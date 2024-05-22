@@ -20,8 +20,7 @@ public class KhachHangDAO implements DAOInterface<KHACHHANG>{
             String sql = "INSERT INTO KHACHHANG (TENKH, GIOITINH, NGAYSINH)"
                         + "VALUES (?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
-        
-            ps.setString(1, t.getTenKH());
+          ps.setString(1, t.getTenKH());
             ps.setString(2, t.getGioiTinh());
             ps.setDate(3, t.getNgaySinh());
             
