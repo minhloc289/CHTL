@@ -19,4 +19,11 @@ public class KhuyenMaiBUS {
     public ArrayList<KHUYENMAI> selectAll(KHUYENMAI t){
         return kmdao.selectAll(t);
     }
+    
+    public int insert (KHUYENMAI t ) {
+        return kmdao.insert(t);
+    }
+    public int delete(KHUYENMAI t){
+        return kmdao.delete(t);
+    }
 }

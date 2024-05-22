@@ -13,11 +13,15 @@ import java.util.ArrayList;
  */
 public class SanPhamBUS {
     private SanPhamDAO sanpham;
+    SanPhamDAO spdao= new SanPhamDAO();
     public SanPhamBUS(){
         sanpham = new SanPhamDAO();
     }
      public ArrayList<SANPHAM> selectAll(SANPHAM t){
          return sanpham.selectAll(t);
+     }
+     public int insert(SANPHAM t){
+       return spdao.insert(t);
      }
 }
 

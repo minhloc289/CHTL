@@ -27,8 +27,6 @@ public class SANPHAM {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.dvt = dvt;
-        this.ngaySX = ngaySX;
-        this.hanSD = hanSD;
         this.giaBan = giaBan;
         this.giaNhap = giaNhap;
         this.slSP = slSP;
@@ -46,13 +44,6 @@ public class SANPHAM {
         return dvt;
     }
 
-    public Date getNgaySX() {
-        return ngaySX;
-    }
-
-    public Date getHanSD() {
-        return hanSD;
-    }
 
     public float getGiaBan() {
         return giaBan;
@@ -77,15 +68,6 @@ public class SANPHAM {
     public void setDvt(String dvt) {
         this.dvt = dvt;
     }
-
-    public void setNgaySX(Date ngaySX) {
-        this.ngaySX = ngaySX;
-    }
-
-    public void setHanSD(Date hanSD) {
-        this.hanSD = hanSD;
-    }
-
     public void setGiaBan(float giaBan) {
         this.giaBan = giaBan;
     }
@@ -100,7 +82,7 @@ public class SANPHAM {
 
     @Override
     public String toString() {
-        return "SANPHAM{" + "maSP=" + maSP + ", tenSP=" + tenSP + ", dvt=" + dvt + ", ngaySX=" + ngaySX + ", hanSD=" + hanSD + ", giaBan=" + giaBan + ", giaNhap=" + giaNhap + ", slSP=" + slSP + '}';
+        return "SANPHAM{" + "maSP=" + maSP + ", tenSP=" + tenSP + ", dvt=" + dvt + ", giaBan=" + giaBan + ", giaNhap=" + giaNhap + ", slSP=" + slSP + '}';
     }
     
 }
