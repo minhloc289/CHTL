@@ -17,15 +17,13 @@ public class KhachHangDAO implements DAOInterface<KHACHHANG>{
     public int insert(KHACHHANG t) {
         try {
             Connection con = JDBC.getConnection();
-            String sql = "INSERT INTO KHACHHANG (MAKH, TENKH, GIOITINH, NGAYSINH, TICHDIEM)"
-                        + "VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO KHACHHANG (TENKH, GIOITINH, NGAYSINH)"
+                        + "VALUES (?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
-            
-            ps.setString(1, t.getMaKH());
-            ps.setString(2, t.getTenKH());
-            ps.setString(3, t.getGioiTinh());
-            ps.setDate(4, t.getNgaySinh());
-            ps.setInt(5, t.getTichDiem());
+        
+            ps.setString(1, t.getTenKH());
+            ps.setString(2, t.getGioiTinh());
+            ps.setDate(3, t.getNgaySinh());
             
             return ps.executeUpdate();
             
@@ -72,17 +70,16 @@ public class KhachHangDAO implements DAOInterface<KHACHHANG>{
         ArrayList<KHACHHANG> khachHangList = new ArrayList<>();
         try {
             Connection con = JDBC.getConnection();
-            String sql = "Select * from KHACHHANG";
+            String sql = "select * from khachhang";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 KHACHHANG kh = new KHACHHANG();
-                kh.setMaKH(rs.getString("MAKM"));
+                kh.setMaKH(rs.getString("MAKh"));
                 kh.setTenKH(rs.getString("TENKH"));
                 kh.setGioiTinh(rs.getString("GIOITINH"));
                 kh.setNgaySinh(rs.getDate("NgaySinh"));
                 kh.setTichDiem(rs.getInt("TICHDIEM"));
-                
                 khachHangList.add(kh);
                
             }
