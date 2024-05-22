@@ -38,9 +38,10 @@ public class CTHD extends javax.swing.JFrame {
         };
         tableCTHD1.setModel(defaultTableModel);
         defaultTableModel.addColumn("Mã hóa đơn");
-        defaultTableModel.addColumn("Mã sản phẩm");
-        defaultTableModel.addColumn("Mã khuyến mãi");
+        defaultTableModel.addColumn("Tên sản phẩm");
         defaultTableModel.addColumn("Số lượng");
+        defaultTableModel.addColumn("Chiết khấu");
+        defaultTableModel.addColumn("Giá bán");
         defaultTableModel.addColumn("Trị giá");
 
         cthdBUS= new cthdBUS();
@@ -50,7 +51,7 @@ public class CTHD extends javax.swing.JFrame {
     private void setDataTable(ArrayList<CTHD_temp> rec1,String mahd) {
         for (CTHD_temp rec : rec1){
             if (rec.getMaHD().equals(mahd)){
-            defaultTableModel.addRow(new Object[]{rec.getMaHD(),rec.getMaSP(),rec.getMaKM(),rec.getSL(),rec.getTriGia()
+            defaultTableModel.addRow(new Object[]{rec.getMaHD(),rec.getTenSP(),rec.getSL(),rec.getChietKhau(),rec.getGiaBan(),rec.getTriGia()
             });
         }
         }

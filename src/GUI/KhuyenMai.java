@@ -4,12 +4,19 @@
  */
 package GUI;
 
+import BUS.KhuyenMaiBUS;
+import Model.KHUYENMAI;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author NK
  */
 public class KhuyenMai extends javax.swing.JPanel {
-
+    DefaultTableModel defaultTableModel;
+    KHUYENMAI k = new KHUYENMAI();
+    KhuyenMaiBUS khuyenmaiBUS;
     /**
      * Creates new form KhuyenMai
      */
@@ -24,7 +31,32 @@ public class KhuyenMai extends javax.swing.JPanel {
         tableKhuyenMai1.getColumnModel().getColumn(5).setPreferredWidth(100);
         tableKhuyenMai1.getColumnModel().getColumn(6).setPreferredWidth(100);
         
+        
+        defaultTableModel = new DefaultTableModel(){
+          @Override
+            public boolean isCellEditable(int row,int column){
+                return false;
+            }  
+        };
+        tableKhuyenMai1.setModel(defaultTableModel);
+        khuyenmaiBUS= new KhuyenMaiBUS();
+        defaultTableModel.addColumn("Mã khuyến mãi");
+        defaultTableModel.addColumn("Mã sản phẩm");
+        defaultTableModel.addColumn("Chương trình KM");
+        defaultTableModel.addColumn("Chiết khấu");
+        defaultTableModel.addColumn("Ngày bắt đầu");
+        defaultTableModel.addColumn("Ngày kết thúc");
+        setDataTable(khuyenmaiBUS.selectAll(k));
+        
     }
+    
+    private void setDataTable(ArrayList<KHUYENMAI> khuyenmai) {
+        for (KHUYENMAI rec : khuyenmai){
+            defaultTableModel.addRow(new Object[]{rec.getMaKM(),rec.getMaSP(),rec.getCtkm(),rec.getChietKhau(),rec.getNgayBD(),rec.getNgayKT()
+            });
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -129,12 +161,12 @@ public class KhuyenMai extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1)
                 .addGap(26, 26, 26))
