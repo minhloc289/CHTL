@@ -6,9 +6,13 @@ package GUI;
 
 import BUS.SanPhamBUS;
 import Model.SANPHAM;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -18,6 +22,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
     SANPHAM s = new SANPHAM();
     SanPhamBUS sanPhamBUS;
     DefaultTableModel defaultTableModel;
+    DefaultTableModel defaultTableModel2;
     /**
      * Creates new form ThemHoaDon
      */
@@ -48,11 +53,24 @@ public class ThemHoaDon extends javax.swing.JFrame {
         sanPhamBUS = new SanPhamBUS();
         setDataTable(sanPhamBUS.selectAll(s));
         
+        defaultTableModel2 = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row,int column){
+                return false;
+            }
+        };
+        tableDSSanPham1.setModel(defaultTableModel2);
+        defaultTableModel2.addColumn("Tên sản phẩm");
+        defaultTableModel2.addColumn("Giá bán");
+        defaultTableModel2.addColumn("Số lượng");
+        defaultTableModel2.addColumn("Chiết khấu");
+        defaultTableModel2.addColumn("Trị giá");
         
+       
     }
     private void setDataTable(ArrayList<SANPHAM> spDao) {
         for (SANPHAM spSanpham : spDao){
-            defaultTableModel.addRow(new Object[]{spSanpham.getMaSP(),spSanpham.getTenSP(),spSanpham.getGiaBan()
+            defaultTableModel.addRow(new Object[]{spSanpham.getMaSP(),spSanpham.getTenSP(),spSanpham.getGiaBan(),""
             });
         }
     }
@@ -179,6 +197,11 @@ public class ThemHoaDon extends javax.swing.JFrame {
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/thanh_phan_log/icon/icon/plus (2).png"))); // NOI18N
         jButton3.setText("Thêm");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -242,6 +265,25 @@ public class ThemHoaDon extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
+         TableRowSorter<DefaultTableModel> rowSorter;
+
+         rowSorter = new TableRowSorter<>(defaultTableModel);
+        tableSanPham1.setRowSorter(rowSorter);
+
+        // Tạo JTextField để nhập từ khóa tìm kiếm
+        
+        jTextField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String text = jTextField1.getText();
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+        });
+
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -251,13 +293,46 @@ public class ThemHoaDon extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        int countRow = defaultTableModel2.getRowCount();
+        if(countRow<=0){
+           JOptionPane.showMessageDialog(ThemHoaDon.this,"Chưa có sản phẩm được chọn","Thông báo",JOptionPane.ERROR_MESSAGE);
+        }else{
        int rs= JOptionPane.showConfirmDialog(this, "Xác Nhận Thêm Hóa Đơn", "Thêm Hóa Đơn", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
        if(rs==JOptionPane.YES_OPTION){
             NhapKhachHang NhapKhachHang= new NhapKhachHang();
             NhapKhachHang.setVisible(true);
        }
        
+        }
+       
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+           
+           int row = tableSanPham1.getSelectedRow();
+           
+           if(row==-1){
+            JOptionPane.showMessageDialog(ThemHoaDon.this,"Hãy chọn sản phẩm cần thêm","Thông báo",JOptionPane.ERROR_MESSAGE);
+        }else{
+            
+            String tenSP = tableSanPham1.getValueAt(row,1).toString();
+            String giaBan = tableSanPham1.getValueAt(row,2).toString();
+            String sl =tableSanPham1.getValueAt(row,3).toString();
+            if(sl.isEmpty()){
+                JOptionPane.showMessageDialog(ThemHoaDon.this,"Bạn chưa nhập số lượng ","Thông báo",JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+            try {
+                int quantity = Integer.parseInt(sl);
+                defaultTableModel2.addRow(new Object[]{tenSP,giaBan,sl});
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Số lượng không hợp lệ. Vui lòng nhập một số nguyên.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+            }
+            
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

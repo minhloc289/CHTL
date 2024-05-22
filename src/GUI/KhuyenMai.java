@@ -16,15 +16,16 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import table.TableKhuyenMai;
 
+
 /**
  *
  * @author NK
  */
 public class KhuyenMai extends javax.swing.JPanel {
-    KHUYENMAI s = new KHUYENMAI();
+  KHUYENMAI s = new KHUYENMAI();
     KhuyenMaiBUS khuyenMaiBUS = new KhuyenMaiBUS();
     public DefaultTableModel defaultTableModel;
-    
+
     /**
      * Creates new form KhuyenMai
      */
@@ -39,10 +40,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         tableKhuyenMai1.getColumnModel().getColumn(4).setPreferredWidth(50);
         tableKhuyenMai1.getColumnModel().getColumn(5).setPreferredWidth(100);
         tableKhuyenMai1.getColumnModel().getColumn(6).setPreferredWidth(100);
-        
-        
-        
-        defaultTableModel = new DefaultTableModel(){
+      defaultTableModel = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row,int column){
                 return false;
@@ -59,7 +57,10 @@ public class KhuyenMai extends javax.swing.JPanel {
         
         setDataTable(khuyenMaiBUS.selectAll(s));
         
+        
+
     }
+    
 
     public void setDataTable(ArrayList<KHUYENMAI> kmDao) {
         for (KHUYENMAI kmKhuyenMai : kmDao){

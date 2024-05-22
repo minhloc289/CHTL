@@ -12,6 +12,33 @@ public class CTHD_temp {
     private String maHD;
     private String maSP;
     private String maKM;
+    private String tenSP;
+    private float chietKhau;
+
+    public float getChietKhau() {
+        return chietKhau;
+    }
+
+    public void setChietKhau(float chietKhau) {
+        this.chietKhau = chietKhau;
+    }
+    private float giaBan;
+
+    public String getTenSP() {
+        return tenSP;
+    }
+
+    public void setTenSP(String tenSP) {
+        this.tenSP = tenSP;
+    }
+
+    public float getGiaBan() {
+        return giaBan;
+    }
+
+    public void setGiaBan(float giaBan) {
+        this.giaBan = giaBan;
+    }
     private int SL;
     private float triGia;
 
