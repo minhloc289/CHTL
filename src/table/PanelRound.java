@@ -68,10 +68,16 @@ public class PanelRound extends JPanel{
     protected void paintComponent(Graphics g) {
         Graphics2D g2= (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setColor(Color.red);
-        Area area = new Area(createRoundtopRight());
-        if (roudTOPleft>0){
-            area.intersect(new Area(createRoundtopLeft()));
+        g2.setColor(new Color(224, 238, 238));
+        Area area = new Area(createRoundtopLeft());
+        if (roundBOTTOMright>0){
+            area.intersect(new Area(createRoundtopRight()));
+        }
+        if (roundBOTTOMright>0){
+            area.intersect(new Area(createRoundBOTTOMright()));
+        }
+        if (roudBOTTOMleft>0){
+            area.intersect(new Area(createRoundBOTTOMLeft()));
         }
         g2.fill(area);
         g2.dispose();
@@ -96,8 +102,26 @@ public class PanelRound extends JPanel{
         Area   area     = new Area (new RoundRectangle2D.Double(0,0,with,height,RoundX,RoundY) );
         area.add(new Area(new Rectangle2D.Double(RoundX/2,0,with-RoundX/2,height)));
         area.add(new Area(new Rectangle2D.Double(0,RoundY/2,with,height-RoundY/2)));
-        return area;
-        
+        return area; 
     }
-    
+    private Shape createRoundBOTTOMLeft(){
+        int  with =getWidth();
+        int height = getHeight();
+        int RoundX =Math.min(with,roudBOTTOMleft);
+        int RoundY=Math.min(height, roudBOTTOMleft);
+        Area   area     = new Area (new RoundRectangle2D.Double(0,0,with,height,RoundX,RoundY) );
+        area.add(new Area(new Rectangle2D.Double(RoundX/2,0,with-RoundX/2,height)));
+        area.add(new Area(new Rectangle2D.Double(0,0,with,height-RoundY/2)));
+        return area; 
+    }
+    private Shape createRoundBOTTOMright(){
+        int  with =getWidth();
+        int height = getHeight();
+        int RoundX =Math.min(with,roundBOTTOMright);
+        int RoundY=Math.min(height, roundBOTTOMright);
+        Area   area     = new Area (new RoundRectangle2D.Double(0,0,with,height,RoundX,RoundY) );
+        area.add(new Area(new Rectangle2D.Double(0,0,with-RoundX/2,height)));
+        area.add(new Area(new Rectangle2D.Double(0,0,with,height-RoundY/2)));
+        return area; 
+    }
 }

@@ -23,15 +23,15 @@ public class SanPhamDAO implements DAOInterface<SANPHAM> {
     public int insert(SANPHAM t) {
         try {
             Connection con = JDBC.getConnection();
-            String sql = "INSERT INTO SANPHAM (MASP, TENSP, DVT, GIABAN, GIANHAP)"
-                        + "VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO SANPHAM (TENSP, DVT, GIABAN, GIANHAP)"
+                        + "VALUES ( ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
             
-            ps.setString(1, t.getMaSP());
-            ps.setString(2, t.getTenSP());
-            ps.setString(3, t.getDvt());
-            ps.setDouble(4, t.getGiaBan());
-            ps.setDouble(5, t.getGiaNhap());
+
+            ps.setString(1, t.getTenSP());
+            ps.setString(2, t.getDvt());
+            ps.setDouble(3, t.getGiaBan());
+            ps.setDouble(4, t.getGiaNhap());
             
             return ps.executeUpdate();
             
@@ -98,8 +98,6 @@ public class SanPhamDAO implements DAOInterface<SANPHAM> {
                 sp_rec.setMaSP(rs.getString("masp"));
                 sp_rec.setTenSP(rs.getString("tensp"));
                 sp_rec.setDvt(rs.getString("DVT"));
-                sp_rec.setNgaySX(rs.getDate("ngaySX"));
-                sp_rec.setHanSD(rs.getDate("hansd"));
                 sp_rec.setGiaBan(rs.getFloat("giaban"));
                 sp_rec.setGiaNhap(rs.getFloat("gianhap"));
                 sp_rec.setSlSP(rs.getInt("Slsp"));
