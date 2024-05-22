@@ -21,11 +21,11 @@ public class KhachHangDAO implements DAOInterface<KHACHHANG>{
                         + "VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
             
-            ps.setString(1, t.getMaKH());
-            ps.setString(2, t.getTenKH());
-            ps.setString(3, t.getGioiTinh());
-            ps.setDate(4, t.getNgaySinh());
-            ps.setInt(5, t.getTichDiem());
+            ps.setString(0, t.getMaKH());
+            ps.setString(1, t.getTenKH());
+            ps.setString(2, t.getGioiTinh());
+            ps.setDate(3, t.getNgaySinh());
+            ps.setInt(4, t.getTichDiem());
             
             return ps.executeUpdate();
             

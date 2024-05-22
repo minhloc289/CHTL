@@ -5,6 +5,7 @@
 package Model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -15,13 +16,13 @@ public class KHUYENMAI {
     private String maSP;
     private String ctkm;
     private float chietKhau;
-    private Date ngayBD;
-    private Date ngayKT;
+    private LocalDate ngayBD;
+    private LocalDate ngayKT;
 
     public KHUYENMAI() {
     }
 
-    public KHUYENMAI(String maKM, String maSP, String ctkm, float chietKhau, Date ngayBD, Date ngayKT) {
+    public KHUYENMAI(String maKM, String maSP, String ctkm, float chietKhau, LocalDate ngayBD, LocalDate ngayKT) {
         this.maKM = maKM;
         this.maSP = maSP;
         this.ctkm = ctkm;
@@ -54,11 +55,11 @@ public class KHUYENMAI {
         this.chietKhau = chietKhau;
     }
 
-    public void setNgayBD(Date ngayBD) {
+    public void setNgayBD(LocalDate ngayBD) {
         this.ngayBD = ngayBD;
     }
 
-    public void setNgayKT(Date ngayKT) {
+    public void setNgayKT(LocalDate ngayKT) {
         this.ngayKT = ngayKT;
     }
 
@@ -70,11 +71,11 @@ public class KHUYENMAI {
         return chietKhau;
     }
 
-    public Date getNgayBD() {
+    public LocalDate getNgayBD() {
         return ngayBD;
     }
 
-    public Date getNgayKT() {
+    public LocalDate getNgayKT() {
         return ngayKT;
     }
 

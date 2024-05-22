@@ -8,10 +8,13 @@ package DAO;
  *
  * @author ADMIN
  */
+import GUI.ThemKhuyenMai;
 import Model.KHUYENMAI;
 import java.util.ArrayList;
 import database.JDBC;
 import java.sql.*;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
 
 public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
     
@@ -23,26 +26,26 @@ public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
     public int insert(KHUYENMAI t) {
             try {
             Connection con = JDBC.getConnection();
-            String sql = "INSERT INTO KHUYENMAI (MAKM, MASP, CTKM, CHIETKHAU, NGAYBD, NGAYKT)"
-                        + "VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO KHUYENMAI ( MASP, CTKM, CHIETKHAU, NGAYBD, NGAYKT)"
+                        + "VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
             
-            ps.setString(1, t.getMaKM());
-            ps.setString(2, t.getMaSP());
-            ps.setString(3, t.getCtkm());
-            ps.setFloat(4, t.getChietKhau());
-            ps.setDate(5, t.getNgayBD());
-            ps.setDate(6, t.getNgayKT());
+            ps.setString(1, t.getMaSP());
+            ps.setString(2, t.getCtkm());
+            ps.setFloat(3, t.getChietKhau());
+            ps.setDate(4, Date.valueOf(t.getNgayBD()));
+            ps.setDate(5, Date.valueOf(t.getNgayKT()));
             
-            return ps.executeUpdate();
-            
-            
-        } catch (SQLException e) {
-            System.err.println("SQL Exception: " + e.getMessage());
-            e.printStackTrace();
-             return 0;
-        }
-           
+
+           int result = ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Thêm thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        return result;
+        
+    } catch (SQLException e) {     
+        int errorCode = e.getErrorCode();
+        
+            return errorCode;
+    }
     }
 
     @Override
@@ -53,6 +56,7 @@ public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
             PreparedStatement ps = con.prepareStatement(sql);
        
             ps.setString(1, t.getMaKM());
+            JOptionPane.showMessageDialog(null,"Xóa thành công"); 
             return ps.executeUpdate();
         } catch (SQLException e) {
             System.err.println("SQL Exception: " + e.getMessage());
@@ -76,8 +80,8 @@ public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
             ps.setString(1, t.getMaSP());
             ps.setString(2, t.getCtkm());
             ps.setFloat(3, t.getChietKhau());
-            ps.setDate(4, t.getNgayBD());
-            ps.setDate(5, t.getNgayKT());
+            ps.setDate(4, Date.valueOf(t.getNgayBD()));
+            ps.setDate(5,  Date.valueOf(t.getNgayKT()));
             ps.setString(6, t.getMaKM());
             
             return ps.executeUpdate();
@@ -94,7 +98,7 @@ public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
         
         try {
             Connection con = JDBC.getConnection();
-            String sql = "Select * from KHUYENMAI";
+            String sql = "Select * from KHUYENMAI where isDeleted = 0";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
@@ -103,8 +107,13 @@ public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
                 km.setMaSP(rs.getString("MASP"));
                 km.setCtkm(rs.getString("CTKM"));
                 km.setChietKhau(rs.getFloat("CHIETKHAU"));
-                km.setNgayBD(rs.getDate("NGAYBD"));
-                km.setNgayKT(rs.getDate("NGAYKT"));
+               java.sql.Date sqlDate = rs.getDate("NGAYBD");
+               LocalDate localDate = sqlDate.toLocalDate();
+               km.setNgayBD(localDate);        
+               
+               java.sql.Date sqlDate1 = rs.getDate("NGAYKT");
+               LocalDate localDate1 = sqlDate1.toLocalDate();
+               km.setNgayKT(localDate1);   
                 
                 
                 khuyenMaiList.add(km);
