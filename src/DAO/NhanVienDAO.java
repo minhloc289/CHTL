@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import database.JDBC;
 import java.sql.*;
 import java.sql.Date;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,18 +27,17 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
         
         try {
             Connection con = JDBC.getConnection();
-            String sql = "INSERT INTO NHANVIEN (MANV, TENNV, GIOITINH, NGAYSINH, DIACHI, SDT, LUONG, PASSWORD) "
-                   + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO NHANVIEN (TENNV, GIOITINH, NGAYSINH, DIACHI, SDT, LUONG, PASSWORD) "
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
             
-            ps.setString(1, t.getMaNV());
-            ps.setString(2, t.getTenNV());
-            ps.setString(3, t.getGioiTinh());
-            ps.setDate(4, t.getNgaySinh()); 
-            ps.setString(5, t.getDiaChi());
-            ps.setString(6, t.getSdt());
-            ps.setFloat(7, t.getLuong());
-            ps.setString(8, t.getPassword());
+            ps.setString(1, t.getTenNV());
+            ps.setString(2, t.getGioiTinh());
+            ps.setDate(3, Date.valueOf(t.getNgaySinh())); 
+            ps.setString(4, t.getDiaChi());
+            ps.setString(5, t.getSdt());
+            ps.setFloat(6, t.getLuong());
+            ps.setString(7, t.getPassword());
             return ps.executeUpdate();
         } catch (SQLException e) {
             System.err.println("SQL Exception: " + e.getMessage());
@@ -53,6 +54,7 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
             PreparedStatement ps = con.prepareStatement(sql);
        
             ps.setString(1, t.getMaNV());
+             JOptionPane.showMessageDialog(null,"Xóa thành công"); 
             return ps.executeUpdate();
         } catch (SQLException e) {
             System.err.println("SQL Exception: " + e.getMessage());
@@ -76,14 +78,15 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
              "WHERE MANV = ?";
             PreparedStatement ps = con.prepareStatement(sql);
        
-            ps.setString(1, t.getMaNV());
-            ps.setString(2, t.getTenNV());
-            ps.setString(3, t.getGioiTinh());
-            ps.setDate(4, t.getNgaySinh()); 
-            ps.setString(5, t.getDiaChi());
-            ps.setString(6, t.getSdt());
-            ps.setFloat(7, t.getLuong());
-            ps.setString(8, t.getPassword());
+            ps.setString(1, t.getTenNV());
+            ps.setString(2, t.getGioiTinh());
+            ps.setDate(3, Date.valueOf(t.getNgaySinh())); 
+            ps.setString(4, t.getDiaChi());
+            ps.setString(5, t.getSdt());
+            ps.setFloat(6, t.getLuong());
+            ps.setString(7, t.getPassword());
+            ps.setString(8, t.getMaNV());
+            JOptionPane.showMessageDialog(null, "Sửa thành công nhân viên","Thông báo",JOptionPane.INFORMATION_MESSAGE );
             return ps.executeUpdate();
         } catch (SQLException e) {
             System.err.println("SQL Exception: " + e.getMessage());
@@ -98,7 +101,7 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
         
         try {
             Connection con = JDBC.getConnection();
-            String sql = "Select * from NHANVIEN";
+            String sql = "Select * from NHANVIEN WHERE isDeleted = 0 ORDER BY MANV ASC";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
@@ -106,7 +109,10 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
                 nv.setMaNV(rs.getString("MANV"));
                 nv.setTenNV(rs.getString("TENNV"));
                 nv.setGioiTinh(rs.getString("GIOITINH"));
-                nv.setNgaySinh(rs.getDate("NGAYSINH"));
+                
+               java.sql.Date sqlDate = rs.getDate("NGAYSINH");
+               LocalDate localDate = sqlDate.toLocalDate();
+               nv.setNgaySinh(localDate);
                 nv.setDiaChi(rs.getString("DIACHI"));
                 nv.setSdt(rs.getString("SDT"));
                 nv.setLuong(rs.getFloat("LUONG"));
@@ -128,8 +134,37 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 
     @Override
     public NHANVIEN selectbyID(String T) {
-         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    NHANVIEN nhanVien = null;
+        try {
+            Connection con = JDBC.getConnection();
+            String sql = "SELECT * FROM NHANVIEN WHERE MANV = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, T);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                nhanVien = new NHANVIEN();
+                nhanVien.setMaNV(rs.getString("MANV"));
+                nhanVien.setTenNV(rs.getString("TENNV"));
+                nhanVien.setGioiTinh(rs.getString("GIOITINH"));
+                java.sql.Date sqlDate = rs.getDate("NGAYSINH");
+                LocalDate localDate = sqlDate.toLocalDate();
+                nhanVien.setNgaySinh(localDate);
+                
+                nhanVien.setDiaChi(rs.getString("DIACHI"));
+                nhanVien.setSdt(rs.getString("SDT"));
+                nhanVien.setLuong(rs.getFloat("LUONG"));
+                nhanVien.setPassword(rs.getString("PASSWORD"));
+            }
+            
+            rs.close();
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            System.err.println("SQL Exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return nhanVien;    }
     
     public boolean checkLogin (String username, String password){
         try {

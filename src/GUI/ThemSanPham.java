@@ -210,7 +210,8 @@ public class ThemSanPham extends javax.swing.JFrame {
                             }
                         }
                     }
-        }else{
+        }
+        else{
         float dvtcheck, gbcheck, gncheck;
             
             try {

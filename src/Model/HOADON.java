@@ -15,51 +15,64 @@ public class HOADON {
     private String maNV;
     private Date ngayHD;
     private String maKH;
+    private float tongHoaDon;
 
-    public void setMaHD(String maHD) {
+    public HOADON(String maHD, String maNV, Date ngayHD, String maKH, float tongHoaDon) {
         this.maHD = maHD;
-    }
-
-    public void setMaNV(String maNV) {
         this.maNV = maNV;
-    }
-
-    public void setNgayHD(Date ngayHD) {
         this.ngayHD = ngayHD;
+        this.maKH = maKH;
+        this.tongHoaDon = tongHoaDon;
     }
 
-    public void setMaKH(String maKH) {
-        this.maKH = maKH;
-    }
     public HOADON() {
-    }
-
-    public HOADON(String maHD, String maNV, Date ngayHD, String maKH) {
-        this.maHD = maHD;
-        this.maNV = maNV;
-        this.ngayHD = ngayHD;
-        this.maKH = maKH;
     }
 
     public String getMaHD() {
         return maHD;
     }
 
+    public void setMaHD(String maHD) {
+        this.maHD = maHD;
+    }
+
     public String getMaNV() {
         return maNV;
+    }
+
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
     }
 
     public Date getNgayHD() {
         return ngayHD;
     }
 
+    public void setNgayHD(Date ngayHD) {
+        this.ngayHD = ngayHD;
+    }
+
     public String getMaKH() {
         return maKH;
     }
 
+    public void setMaKH(String maKH) {
+        this.maKH = maKH;
+    }
+
+    public float getTongHoaDon() {
+        return tongHoaDon;
+    }
+
+    public void setTongHoaDon(float tongHoaDon) {
+        this.tongHoaDon = tongHoaDon;
+    }
+
     @Override
     public String toString() {
-        return "HOADON{" + "maHD=" + maHD + ", maNV=" + maNV + ", ngayHD=" + ngayHD + ", maKH=" + maKH + '}';
+        return "HOADON{" + "maHD=" + maHD + ", maNV=" + maNV + ", ngayHD=" + ngayHD + ", maKH=" + maKH + ", tongHoaDon=" + tongHoaDon + '}';
     }
+
+    
     
 }

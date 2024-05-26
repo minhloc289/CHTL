@@ -27,11 +27,12 @@ public class HoaDon extends javax.swing.JPanel {
     public HoaDon() {
         initComponents();
         tableHoaDon1.fixTable(jScrollPane1);
-        tableHoaDon1.getColumnModel().getColumn(0).setPreferredWidth(70);
-        tableHoaDon1.getColumnModel().getColumn(1).setPreferredWidth(200);
-        tableHoaDon1.getColumnModel().getColumn(2).setPreferredWidth(200);
-        tableHoaDon1.getColumnModel().getColumn(3).setPreferredWidth(200);
-        tableHoaDon1.getColumnModel().getColumn(4).setPreferredWidth(200);
+        tableHoaDon1.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tableHoaDon1.getColumnModel().getColumn(1).setPreferredWidth(170);
+        tableHoaDon1.getColumnModel().getColumn(2).setPreferredWidth(170);
+        tableHoaDon1.getColumnModel().getColumn(3).setPreferredWidth(170);
+        tableHoaDon1.getColumnModel().getColumn(4).setPreferredWidth(170);
+        tableHoaDon1.getColumnModel().getColumn(5).setPreferredWidth(170);
         hoaDonBUS = new HoaDonBUS();
         defaultTableModel = new DefaultTableModel(){
             @Override
@@ -44,11 +45,12 @@ public class HoaDon extends javax.swing.JPanel {
         defaultTableModel.addColumn("Mã nhân viên");
         defaultTableModel.addColumn("Ngày hóa đơn");
         defaultTableModel.addColumn("Mã khách hàng");
+        defaultTableModel.addColumn("Tổng hóa đơn");
         setDataTable(hoaDonBUS.selectAll(h));
     }
     private void setDataTable(ArrayList<HOADON> hoadon) {
         for (HOADON rec : hoadon){
-            defaultTableModel.addRow(new Object[]{rec.getMaHD(),rec.getMaNV(),rec.getNgayHD(),rec.getMaKH()
+            defaultTableModel.addRow(new Object[]{rec.getMaHD(),rec.getMaNV(),rec.getNgayHD(),rec.getMaKH(), rec.getTongHoaDon()
             });
         }
     }
@@ -76,24 +78,24 @@ public class HoaDon extends javax.swing.JPanel {
 
         tableHoaDon1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "STT", "Mã Hóa Đơn", "Mã Nhân Viên", "Mã Khách Hàng", "Ngày Hóa Đơn"
+                "STT", "Mã Hóa Đơn", "Mã Nhân Viên", "Mã Khách Hàng", "Title 5", "Ngày Hóa Đơn"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -120,8 +122,8 @@ public class HoaDon extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 946, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 886, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -22,7 +22,7 @@ import table.TableKhuyenMai;
  * @author NK
  */
 public class KhuyenMai extends javax.swing.JPanel {
-  KHUYENMAI s = new KHUYENMAI();
+    KHUYENMAI s = new KHUYENMAI();
     KhuyenMaiBUS khuyenMaiBUS = new KhuyenMaiBUS();
     public DefaultTableModel defaultTableModel;
 
@@ -40,7 +40,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         tableKhuyenMai1.getColumnModel().getColumn(4).setPreferredWidth(50);
         tableKhuyenMai1.getColumnModel().getColumn(5).setPreferredWidth(100);
         tableKhuyenMai1.getColumnModel().getColumn(6).setPreferredWidth(100);
-      defaultTableModel = new DefaultTableModel(){
+        defaultTableModel = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row,int column){
                 return false;
@@ -68,6 +68,11 @@ public class KhuyenMai extends javax.swing.JPanel {
                 kmKhuyenMai.getChietKhau(),kmKhuyenMai.getNgayBD(), kmKhuyenMai.getNgayKT()
             });
         }
+    }
+    
+    public void refreshTable(){
+        defaultTableModel.setRowCount(0);
+        setDataTable(khuyenMaiBUS.selectAll(s));
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -124,6 +129,11 @@ public class KhuyenMai extends javax.swing.JPanel {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/thanh_phan_log/icon/icon/edit.png"))); // NOI18N
         jButton2.setText("Sửa");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/thanh_phan_log/icon/icon/plus (2).png"))); // NOI18N
         jButton3.setText("Thêm");
@@ -203,10 +213,6 @@ public class KhuyenMai extends javax.swing.JPanel {
         // TODO add your handling code here:
         jTextField1.setText("");
         jTextField1.setForeground(Color.black);
-    }//GEN-LAST:event_jTextField1clicktimkiemsanpham
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
         TableRowSorter<DefaultTableModel> rowSorter;
 
          rowSorter = new TableRowSorter<>(defaultTableModel);
@@ -225,13 +231,23 @@ public class KhuyenMai extends javax.swing.JPanel {
                 }
             }
         });
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextField1clicktimkiemsanpham
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jTextField1ActionPerformed
+  
     private void clickthemkm(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickthemkm
         // TODO add your handling code here:
         ThemKhuyenMai themkm = new ThemKhuyenMai();
         themkm.setVisible(true); 
-        
+        themkm.setOnProductAddedListener(new ThemKhuyenMai.OnProductAddedListener() {
+        @Override
+        public void onProductAdded() {
+            refreshTable();
+        }
+    });
         
     }//GEN-LAST:event_clickthemkm
 
@@ -257,6 +273,33 @@ public class KhuyenMai extends javax.swing.JPanel {
         defaultTableModel.setRowCount(0);
         setDataTable(khuyenMaiBUS.selectAll(s));
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+         int row = tableKhuyenMai1.getSelectedRow();
+           
+           if(row==-1){
+            JOptionPane.showMessageDialog(this,"Hãy chọn sản phẩm cần sửa","Thông báo",JOptionPane.ERROR_MESSAGE);
+        }else{
+            String maKM = tableKhuyenMai1.getValueAt(row, 0).toString();
+            String maSP = tableKhuyenMai1.getValueAt(row,1).toString();
+            String tenKM = tableKhuyenMai1.getValueAt(row,2).toString();
+            String chietKhau = tableKhuyenMai1.getValueAt(row,3).toString();
+            String ngayBD= tableKhuyenMai1.getValueAt(row,4).toString();
+            String ngayKT= tableKhuyenMai1.getValueAt(row,5).toString();
+            SuaKhuyenMai suakm = new  SuaKhuyenMai(maKM);
+            suakm.setVisible(true);
+            suakm.setText(maSP, tenKM, chietKhau, ngayBD, ngayKT);
+            
+            suakm.setOnProductAddedListener(new SuaKhuyenMai.OnProductAddedListener() {
+        @Override
+        public void onProductAdded() {
+            refreshTable();
+        }
+    });
+            
+          }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

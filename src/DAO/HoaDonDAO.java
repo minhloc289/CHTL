@@ -50,6 +50,7 @@ public class HoaDonDAO implements DAOInterface<HOADON> {
                 hoadon.setMaNV(rs.getString("manv"));
                 hoadon.setNgayHD(rs.getDate("ngayhd"));
                 hoadon.setMaKH(rs.getString("makh"));
+                hoadon.setTongHoaDon(rs.getFloat("tonghoadon"));
                 hoadonList.add(hoadon);
             }
             rs.close();

@@ -4,6 +4,15 @@
  */
 package GUI;
 
+import BUS.NhanVienBUS;
+import Model.NHANVIEN;
+import java.awt.Color;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author NK
@@ -20,7 +29,7 @@ public class ThemNhanVien extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,16 +44,16 @@ public class ThemNhanVien extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -97,33 +106,31 @@ public class ThemNhanVien extends javax.swing.JFrame {
         panelRound1Layout.setHorizontalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(25, 25, 25)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel7)
-                            .addComponent(jButton2)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField5)
-                            .addComponent(jTextField6))
-                        .addGap(48, 48, 48))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(59, 59, 59))))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField1)
+                    .addComponent(jTextField2)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField4)
+                    .addComponent(jTextField5)
+                    .addComponent(jTextField6))
+                .addGap(48, 48, 48))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(59, 59, 59))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,15 +145,15 @@ public class ThemNhanVien extends javax.swing.JFrame {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(11, 11, 11)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -163,8 +170,8 @@ public class ThemNhanVien extends javax.swing.JFrame {
                 .addGap(23, 23, 23))
         );
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Thêm Nhân Viên");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("  Thêm Nhân Viên");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -175,16 +182,16 @@ public class ThemNhanVien extends javax.swing.JFrame {
                 .addComponent(panelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(143, 143, 143)
-                .addComponent(jLabel1)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addGap(109, 109, 109)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(52, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(31, 31, 31)
+                .addGap(36, 36, 36)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -192,75 +199,102 @@ public class ThemNhanVien extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void highlightField(JTextField field) {
+        field.requestFocus();
+        field.setBackground(Color.YELLOW);
+    }
+    private void rehighlightField(JTextField field) {
+        field.setBackground(Color.white);
+    }
+    
+    public interface OnProductAddedListener {
+        void onProductAdded();
+}
+
+    private OnProductAddedListener productAddedListener;
+
+    public void setOnProductAddedListener(OnProductAddedListener listener) {
+        this.productAddedListener = listener;
+}
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        //        SanPhamBUS spBUS= new SanPhamBUS();
-        //        SANPHAM sp = new SANPHAM();
-        //        String tensp=jTextField1.getText();
-        //        String dvt=jTextField2.getText();
-        //        String gianhap=jTextField3.getText();
-        //        String giaban=jTextField4.getText();
-        //
-        //        if(tensp.isEmpty()||dvt.isEmpty()||gianhap.isEmpty()||giaban.isEmpty()){
-            //            JOptionPane.showMessageDialog(null, "Vui lòng nhập thông tin đầy đủ.", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
-            //            if (tensp.isEmpty()) {
-                //                highlightField(jTextField1);
-                //            }else if(!tensp.isEmpty()){
-                //                rehighlightField(jTextField1);
-                //                if (dvt.isEmpty()) {
-                    //                    highlightField(jTextField2);
-                    //                }else if(!dvt.isEmpty()){
-                    //                    rehighlightField(jTextField2);
-                    //                    if (giaban.isEmpty()) {
-                        //                        highlightField(jTextField4);
-                        //                    }else if(!giaban.isEmpty()){
-                        //                        rehighlightField(jTextField4);
-                        //                        if (gianhap.isEmpty()) {
-                            //                            highlightField(jTextField3);
-                            //                        }else if(!gianhap.isEmpty()){
-                            //                            rehighlightField(jTextField3);
-                            //                        }
-                        //                    }
-                    //                }
-                //            }
-            //        }else{
-            //            float dvtcheck, gbcheck, gncheck;
-            //            try {
-                //                dvtcheck=Float.parseFloat(dvt);
-                //                JOptionPane.showMessageDialog(this, "Đơn Vị tính không hợp lệ. Vui lòng nhập lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                //                highlightField(jTextField2);
-                //            } catch (NumberFormatException ex) {
-                //                rehighlightField(jTextField2);
-                //            }
-            //            try {
-                //                gbcheck=Float.parseFloat(giaban);
-                //                sp.setGiaBan(gbcheck);
-                //                rehighlightField(jTextField4);
-                //            } catch (NumberFormatException ex) {
-                //                JOptionPane.showMessageDialog(this, "Giá bán không hợp lệ. Vui lòng nhập lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                //                highlightField(jTextField4);
-                //            }
-            //            try {
-                //                gncheck=Float.parseFloat(gianhap);
-                //                sp.setGiaNhap(gncheck);
-                //                rehighlightField(jTextField3);
-                //            } catch (NumberFormatException ex) {
-                //                JOptionPane.showMessageDialog(this, "Giá nhập không hợp lệ. Vui lòng nhập lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                //                highlightField(jTextField3);
-                //            }
-            //        }
-        //        sp.setTenSP(tensp);
-        //        sp.setDvt(dvt);
-        //
-        //        spBUS.insert(sp);
-        //        JOptionPane.showMessageDialog(this, "Thêm thành công sản phẩm","Thông báo",JOptionPane.INFORMATION_MESSAGE );
-        //        dispose();
-        //
+        NhanVienBUS nvbus= new NhanVienBUS();
+        NHANVIEN nv = new NHANVIEN();
+        String tenNV=jTextField1.getText();
+        String gioiTinh = (String) jComboBox1.getSelectedItem();
+        String ngaySinh =jTextField2.getText();
+        String diaChi =jTextField3.getText();
+        String sdt = jTextField4.getText();
+        String luong = jTextField5.getText();
+        String password = jTextField6.getText();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        float floatLuong;
+        
+        if(tenNV.isEmpty() || ngaySinh.isEmpty() || diaChi.isEmpty() || sdt.isEmpty() || luong.isEmpty() || password.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập thông tin đầy đủ.", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
+            if (tenNV.isEmpty()) {
+                highlightField(jTextField1);
+            } else if(!tenNV.isEmpty()){
+                           rehighlightField(jTextField1);
+                        if (ngaySinh.isEmpty()) {
+                                highlightField(jTextField2);
+                        } else if(!ngaySinh.isEmpty()){
+                                     rehighlightField(jTextField2);
+                                if (diaChi.isEmpty()) {
+                                    highlightField(jTextField3);
+                                } else if(!diaChi.isEmpty()){
+                                    rehighlightField(jTextField3);
+                                    if (sdt.isEmpty()){
+                                        highlightField(jTextField4);
+                                    } else if (!sdt.isEmpty()){
+                                        rehighlightField(jTextField4);
+                                        if (luong.isEmpty()) {
+                                            highlightField(jTextField5);
+                                        } else if (!luong.isEmpty()){
+                                            rehighlightField(jTextField5);
+                                            if (password.isEmpty()) {
+                                                highlightField(jTextField6);
+                                            } else if (!password.isEmpty()){
+                                                rehighlightField(jTextField6);
+                                            }
+                                            }
+                                        }
+                                    }  
+                            }
+                        }
+                    }
+        else {
+            try {
+            floatLuong = Float.parseFloat(luong);
+           } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(ThemNhanVien.this, " Lương không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        return;
+        };
+        
+          try {
+        LocalDate date1 = LocalDate.parse(ngaySinh, formatter);
+        nv.setNgaySinh(date1);
+         } catch (DateTimeParseException e) {
+        JOptionPane.showMessageDialog(ThemNhanVien.this, "Ngày không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        return;
+        }
+        
+          nv.setGioiTinh(gioiTinh);
+          nv.setTenNV(tenNV);
+          nv.setDiaChi(diaChi);
+          nv.setSdt(sdt);
+          nv.setLuong(floatLuong);
+          nv.setPassword(password);
+          
+        nvbus.insert(nv);
+        JOptionPane.showMessageDialog(this, "Thêm thành công nhân viên","Thông báo",JOptionPane.INFORMATION_MESSAGE );
+        dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
