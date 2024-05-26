@@ -13,6 +13,7 @@ import Model.CTHD_temp;
 import java.util.ArrayList;
 import database.JDBC;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 public class CTHDDAO  {
     
@@ -22,13 +23,53 @@ public class CTHDDAO  {
 
     
     public int insert(CTHD t) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    try {
+        Connection con = JDBC.getConnection();
+        String sql = "{CALL INSERT_CTHD(?, ?, ?, ?, ?)}"; // Replace with your actual procedure name
+
+        CallableStatement cs = con.prepareCall(sql);
+
+        cs.setString(1, t.getMaHD());
+        cs.setString(2, t.getMaSP());
+        cs.setString(3, t.getMaKM());
+        cs.setFloat(4, t.getTriGia());
+        cs.setInt(5, t.getSL());
+
+        int rse = cs.executeUpdate();
+        return rse;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, e.getMessage(), "Xin mời nhập lại", JOptionPane.ERROR_MESSAGE);
+        return 0; // Return an appropriate value based on your business logic
+    }
+}
+
+
+    
+    public int delete(String mahd) {
+        int rs;
+        try {
+            Connection con = JDBC.getConnection();
+            String sql = "DELETE FROM HOADON WHERE MAHD = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+       
+            ps.setString(1, mahd);
+            
+            rs = ps.executeUpdate();
+            if(rs>0){
+                JOptionPane.showMessageDialog(null,"Xóa thành công"); 
+                return rs;
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("SQL Exception: " + e.getMessage());
+            e.printStackTrace();
+            return 0;
+        }   
+        return rs;
     }
 
     
-    public int delete(CTHD t) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
    
     public int update(CTHD t) {
@@ -64,9 +105,68 @@ public class CTHDDAO  {
         return cthd;
     }
 
-   
-    public CTHD selectbyID(String T) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public String getNewMaHD(){
+        try {
+            Connection con = JDBC.getConnection();
+             CallableStatement callableStatement = con.prepareCall("{call GET_NEWEST_MAHD(?)}");
+            // Đăng ký tham số OUT cho mã hóa đơn mới nhất
+            callableStatement.registerOutParameter(1, Types.VARCHAR);
+            // Thực thi procedure
+            callableStatement.execute();
+            // Lấy giá trị của tham số OUt
+            String newestMaHD;
+            newestMaHD = callableStatement.getString(1);
+            return newestMaHD;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-}
+    public ArrayList<Float> getInfCTHD(String maSp,String maKh,int soLuong) {
+        ArrayList<Float> list = new ArrayList<>();
+        try{
+             Connection con = JDBC.getConnection();
+             CallableStatement callableStatement = con.prepareCall("{call GET_DISCOUNT_AND_VALUE(?, ?, ?, ?, ?)}");
+
+            // Đặt giá trị cho tham số đầu vào
+            callableStatement.setString(1, maSp);
+            callableStatement.setString(2, maKh);
+            callableStatement.setInt(3, soLuong);
+
+            // Đăng ký tham số OUT
+            callableStatement.registerOutParameter(4, Types.FLOAT);
+            callableStatement.registerOutParameter(5, Types.FLOAT);
+
+            // Thực thi procedure
+            callableStatement.execute();
+
+            // Lấy giá trị từ các tham số OUT
+            list.add(callableStatement.getFloat(4));
+            list.add(callableStatement.getFloat(5));
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Số lượng chọn mua lớn hơn số lượng hàng tồn","Xin mời nhập lại",JOptionPane.ERROR_MESSAGE);
+        }
+        return list;
+    }
+    
+    public String getMakm (String masp){
+        String maKM = null;
+        try {
+            Connection con = JDBC.getConnection();
+            String sql = "SELECT MAKM FROM KHUYENMAI WHERE MASP = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, masp);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+            maKM = rs.getString("makm");
+            }
+            return maKM;  
+        } catch (Exception e) {
+             e.printStackTrace(); 
+        }
+          return maKM;  
+    }
+
+}         
 

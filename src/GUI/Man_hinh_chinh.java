@@ -7,8 +7,11 @@ package GUI;
 import Bean.DanhMuc;
 import Controller.ChuyenManHinh;
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import  java.util.List;
+import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 
 /**
  *
@@ -43,7 +46,9 @@ public class Man_hinh_chinh extends javax.swing.JFrame {
         listItem.add(new DanhMuc("DangKi",Dangkijpn,Dangkijlb));
         
         controller.setEvent(listItem);
-    }
+        
+
+       }
 
     /**
      * This method is called from within the constructor to initialize the form.
