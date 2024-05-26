@@ -47,7 +47,7 @@ public class SanPhamDAO implements DAOInterface<SANPHAM> {
     public int delete(SANPHAM t) {
             try {
             Connection con = JDBC.getConnection();
-            String sql = "UPDATE SANPHAM SET isDeleted = 1 WHERE MAKM = ?";
+            String sql = "UPDATE SANPHAM SET isDeleted = 1 WHERE MASP = ?";
             PreparedStatement ps = con.prepareStatement(sql);
        
             ps.setString(1, t.getMaSP());
@@ -62,21 +62,17 @@ public class SanPhamDAO implements DAOInterface<SANPHAM> {
         try {
             Connection con = JDBC.getConnection();
             String sql = "UPDATE SANPHAM SET " +
-                    "MASP = ?, "+
                     "TENSP = ?, "+
                     "DVT = ?, "+
                     "GIABAN = ?, " +
                     "GIANHAP = ? "+ 
                     "WHERE MASP = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            
-            ps.setString(1, t.getMaSP());
-            ps.setString(2, t.getTenSP());
-            ps.setString(3, t.getDvt());
-            ps.setDouble(4, t.getGiaBan());
-            ps.setDouble(5, t.getGiaNhap());
-            
-            
+            ps.setString(1, t.getTenSP());
+            ps.setString(2, t.getDvt());
+            ps.setFloat(3, t.getGiaBan());
+            ps.setFloat(4, t.getGiaNhap());
+            ps.setString(5, t.getMaSP());
             return ps.executeUpdate();
         }  catch (SQLException e) {
             System.err.println("SQL Exception: " + e.getMessage());
@@ -90,7 +86,7 @@ public class SanPhamDAO implements DAOInterface<SANPHAM> {
         ArrayList<SANPHAM> sanpham = new ArrayList<SANPHAM>();
         try {
             Connection con = JDBC.getConnection();
-            String sql ="Select * From SANPHAM";
+            String sql ="Select * From SANPHAM WHERE isdeleted = 0";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -104,7 +100,7 @@ public class SanPhamDAO implements DAOInterface<SANPHAM> {
                 sanpham.add(sp_rec);
             }
             rs.close();
-            ps.close();
+            ps.close(); 
             con.close();
         } catch (SQLException e) {
         }
