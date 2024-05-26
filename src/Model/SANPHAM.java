@@ -23,7 +23,7 @@ public class SANPHAM {
     public SANPHAM() {
     }
 
-    public SANPHAM(String maSP, String tenSP, String dvt, Date ngaySX, Date hanSD, float giaBan, float giaNhap, int slSP) {
+    public SANPHAM(String maSP, String tenSP, String dvt, float giaBan, float giaNhap, int slSP) {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.dvt = dvt;

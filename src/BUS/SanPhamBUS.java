@@ -23,6 +23,12 @@ public class SanPhamBUS {
      public int insert(SANPHAM t){
        return spdao.insert(t);
      }
+     public int delete(SANPHAM t){
+         return spdao.delete(t);
+     }
+     public int update(SANPHAM t){
+         return spdao.update(t);
+     }
 }
 
 

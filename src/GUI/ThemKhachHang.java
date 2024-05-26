@@ -4,7 +4,14 @@
  */
 package GUI;
 
+import BUS.KhachHangBUS;
+import Model.KHACHHANG;
+import java.awt.Color;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -41,8 +48,8 @@ public class ThemKhachHang extends javax.swing.JFrame {
         jLabel3date = new javax.swing.JLabel();
         jTextFieldName = new javax.swing.JTextField();
         jTextFieldDate = new javax.swing.JTextField();
-        jTextFieldSex = new javax.swing.JTextField();
         jButton1OK = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,11 +65,26 @@ public class ThemKhachHang extends javax.swing.JFrame {
             }
         });
 
+        jTextFieldDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldDateActionPerformed(evt);
+            }
+        });
+
+        jButton1OK.setBackground(new java.awt.Color(0, 204, 51));
+        jButton1OK.setForeground(new java.awt.Color(255, 255, 255));
         jButton1OK.setText("Hoàn thành");
         jButton1OK.setToolTipText("");
         jButton1OK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1OKActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
             }
         });
 
@@ -72,19 +94,21 @@ public class ThemKhachHang extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1ten, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2sex, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1ten)
+                    .addComponent(jLabel3date, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2sex, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldSex, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1OK)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1OK))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 25, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -96,15 +120,19 @@ public class ThemKhachHang extends javax.swing.JFrame {
                     .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2sex, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldSex, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3date, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1OK)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1OK)
+                        .addGap(26, 26, 26))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2sex, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(118, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -120,8 +148,8 @@ public class ThemKhachHang extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -130,58 +158,57 @@ public class ThemKhachHang extends javax.swing.JFrame {
     private void jTextFieldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNameActionPerformed
-
+    private void highlightField(JTextField field) {
+        field.requestFocus();
+        field.setBackground(Color.YELLOW);
+    }
+    private void rehighlightField(JTextField field) {
+        field.setBackground(Color.white);
+    }
     private void jButton1OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1OKActionPerformed
         // TODO add your handling code here:
         String tenkh = jTextFieldName.getText();
+        String sex = (String)jComboBox1.getSelectedItem();
         String ngaysinh = jTextFieldDate.getText();
-        String sex = jTextFieldSex.getText();
-        /*if(tenkh.isEmpty()||ngaysinh.isEmpty()||sex.isEmpty()){
+         KHACHHANG kh = new KHACHHANG();
+        if(tenkh.isEmpty()||ngaysinh.isEmpty()||sex.isEmpty()){
             JOptionPane.showMessageDialog(null, "Vui lòng nhập thông tin đầy đủ.", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
-            if (tensp.isEmpty()) {
-                highlightField(jTextField1);
-            }else if(!tensp.isEmpty()){
-                rehighlightField(jTextField1);
-                    if (dvt.isEmpty()) {
-                    highlightField(jTextField2);
-                    }else if(!dvt.isEmpty()){
-                    rehighlightField(jTextField2);
-                            if (giaban.isEmpty()) {
-                        highlightField(jTextField4);
-                        }else if(!giaban.isEmpty()){
-                        rehighlightField(jTextField4);
-                                    if (gianhap.isEmpty()) {
-                                    highlightField(jTextField3);
-                                    }else if(!gianhap.isEmpty()){
-                                    rehighlightField(jTextField3);
-                            }
-                        }
-                    }
+            if (tenkh.isEmpty()) {
+                highlightField(jTextFieldName);
+            }else{
+                rehighlightField(jTextFieldName);
+            }
+            if (ngaysinh.isEmpty()) {
+                highlightField(jTextFieldDate);
+            }else{
+                rehighlightField(jTextFieldDate);
             }
         }else{
             try {
-                float dvtcheck=Float.parseFloat(dvt);
-                JOptionPane.showMessageDialog(this, "Đơn Vị tính không hợp lệ. Vui lòng nhập lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                highlightField(jTextField2);
-            } catch (NumberFormatException ex) {
-                rehighlightField(jTextField2);
+                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                 LocalDate date_ngaySinh = LocalDate.parse(ngaysinh, formatter);
+                 kh.setNgaySinh(date_ngaySinh);
+            } catch (DateTimeParseException e) {
+                 JOptionPane.showMessageDialog(null, "Ngày không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                 return;
             }
-            try {
-                float gbcheck=Float.parseFloat(giaban);
-                rehighlightField(jTextField4);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Giá bán không hợp lệ. Vui lòng nhập lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                highlightField(jTextField4);
-            }
-            try {
-                float gncheck=Float.parseFloat(gianhap);
-                rehighlightField(jTextField3);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Giá nhập không hợp lệ. Vui lòng nhập lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                highlightField(jTextField3);
-            }
-        }*/
+           
+            kh.setTenKH(tenkh);
+            kh.setGioiTinh(sex);
+           
+            KhachHangBUS khBUS = new KhachHangBUS();
+            khBUS.insert(kh);
+        }
+        
     }//GEN-LAST:event_jButton1OKActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jTextFieldDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldDateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,12 +247,12 @@ public class ThemKhachHang extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1OK;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1ten;
     private javax.swing.JLabel jLabel2sex;
     private javax.swing.JLabel jLabel3date;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextFieldDate;
     private javax.swing.JTextField jTextFieldName;
-    private javax.swing.JTextField jTextFieldSex;
     // End of variables declaration//GEN-END:variables
 }

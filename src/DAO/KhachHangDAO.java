@@ -7,6 +7,7 @@ import Model.KHACHHANG;
 import java.util.ArrayList;
 import database.JDBC;
 import java.sql.*;
+import java.time.LocalDate;
 /**
  *
  * @author ADMIN
@@ -20,7 +21,7 @@ public class KhachHangDAO implements DAOInterface<KHACHHANG>{
             String sql = "INSERT INTO KHACHHANG (TENKH, GIOITINH, NGAYSINH)"
                         + "VALUES (?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
-          ps.setString(1, t.getTenKH());
+            ps.setString(1, t.getTenKH());
             ps.setString(2, t.getGioiTinh());
             ps.setDate(3, t.getNgaySinh());
             
@@ -69,7 +70,7 @@ public class KhachHangDAO implements DAOInterface<KHACHHANG>{
         ArrayList<KHACHHANG> khachHangList = new ArrayList<>();
         try {
             Connection con = JDBC.getConnection();
-            String sql = "select * from khachhang";
+            String sql = "select * from khachhang order by makh asc";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
@@ -77,8 +78,12 @@ public class KhachHangDAO implements DAOInterface<KHACHHANG>{
                 kh.setMaKH(rs.getString("MAKh"));
                 kh.setTenKH(rs.getString("TENKH"));
                 kh.setGioiTinh(rs.getString("GIOITINH"));
-                kh.setNgaySinh(rs.getDate("NgaySinh"));
-                kh.setTichDiem(rs.getInt("TICHDIEM"));
+                java.sql.Date sqlDate = rs.getDate("ngaysinh");
+                if(sqlDate!= null){
+                LocalDate localDate = sqlDate.toLocalDate();
+                kh.setNgaySinh(localDate);
+                }
+                
                 khachHangList.add(kh);
                
             }
@@ -108,7 +113,9 @@ public class KhachHangDAO implements DAOInterface<KHACHHANG>{
                 khachHang.setMaKH(rs.getString("MAKH"));
                 khachHang.setTenKH(rs.getString("TENKH"));
                 khachHang.setGioiTinh(rs.getString("GIOITINH"));
-                khachHang.setNgaySinh(rs.getDate("NGAYSINH"));
+                java.sql.Date sqlDate = rs.getDate("NGAYSINH");    
+                LocalDate localDate = sqlDate.toLocalDate();
+                khachHang.setNgaySinh(localDate);
                 khachHang.setTichDiem(rs.getInt("TICHDIEM"));
             }
             

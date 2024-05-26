@@ -5,6 +5,8 @@
 package Model;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -52,8 +54,9 @@ public class KHACHHANG {
         this.gioiTinh = gioiTinh;
     }
 
-    public void setNgaySinh(Date ngaySinh) {
-        this.ngaySinh = ngaySinh;
+    public void setNgaySinh(LocalDate ngaySinh) {
+        Date date = Date.valueOf(ngaySinh);
+        this.ngaySinh = date;
     }
 
     public void setTichDiem(int tichDiem) {

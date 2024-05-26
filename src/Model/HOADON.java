@@ -5,6 +5,7 @@
 package Model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -13,19 +14,38 @@ import java.sql.Date;
 public class HOADON {
     private String maHD;
     private String maNV;
-    private Date ngayHD;
+    private LocalDate ngayHD;
     private String maKH;
-    private float tongHoaDon;
 
-    public HOADON(String maHD, String maNV, Date ngayHD, String maKH, float tongHoaDon) {
+
+    private float tonghoadon;
+    public void setMaHD(String maHD) {
+
         this.maHD = maHD;
         this.maNV = maNV;
+
+    public void setNgayHD(LocalDate ngayHD) {
+
         this.ngayHD = ngayHD;
         this.maKH = maKH;
         this.tongHoaDon = tongHoaDon;
     }
 
-    public HOADON() {
+
+    public HOADON(String maHD, String maNV, LocalDate ngayHD, String maKH) {
+        this.maHD = maHD;
+        this.maNV = maNV;
+        this.ngayHD = ngayHD;
+        this.maKH = maKH;
+
+    }
+
+    public float getTonghoadon() {
+        return tonghoadon;
+    }
+
+    public void setTonghoadon(float tonghoadon) {
+        this.tonghoadon = tonghoadon;
     }
 
     public String getMaHD() {
@@ -40,11 +60,10 @@ public class HOADON {
         return maNV;
     }
 
-    public void setMaNV(String maNV) {
-        this.maNV = maNV;
-    }
 
-    public Date getNgayHD() {
+
+    public LocalDate getNgayHD() {
+
         return ngayHD;
     }
 

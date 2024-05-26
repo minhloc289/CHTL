@@ -7,6 +7,7 @@ package GUI;
 import BUS.SanPhamBUS;
 import GUI.ThemSanPham;
 import Model.SANPHAM;
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -49,7 +50,10 @@ public class SanPham extends javax.swing.JPanel {
          
         
     }
-
+    public  void refreshTable(){
+        defaultTableModel.setRowCount(0);
+        setDataTable(sanPhamBUS.selectAll(s));
+    }
 
     
 
@@ -117,6 +121,11 @@ public class SanPham extends javax.swing.JPanel {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/thanh_phan_log/icon/icon/bin.png"))); // NOI18N
         jButton4.setText("Xóa");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         tableSanPham1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -157,7 +166,7 @@ public class SanPham extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(48, 48, 48)
-                      .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(58, 58, 58))
@@ -180,11 +189,8 @@ public class SanPham extends javax.swing.JPanel {
     private void clicktimkiemsanpham(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clicktimkiemsanpham
         // TODO add your handling code here:
       jTextField1.setText("");
-    }//GEN-LAST:event_clicktimkiemsanpham
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-       TableRowSorter<DefaultTableModel> rowSorter;
+      jTextField1.setForeground(Color.black);
+      TableRowSorter<DefaultTableModel> rowSorter;
 
          rowSorter = new TableRowSorter<>(defaultTableModel);
         tableSanPham1.setRowSorter(rowSorter);
@@ -203,6 +209,11 @@ public class SanPham extends javax.swing.JPanel {
             }
         });
 
+    }//GEN-LAST:event_clicktimkiemsanpham
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+       
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
@@ -213,6 +224,12 @@ public class SanPham extends javax.swing.JPanel {
     private void clickthemsanpham(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickthemsanpham
         // TODO add your handling code here:
          ThemSanPham themsanpham = new ThemSanPham();
+         themsanpham.setOnProductAddedListener(new ThemSanPham.OnProductAddedListener() {
+        @Override
+        public void onProductAdded() {
+            refreshTable();
+        }
+    });
           themsanpham.setVisible(true);
     }//GEN-LAST:event_clickthemsanpham
 
@@ -223,21 +240,43 @@ public class SanPham extends javax.swing.JPanel {
            if(row==-1){
             JOptionPane.showMessageDialog(this,"Hãy chọn sản phẩm cần sửa","Thông báo",JOptionPane.ERROR_MESSAGE);
         }else{
-            
+            String maSP= tableSanPham1.getValueAt(row, 0).toString();
             String tenSP = tableSanPham1.getValueAt(row,1).toString();
             String dvt = tableSanPham1.getValueAt(row,2).toString();
             String giaban = tableSanPham1.getValueAt(row,3).toString();
             String  gianhap= tableSanPham1.getValueAt(row,4).toString();
-            SuaSanPham suasanpham = new  SuaSanPham();
+            SuaSanPham suasanpham = new  SuaSanPham(maSP);
             suasanpham.setVisible(true);
             suasanpham.setText(tenSP, dvt, giaban, gianhap);
+            suasanpham.setOnProductAddedListener(new SuaSanPham.OnProductAddedListener() {
+        @Override
+        public void onProductAdded() {
+            refreshTable();
+        }
+    });
             
-          }
+           }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int row = tableSanPham1.getSelectedRow();
+           
+           if(row==-1){
+            JOptionPane.showMessageDialog(this,"Hãy chọn sản phẩm cần xóa","Thông báo",JOptionPane.ERROR_MESSAGE);
+        }else{
+            
+            String maSP= tableSanPham1.getValueAt(row,0).toString();
+            s.setMaSP(maSP);
+            sanPhamBUS.delete(s);
+          }
+           defaultTableModel.setRowCount(0);
+           setDataTable(sanPhamBUS.selectAll(s));
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

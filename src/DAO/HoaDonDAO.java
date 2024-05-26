@@ -8,11 +8,15 @@ package DAO;
  *
  * @author ADMIN
  */
+import GUI.Login;
 import Model.HOADON;
 import Model.SANPHAM;
 import java.util.ArrayList;
 import database.JDBC;
 import java.sql.*;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
+import oracle.jdbc.driver.Representation;
 
 public class HoaDonDAO implements DAOInterface<HOADON> {
     
@@ -22,7 +26,24 @@ public class HoaDonDAO implements DAOInterface<HOADON> {
 
     @Override
     public int insert(HOADON t) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            Connection con = JDBC.getConnection();
+            String sql = "INSERT INTO HOADON (MANV,NGAYHD, MAKH)"
+                        + "VALUES ( ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+       
+            ps.setString(1,t.getMaNV());
+            ps.setDate(2, Date.valueOf(t.getNgayHD()));
+            ps.setString(3, t.getMaKH());
+            
+            int rse = ps.executeUpdate();
+            
+        } catch (SQLException e) {
+            System.err.println("SQL Exception: " + e.getMessage());
+            e.printStackTrace();
+            return 0;
+    }
+        return 1;
     }
 
     @Override
@@ -41,14 +62,16 @@ public class HoaDonDAO implements DAOInterface<HOADON> {
         
         try {
             Connection con = JDBC.getConnection();
-            String sql ="Select * From HOADON";
+            String sql ="Select * From HOADON order by mahd asc";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 HOADON hoadon = new HOADON();
                 hoadon.setMaHD(rs.getString("mahd"));
                 hoadon.setMaNV(rs.getString("manv"));
-                hoadon.setNgayHD(rs.getDate("ngayhd"));
+                java.sql.Date sqlDate = rs.getDate("ngayhd");
+                LocalDate localDate = sqlDate.toLocalDate();
+                hoadon.setNgayHD(localDate);
                 hoadon.setMaKH(rs.getString("makh"));
                 hoadon.setTongHoaDon(rs.getFloat("tonghoadon"));
                 hoadonList.add(hoadon);
@@ -64,7 +87,19 @@ public class HoaDonDAO implements DAOInterface<HOADON> {
 
     @Override
     public HOADON selectbyID(String T) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HOADON hd = new HOADON();
+        try {
+            Connection con = JDBC.getConnection();
+            String sql ="Select MANV From NHANVIEN WHERE SDT = ? ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, T);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            hd.setMaNV(rs.getString("manv"));
+            }
+        } catch (Exception e) {
+        }
+        return hd;
     }
 }
 

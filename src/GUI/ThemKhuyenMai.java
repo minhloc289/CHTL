@@ -183,7 +183,7 @@ public class ThemKhuyenMai extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         KhuyenMaiBUS kmbus = new KhuyenMaiBUS();
@@ -243,15 +243,13 @@ public class ThemKhuyenMai extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(ThemKhuyenMai.this, "Ngày không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
         return;
     }
-        
-        
         km.setCtkm(tenKM);
         km.setMaSP(maSP);
         km.setChietKhau(chietKhauFloat);
+
         }
+ 
         
-        
-       
         int errorCode = kmbus.insert(km);
         if (productAddedListener != null) {
                     productAddedListener.onProductAdded();
