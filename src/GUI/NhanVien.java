@@ -18,6 +18,7 @@ import Model.NHANVIEN;
 
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,13 +26,15 @@ import java.util.ArrayList;
  */
 public class NhanVien extends javax.swing.JPanel {
     NhanVienBUS nvBUS;
+    NHANVIEN nv = new NHANVIEN();
+    public DefaultTableModel defaultTableModel;
     /**
      * Creates new form NhanVien
      */
     public NhanVien() {
         initComponents();
         nvBUS = new NhanVienBUS();
-        DefaultTableModel defaultTableModel = new DefaultTableModel(){
+        defaultTableModel = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row,int column){
                 return false;
@@ -48,16 +51,20 @@ public class NhanVien extends javax.swing.JPanel {
         defaultTableModel.addColumn("Mật khẩu");
         
        
-        
-        NHANVIEN nv = new NHANVIEN();
-        ArrayList<NHANVIEN> nvDao =nvBUS.selectAll(nv);
-        
+        setDataTable(nvBUS.selectAll(nv));
+    }
+    
+    public void setDataTable(ArrayList<NHANVIEN> nvDao) {
         for (NHANVIEN nvien : nvDao){
             defaultTableModel.addRow(new Object[]{ nvien.getMaNV(), nvien.getTenNV(), nvien.getGioiTinh(), nvien.getNgaySinh(), nvien.getDiaChi(), nvien.getSdt(), nvien.getLuong(), nvien.getPassword()
             });
         }
     }
-
+    
+    public void refreshTable(){
+        defaultTableModel.setRowCount(0);
+        setDataTable(nvBUS.selectAll(nv));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,6 +79,7 @@ public class NhanVien extends javax.swing.JPanel {
         jButton4 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableNhanVien1 = new table.TableNhanVien();
+        jButton1 = new javax.swing.JButton();
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/thanh_phan_log/icon/icon/edit.png"))); // NOI18N
         jButton2.setText("Sửa");
@@ -102,6 +110,11 @@ public class NhanVien extends javax.swing.JPanel {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/thanh_phan_log/icon/icon/bin.png"))); // NOI18N
         jButton4.setText("Xóa");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         tableNhanVien1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -116,32 +129,41 @@ public class NhanVien extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(tableNhanVien1);
 
+        jButton1.setText("Tính lương");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(108, 108, 108)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(92, 92, 92)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(217, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(230, 230, 230)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(282, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(36, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addComponent(jButton3))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
@@ -154,27 +176,43 @@ public class NhanVien extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-//        int row = tableSanPham1.getSelectedRow();
-//
-//        if(row==-1){
-//            JOptionPane.showMessageDialog(this,"Hãy chọn sản phẩm cần sửa","Thông báo",JOptionPane.ERROR_MESSAGE);
-//        }else{
-//
-//            String tenSP = tableSanPham1.getValueAt(row,1).toString();
-//            String dvt = tableSanPham1.getValueAt(row,2).toString();
-//            String giaban = tableSanPham1.getValueAt(row,3).toString();
-//            String  gianhap= tableSanPham1.getValueAt(row,4).toString();
-//            SuaSanPham suasanpham = new  SuaSanPham();
-//            suasanpham.setVisible(true);
-//            suasanpham.setText(tenSP, dvt, giaban, gianhap);
-
-//        }
+               int row = tableNhanVien1.getSelectedRow();
+           
+           if(row==-1){
+            JOptionPane.showMessageDialog(this,"Hãy chọn sản phẩm cần sửa","Thông báo",JOptionPane.ERROR_MESSAGE);
+        }else{
+            String maNV = tableNhanVien1.getValueAt(row, 0).toString();
+            String tenNV = tableNhanVien1.getValueAt(row,1).toString();
+            String gioiTinh = tableNhanVien1.getValueAt(row,2).toString();
+            String ngaySinh = tableNhanVien1.getValueAt(row,3).toString();
+            String diaChi = tableNhanVien1.getValueAt(row,4).toString();
+            String sdt= tableNhanVien1.getValueAt(row,5).toString();
+            String luong = tableNhanVien1.getValueAt(row,6).toString();
+            String password = tableNhanVien1.getValueAt(row, 7).toString();
+            SuaNhanVien suanv = new  SuaNhanVien(maNV);
+            suanv.setVisible(true);
+            suanv.setText(tenNV, gioiTinh, ngaySinh, diaChi, sdt, luong, password);
+            
+            suanv.setOnProductAddedListener(new SuaNhanVien.OnProductAddedListener() {
+        @Override
+        public void onProductAdded() {
+            refreshTable();
+        }
+            
+    });
+           }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         // TODO add your handling code here:
         ThemNhanVien themnhanvien = new ThemNhanVien();
         themnhanvien.setVisible(true);
+        themnhanvien.setOnProductAddedListener(new ThemNhanVien.OnProductAddedListener() {
+        @Override
+        public void onProductAdded() {
+            refreshTable();
+        }
+    });
 
     }//GEN-LAST:event_jButton3MouseClicked
 
@@ -186,10 +224,35 @@ public class NhanVien extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int row = tableNhanVien1.getSelectedRow();
+        
+        if (row == -1 ){
+            JOptionPane.showMessageDialog(this, "Hãy chọn nhân viên cần xóa","Thông báo", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            String maNV = tableNhanVien1.getValueAt(row,0).toString();
+            
+            nv.setMaNV(maNV);
+            nvBUS.delete(nv);
+        }
+        defaultTableModel.setRowCount(0);
+        setDataTable(nvBUS.selectAll(nv));
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        TinhLuongNhanVien tlnv = new TinhLuongNhanVien();
+        tlnv.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

@@ -8,6 +8,7 @@ import BUS.KhuyenMaiBUS;
 import BUS.SanPhamBUS;
 import Model.SANPHAM;
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -28,6 +29,15 @@ public class ThemSanPham extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
+    public interface OnProductAddedListener {
+        void onProductAdded();
+}
+
+    private OnProductAddedListener productAddedListener;
+
+    public void setOnProductAddedListener(OnProductAddedListener listener) {
+        this.productAddedListener = listener;
+}
     private void highlightField(JTextField field) {
         field.requestFocus();
         field.setBackground(Color.YELLOW);
@@ -177,7 +187,7 @@ public class ThemSanPham extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         dispose();
@@ -191,55 +201,53 @@ public class ThemSanPham extends javax.swing.JFrame {
         String dvt= (String) jComboBox1.getSelectedItem();
         String gianhap=jTextField3.getText();
         String giaban=jTextField4.getText();
-        
-        
         if(tensp.isEmpty()||dvt.isEmpty()||gianhap.isEmpty()||giaban.isEmpty()){
             JOptionPane.showMessageDialog(null, "Vui lòng nhập thông tin đầy đủ.", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
             if (tensp.isEmpty()) {
                 highlightField(jTextField1);
             }else if(!tensp.isEmpty()){
-                rehighlightField(jTextField1);
-                            if (giaban.isEmpty()) {
-                        highlightField(jTextField4);
+                           rehighlightField(jTextField1);
+                        if (giaban.isEmpty()) {
+                                highlightField(jTextField3);
                         }else if(!giaban.isEmpty()){
-                        rehighlightField(jTextField4);
-                                    if (gianhap.isEmpty()) {
-                                    highlightField(jTextField3);
-                                    }else if(!gianhap.isEmpty()){
-                                    rehighlightField(jTextField3);
+                                     rehighlightField(jTextField3);
+                                if (gianhap.isEmpty()) {
+                                    highlightField(jTextField4);
+                                }else if(!gianhap.isEmpty()){
+                                    rehighlightField(jTextField4);
                             }
                         }
                     }
-        }else{
+        }
+        else{
         float dvtcheck, gbcheck, gncheck;
             
             try {
                 gbcheck=Float.parseFloat(giaban);
                 sp.setGiaBan(gbcheck);
                 rehighlightField(jTextField4);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Giá bán không hợp lệ. Vui lòng nhập lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                highlightField(jTextField4);
-            }
-            try {
+                try {
                 gncheck=Float.parseFloat(gianhap);
                 sp.setGiaNhap(gncheck);
                 rehighlightField(jTextField3);
+                sp.setTenSP(tensp);
+                sp.setDvt(dvt);
+
+                spBUS.insert(sp);
+                    JOptionPane.showMessageDialog(this, "Thêm thành công sản phẩm","Thông báo",JOptionPane.INFORMATION_MESSAGE );
+                     if (productAddedListener != null) {
+                    productAddedListener.onProductAdded();
+                }
+                    dispose();
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Giá nhập không hợp lệ. Vui lòng nhập lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 highlightField(jTextField3);
             }
-         sp.setTenSP(tensp);
-        sp.setDvt(dvt);
-       
-        spBUS.insert(sp);
-        JOptionPane.showMessageDialog(this, "Thêm thành công sản phẩm","Thông báo",JOptionPane.INFORMATION_MESSAGE );
-        dispose();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Giá bán không hợp lệ. Vui lòng nhập lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                highlightField(jTextField4);
+            }
 }
-        
-        
-        
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked

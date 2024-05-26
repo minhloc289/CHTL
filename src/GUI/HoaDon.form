@@ -73,8 +73,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
+
                   <Component id="jScrollPane1" min="-2" pref="862" max="-2" attributes="0"/>
                   <EmptySpace pref="119" max="32767" attributes="0"/>
+
               </Group>
           </Group>
         </DimensionLayout>
@@ -104,7 +106,9 @@
                     <Column editable="false" title="M&#xe3; H&#xf3;a &#x110;&#x1a1;n" type="java.lang.String"/>
                     <Column editable="false" title="M&#xe3; Nh&#xe2;n Vi&#xea;n" type="java.lang.String"/>
                     <Column editable="false" title="M&#xe3; Kh&#xe1;ch H&#xe0;ng" type="java.lang.String"/>
+
                     <Column editable="true" title="Title 5" type="java.lang.Object"/>
+
                     <Column editable="false" title="Ng&#xe0;y H&#xf3;a &#x110;&#x1a1;n" type="java.lang.String"/>
                   </Table>
                 </Property>

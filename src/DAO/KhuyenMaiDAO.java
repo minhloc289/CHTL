@@ -83,12 +83,12 @@ public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
             ps.setDate(4, Date.valueOf(t.getNgayBD()));
             ps.setDate(5,  Date.valueOf(t.getNgayKT()));
             ps.setString(6, t.getMaKM());
-            
-            return ps.executeUpdate();
+            int result = ps.executeUpdate();
+            return result;
         }  catch (SQLException e) {
-            System.err.println("SQL Exception: " + e.getMessage());
             e.printStackTrace();
-            return 0;
+           int errorCode = e.getErrorCode();
+            return errorCode;
         }
     }
 
@@ -98,7 +98,7 @@ public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
         
         try {
             Connection con = JDBC.getConnection();
-            String sql = "Select * from KHUYENMAI where isDeleted = 0";
+            String sql = "Select * from KHUYENMAI where isDeleted = 0 ORDER BY MAKM ASC";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){

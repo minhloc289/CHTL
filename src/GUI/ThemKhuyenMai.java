@@ -105,6 +105,12 @@ public class ThemKhuyenMai extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(68, 68, 68))
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,23 +132,20 @@ public class ThemKhuyenMai extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(37, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(68, 68, 68))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(112, 112, 112))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addGap(54, 54, 54)
                 .addComponent(jLabel1)
-                .addGap(23, 23, 23)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -180,14 +183,48 @@ public class ThemKhuyenMai extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         KhuyenMaiBUS kmbus = new KhuyenMaiBUS();
         String tenKM = jTextField1.getText();
         String maSP = jTextField3.getText();
         String chietKhau = jTextField2.getText();
-      float chietKhauFloat;
+        String ngayBD = jTextField5.getText();
+        String ngayKT = jTextField4.getText();
+        KHUYENMAI km = new KHUYENMAI();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        float chietKhauFloat;
+      
+        if (tenKM.isEmpty() || maSP.isEmpty() || chietKhau.isEmpty() || ngayBD.isEmpty() || ngayKT.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Không được để trống thông tin.", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
+            if (tenKM.isEmpty()) {
+                highlightField(jTextField1);
+            } else if(!tenKM.isEmpty()){
+                           rehighlightField(jTextField1);
+                        if (maSP.isEmpty()) {
+                                highlightField(jTextField3);
+                        } else if(!maSP.isEmpty()){
+                                     rehighlightField(jTextField3);
+                                if (chietKhau.isEmpty()) {
+                                    highlightField(jTextField2);
+                                } else if(!chietKhau.isEmpty()){
+                                    rehighlightField(jTextField2);
+                                    if (ngayBD.isEmpty()){
+                                        highlightField(jTextField5);
+                                    } else if (!ngayBD.isEmpty()){
+                                        rehighlightField(jTextField5);
+                                        if (ngayKT.isEmpty()) {
+                                            highlightField(jTextField4);
+                                        } else if (!ngayKT.isEmpty()){
+                                            rehighlightField(jTextField4);
+                                        }
+                                    }  
+                            }
+                        }
+                    }
+        }
+        else {
         try {
         chietKhauFloat = Float.parseFloat(chietKhau);
            } catch (NumberFormatException e) {
@@ -195,10 +232,7 @@ public class ThemKhuyenMai extends javax.swing.JFrame {
         return;
         };
         
-        String ngayBD = jTextField5.getText();
-        String ngayKT = jTextField4.getText();
-        KHUYENMAI km = new KHUYENMAI();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+       
 
         try {
         LocalDate date1 = LocalDate.parse(ngayBD, formatter);
@@ -209,34 +243,17 @@ public class ThemKhuyenMai extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(ThemKhuyenMai.this, "Ngày không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
         return;
     }
-        
-        
         km.setCtkm(tenKM);
         km.setMaSP(maSP);
         km.setChietKhau(chietKhauFloat);
-        
-        
-        
-        if (tenKM.isEmpty() || maSP.isEmpty() || chietKhau.isEmpty() || ngayBD.isEmpty() || ngayKT.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Không được để trống thông tin.", "Tiêu đề", JOptionPane.INFORMATION_MESSAGE);
-            if(tenKM.isEmpty()){
-            highlightField(jTextField1);
-            }
-            else if (maSP.isEmpty()) {
-               highlightField(jTextField3);
-                }
-            else if (chietKhau.isEmpty()){
-                highlightField(jTextField2);
-            }
-            else if (ngayBD.isEmpty()){
-                highlightField(jTextField5);
-            }
-            else if (ngayKT.isEmpty()){
-                highlightField(jTextField4);
-            }
-            return;
+
         }
+ 
+        
         int errorCode = kmbus.insert(km);
+        if (productAddedListener != null) {
+                    productAddedListener.onProductAdded();
+                }
        if (errorCode == 20001){
             JOptionPane.showMessageDialog(null, "Thông tin khuyến mãi không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
         } else if (errorCode == 20002) {
@@ -245,10 +262,21 @@ public class ThemKhuyenMai extends javax.swing.JFrame {
          
          
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+    public interface OnProductAddedListener {
+        void onProductAdded();
+}
+
+    private OnProductAddedListener productAddedListener;
+
+    public void setOnProductAddedListener(OnProductAddedListener listener) {
+        this.productAddedListener = listener;
+}
     private void highlightField(JTextField field) {
         field.requestFocus();
         field.setBackground(Color.YELLOW);
+    }
+    private void rehighlightField(JTextField field) {
+        field.setBackground(Color.white);
     }
     /**
      * @param args the command line arguments

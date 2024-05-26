@@ -26,4 +26,7 @@ public class KhuyenMaiBUS {
     public int delete(KHUYENMAI t){
         return kmdao.delete(t);
     }
+    public int update(KHUYENMAI t){
+        return kmdao.update(t);
+    }
 }

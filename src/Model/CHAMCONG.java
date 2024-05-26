@@ -5,6 +5,7 @@
 package Model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -13,18 +14,20 @@ import java.sql.Date;
 public class CHAMCONG {
     private String maCC;
     private String maNV;
-    private Date ngayCC;
+    private LocalDate ngayCC;
     private int soGioLam;
 
     public CHAMCONG() {
     }
 
-    public CHAMCONG(String maCC, String maNV, Date ngayCC, int soGioLam) {
+    public CHAMCONG(String maCC, String maNV, LocalDate ngayCC, int soGioLam) {
         this.maCC = maCC;
         this.maNV = maNV;
         this.ngayCC = ngayCC;
         this.soGioLam = soGioLam;
     }
+
+    
 
     public String getMaCC() {
         return maCC;
@@ -34,13 +37,31 @@ public class CHAMCONG {
         return maNV;
     }
 
-    public Date getNgayCC() {
+    public LocalDate getNgayCC() {
         return ngayCC;
     }
 
     public int getSoGioLam() {
         return soGioLam;
     }
+
+    public void setMaCC(String maCC) {
+        this.maCC = maCC;
+    }
+
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
+    }
+
+    public void setNgayCC(LocalDate ngayCC) {
+        this.ngayCC = ngayCC;
+    }
+
+    public void setSoGioLam(int soGioLam) {
+        this.soGioLam = soGioLam;
+    }
+    
+    
 
     @Override
     public String toString() {

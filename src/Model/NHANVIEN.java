@@ -6,6 +6,7 @@ package Model;
 
 
 import java.sql.Date;
+import java.time.LocalDate;
 /**
  *
  * @author quanlong79
@@ -14,7 +15,7 @@ public class NHANVIEN {
     private String maNV;
     private String tenNV;
     private String gioiTinh;
-    private Date ngaySinh;
+    private LocalDate ngaySinh;
     private String diaChi;
     private String sdt;
     private float luong;
@@ -23,7 +24,7 @@ public class NHANVIEN {
     public NHANVIEN() {
     }
 
-    public NHANVIEN(String maNV, String tenNV, String gioiTinh, Date ngaySinh, String diaChi, String sdt, float luong, String password) {
+    public NHANVIEN(String maNV, String tenNV, String gioiTinh, LocalDate ngaySinh, String diaChi, String sdt, float luong, String password) {
         this.maNV = maNV;
         this.tenNV = tenNV;
         this.gioiTinh = gioiTinh;
@@ -46,7 +47,7 @@ public class NHANVIEN {
         return gioiTinh;
     }
 
-    public Date getNgaySinh() {
+    public LocalDate getNgaySinh() {
         return ngaySinh;
     }
 
@@ -78,7 +79,7 @@ public class NHANVIEN {
         this.gioiTinh = gioiTinh;
     }
 
-    public void setNgaySinh(Date ngaySinh) {
+    public void setNgaySinh(LocalDate ngaySinh) {
         this.ngaySinh = ngaySinh;
     }
 

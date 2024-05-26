@@ -18,8 +18,12 @@ public class JDBC {
 	try 
 	{
 		DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+
+
     	String url = "jdbc:oracle:thin:@localhost:1521:Noahs";
 		String username = "c##CSDL_JDBC_DO_AN";
+
+
 		
 
 		String password = "1";

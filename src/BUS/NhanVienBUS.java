@@ -20,4 +20,16 @@ public class NhanVienBUS {
     public ArrayList<NHANVIEN> selectAll(NHANVIEN t){
         return nvdao.selectAll(t);
     }
+    public int insert (NHANVIEN t){
+        return nvdao.insert(t);
+    }
+    public int delete (NHANVIEN t){
+        return nvdao.delete(t);
+    }
+    public int update (NHANVIEN t){
+        return nvdao.update(t);
+    }
+    public NHANVIEN selectbyID (String t){
+        return nvdao.selectbyID(t);
+    }
 }
