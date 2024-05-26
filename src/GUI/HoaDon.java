@@ -50,7 +50,9 @@ public class HoaDon extends javax.swing.JPanel {
     }
     private void setDataTable(ArrayList<HOADON> hoadon) {
         for (HOADON rec : hoadon){
+
             defaultTableModel.addRow(new Object[]{rec.getMaHD(),rec.getMaNV(),rec.getNgayHD(),rec.getMaKH(),rec.getTonghoadon()
+
             });
         }
     }
@@ -95,7 +97,10 @@ public class HoaDon extends javax.swing.JPanel {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
+
+
                 false, false, false, false, true, false
+
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -122,8 +127,10 @@ public class HoaDon extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 862, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(119, Short.MAX_VALUE))
+
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

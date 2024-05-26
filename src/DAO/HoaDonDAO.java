@@ -73,6 +73,7 @@ public class HoaDonDAO implements DAOInterface<HOADON> {
                 LocalDate localDate = sqlDate.toLocalDate();
                 hoadon.setNgayHD(localDate);
                 hoadon.setMaKH(rs.getString("makh"));
+                hoadon.setTongHoaDon(rs.getFloat("tonghoadon"));
                 hoadonList.add(hoadon);
             }
             rs.close();
