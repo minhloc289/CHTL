@@ -20,4 +20,7 @@ public class KhachHangBUS {
     public ArrayList<KHACHHANG> selectAll(KHACHHANG t){
         return khdao.selectAll(t);
     }
+    public int insert(KHACHHANG t){
+        return khdao.insert(t);
+    }
 }

@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author NK
  */
 public class Login extends javax.swing.JFrame {
-
+     public static String LocalsdtNV;
     /**
      * Creates new form Login
      */
@@ -251,6 +251,7 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Không được để trống thông tin đăng nhập", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
         }
         else if (isLoggedIn){
+            LocalsdtNV = user;
             Man_hinh_chinh manhinhchinh= new Man_hinh_chinh();
             manhinhchinh.setVisible(true);
             dispose();

@@ -107,12 +107,19 @@ public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
                 km.setMaSP(rs.getString("MASP"));
                 km.setCtkm(rs.getString("CTKM"));
                 km.setChietKhau(rs.getFloat("CHIETKHAU"));
-               java.sql.Date sqlDate = rs.getDate("NGAYBD");
-               LocalDate localDate = sqlDate.toLocalDate();
-               km.setNgayBD(localDate);        
-               
+               java.sql.Date sqlDate = rs.getDate("NGAYBD");   
                java.sql.Date sqlDate1 = rs.getDate("NGAYKT");
-               LocalDate localDate1 = sqlDate1.toLocalDate();
+               LocalDate localDate ;
+                LocalDate localDate1;
+               if(sqlDate == null && sqlDate1 == null){
+                   localDate = null;
+                   localDate1 = null;
+               }
+               else{
+                   localDate = sqlDate.toLocalDate();
+                    localDate1 = sqlDate1.toLocalDate();   
+               }
+                km.setNgayBD(localDate);     
                km.setNgayKT(localDate1);   
                 
                 

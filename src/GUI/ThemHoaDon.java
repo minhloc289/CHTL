@@ -6,6 +6,9 @@ package GUI;
 
 import BUS.SanPhamBUS;
 import Model.SANPHAM;
+import Model.CTHD;
+import BUS.cthdBUS;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -13,16 +16,21 @@ import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-
+import GUI.NhapKhachHang;
 /**
  *
  * @author NK
  */
 public class ThemHoaDon extends javax.swing.JFrame {
     SANPHAM s = new SANPHAM();
-    SanPhamBUS sanPhamBUS;
+    SanPhamBUS sanPhamBUS= new SanPhamBUS();
     DefaultTableModel defaultTableModel;
     DefaultTableModel defaultTableModel2;
+    public ArrayList <CTHD> c = new ArrayList();
+    cthdBUS cthdBUS = new cthdBUS();
+    int quantity;
+    String maSP;
+    String maHD ;
     /**
      * Creates new form ThemHoaDon
      */
@@ -65,8 +73,8 @@ public class ThemHoaDon extends javax.swing.JFrame {
         defaultTableModel2.addColumn("Số lượng");
         defaultTableModel2.addColumn("Chiết khấu");
         defaultTableModel2.addColumn("Trị giá");
-        
-       
+        maHD = cthdBUS.getNewMaHD();
+       jButton1.requestFocus();
     }
     private void setDataTable(ArrayList<SANPHAM> spDao) {
         for (SANPHAM spSanpham : spDao){
@@ -104,9 +112,9 @@ public class ThemHoaDon extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Tên Sản Phẩm");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField1MouseClicked(evt);
             }
         });
 
@@ -263,7 +271,78 @@ public class ThemHoaDon extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+            int rs= JOptionPane.showConfirmDialog(this, "Xác muốn hủy tạo hóa đơn", "Hủy hóa đơn", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(rs==JOptionPane.YES_OPTION){
+                cthdBUS.delete(maHD);
+                 dispose();
+            }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int countRow = defaultTableModel2.getRowCount();
+        if(countRow<=0){
+           JOptionPane.showMessageDialog(ThemHoaDon.this,"Chưa có sản phẩm được chọn","Thông báo",JOptionPane.ERROR_MESSAGE);
+        }else{
+       int rs= JOptionPane.showConfirmDialog(this, "Xác Nhận Thêm Hóa Đơn", "Thêm Hóa Đơn", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+       if(rs==JOptionPane.YES_OPTION){
+           for (int i = 0; i < c.size(); i++) {
+            cthdBUS.insert(c.get(i));
+            
+       }
+       }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+           
+           int row = tableSanPham1.getSelectedRow();
+           
+           if(row==-1){
+            JOptionPane.showMessageDialog(ThemHoaDon.this,"Hãy chọn sản phẩm cần thêm","Thông báo",JOptionPane.ERROR_MESSAGE);
+        }else{
+            maSP = tableSanPham1.getValueAt(row, 0).toString();
+            String tenSP = tableSanPham1.getValueAt(row,1).toString();
+            String giaBan = tableSanPham1.getValueAt(row,2).toString();
+            String sl =tableSanPham1.getValueAt(row,3).toString();
+            if(sl.isEmpty()){
+                JOptionPane.showMessageDialog(ThemHoaDon.this,"Bạn chưa nhập số lượng ","Thông báo",JOptionPane.ERROR_MESSAGE);
+            }
+            else{
+            try {
+                quantity = Integer.parseInt(sl);
+               
+                
+                
+                try {
+                    ArrayList<Float> list = new ArrayList<>();
+                    list = cthdBUS.getInfCTHD(maSP, NhapKhachHang.makH, quantity);
+                // Chỉ chạy câu lệnh dưới nếu không có lỗi
+                     String makm = "N/A";
+                    if(list.get(0)>0){
+                        makm = cthdBUS.getMakm(maSP);
+                    }
+                    c.add(new CTHD(maHD,maSP,makm,quantity,list.get(1)));
+                    defaultTableModel2.addRow(new Object[]{tenSP, giaBan, list.get(0), makm, list.get(1)});
+                } catch (Exception e) {
+                    // Xử lý lỗi nếu cần thiết, ví dụ như ghi log hoặc hiển thị thông báo lỗi
+                     System.err.println("Lỗi khi gọi getInfCTHD: " + e.getMessage());
+                    // Bạn có thể hiển thị thông báo lỗi cho người dùng nếu cần thiết
+                     JOptionPane.showMessageDialog(null, "Không thể lấy thông tin chi tiết hóa đơn: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Số lượng không hợp lệ. Vui lòng nhập một số nguyên.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+            }
+            
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
         // TODO add your handling code here:
          TableRowSorter<DefaultTableModel> rowSorter;
 
@@ -283,56 +362,7 @@ public class ThemHoaDon extends javax.swing.JFrame {
                 }
             }
         });
-
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        int countRow = defaultTableModel2.getRowCount();
-        if(countRow<=0){
-           JOptionPane.showMessageDialog(ThemHoaDon.this,"Chưa có sản phẩm được chọn","Thông báo",JOptionPane.ERROR_MESSAGE);
-        }else{
-       int rs= JOptionPane.showConfirmDialog(this, "Xác Nhận Thêm Hóa Đơn", "Thêm Hóa Đơn", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-       if(rs==JOptionPane.YES_OPTION){
-            NhapKhachHang NhapKhachHang= new NhapKhachHang();
-            NhapKhachHang.setVisible(true);
-       }
-       
-        }
-       
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-           
-           int row = tableSanPham1.getSelectedRow();
-           
-           if(row==-1){
-            JOptionPane.showMessageDialog(ThemHoaDon.this,"Hãy chọn sản phẩm cần thêm","Thông báo",JOptionPane.ERROR_MESSAGE);
-        }else{
-            
-            String tenSP = tableSanPham1.getValueAt(row,1).toString();
-            String giaBan = tableSanPham1.getValueAt(row,2).toString();
-            String sl =tableSanPham1.getValueAt(row,3).toString();
-            if(sl.isEmpty()){
-                JOptionPane.showMessageDialog(ThemHoaDon.this,"Bạn chưa nhập số lượng ","Thông báo",JOptionPane.ERROR_MESSAGE);
-            }
-            else{
-            try {
-                int quantity = Integer.parseInt(sl);
-                defaultTableModel2.addRow(new Object[]{tenSP,giaBan,sl});
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Số lượng không hợp lệ. Vui lòng nhập một số nguyên.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
-            }
-            
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jTextField1MouseClicked
 
     /**
      * @param args the command line arguments
