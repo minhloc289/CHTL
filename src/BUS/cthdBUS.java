@@ -21,4 +21,20 @@ public class cthdBUS {
     public ArrayList<CTHD_temp> selectAll(CTHD_temp c){
         return cthddao.selectAll(c);
     }
+    public ArrayList<Float> getInfCTHD(String maSp,String maKh,int sl){
+        return cthddao.getInfCTHD(maSp,maKh, sl);
+    }
+    
+   public String getNewMaHD(){
+       return cthddao.getNewMaHD();
+   }
+   public int insert (CTHD c){
+       return cthddao.insert(c);
+   }
+   public int delete(String mahd){
+       return cthddao.delete(mahd);
+   }
+   public String getMakm(String masp){
+       return cthddao.getMakm(masp);
+   }
 }

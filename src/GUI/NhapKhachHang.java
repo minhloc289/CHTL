@@ -4,9 +4,12 @@
  */
 package GUI;
 
+import BUS.HoaDonBUS;
 import BUS.KhachHangBUS;
 import GUI.ThemKhachHang;
+import Model.HOADON;
 import Model.KHACHHANG;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -20,7 +23,9 @@ public class NhapKhachHang extends javax.swing.JFrame {
     KHACHHANG k = new KHACHHANG();
     KhachHangBUS khachhangBUS;
     DefaultTableModel defaultTableModel2;
-
+    public static HOADON hd = new HOADON();
+    public static HoaDonBUS hdBUS = new HoaDonBUS();
+    public static String  makH ;
     /**
      * Creates new form NhapKhachHang
      */
@@ -184,15 +189,26 @@ public class NhapKhachHang extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+       
         int row = tableDSKhachHang1.getSelectedRow();
            
            if(row==-1){
             JOptionPane.showMessageDialog(NhapKhachHang.this,"Hãy chọn khách hàng cần thêm","Thông báo",JOptionPane.ERROR_MESSAGE);
-        }else{
-            String tenSP = tableDSKhachHang1.getValueAt(row,1).toString();
-            String giaBan = tableDSKhachHang1.getValueAt(row,2).toString();
-            String sl =tableDSKhachHang1.getValueAt(row,3).toString();
+            return;
+        }else{  
+                makH =tableDSKhachHang1.getValueAt(row, 0).toString();
+                hd.setMaKH(makH);
+                LocalDate currentDate = LocalDate.now();
+                hd.setNgayHD(currentDate);
+                hd.setMaNV( hdBUS.getManv(Login.LocalsdtNV));
+                JOptionPane.showMessageDialog(null,"Đã thêm khách hàng thành công","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+                hdBUS.insert(hd);
+                ThemHoaDon themhoadon= new ThemHoaDon();
+                themhoadon.setVisible(true);
             }
+           
+        
+           
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
