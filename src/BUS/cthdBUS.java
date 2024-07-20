@@ -24,7 +24,9 @@ public class cthdBUS {
     public ArrayList<Float> getInfCTHD(String maSp,String maKh,int sl){
         return cthddao.getInfCTHD(maSp,maKh, sl);
     }
-    
+    public int update_tongDT(String mahd,float triGia){
+      return cthddao.updateTongHoaDon(mahd, triGia);
+   }
    public String getNewMaHD(){
        return cthddao.getNewMaHD();
    }
@@ -37,4 +39,5 @@ public class cthdBUS {
    public String getMakm(String masp){
        return cthddao.getMakm(masp);
    }
+   
 }

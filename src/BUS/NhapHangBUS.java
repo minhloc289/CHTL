@@ -24,4 +24,7 @@ public class NhapHangBUS {
         return nhdao.insert(t);
     }
     
+    public boolean productExists (String maSP){
+        return nhdao.productExists(maSP);
+    }
 }

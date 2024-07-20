@@ -22,8 +22,28 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
 
     @Override
     public int insert(CHAMCONG t) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    try {
+        Connection con = JDBC.getConnection();
+        String sql = "INSERT INTO CHAMCONG (MANV, NGAYCC, SOGIOLAM) VALUES (?, ?, ?)";
+        PreparedStatement ps = con.prepareStatement(sql);
+  
+        ps.setString(1, t.getMaNV());
+        ps.setDate(2, Date.valueOf(t.getNgayCC()));
+        ps.setInt(3, t.getSoGioLam());
+
+        int result = ps.executeUpdate();
+        
+        ps.close();
+        con.close();
+        
+        return result;
+    } catch (SQLException e) {
+        System.err.println("SQL Exception: " + e.getMessage());
+        e.printStackTrace();
+        return 0; // hoặc mã lỗi khác nếu cần
     }
+}
+
 
     @Override
     public int delete(CHAMCONG t) {

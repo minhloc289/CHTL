@@ -38,11 +38,12 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
             ps.setString(5, t.getSdt());
             ps.setFloat(6, t.getLuong());
             ps.setString(7, t.getPassword());
-            return ps.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("SQL Exception: " + e.getMessage());
-            e.printStackTrace();
-            return 0;
+           int rs= ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Thêm thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return rs;
+        } catch (SQLException e) {    
+        int errorCode = e.getErrorCode();
+        return errorCode;
         }
     }
 
@@ -86,12 +87,12 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
             ps.setFloat(6, t.getLuong());
             ps.setString(7, t.getPassword());
             ps.setString(8, t.getMaNV());
-            JOptionPane.showMessageDialog(null, "Sửa thành công nhân viên","Thông báo",JOptionPane.INFORMATION_MESSAGE );
-            return ps.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("SQL Exception: " + e.getMessage());
-            e.printStackTrace();
-            return 0;
+            int rs= ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Sửa thành công nhân viên", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return rs;
+        } catch (SQLException e) {    
+        int errorCode = e.getErrorCode();
+        return errorCode;
         }
     }
 

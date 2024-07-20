@@ -7,6 +7,9 @@ package GUI;
 
 
 import BUS.NhanVienBUS;
+import GUI.Dialog.ChamCongDialog_add;
+import GUI.Dialog.NhanVienDialog_add;
+import GUI.Dialog.NhanVienDialog_edit;
 import Model.NHANVIEN;
 import com.sun.source.doctree.DocTree;
 import java.util.ArrayList;
@@ -18,7 +21,9 @@ import Model.NHANVIEN;
 
 
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -28,30 +33,40 @@ public class NhanVien extends javax.swing.JPanel {
     NhanVienBUS nvBUS;
     NHANVIEN nv = new NHANVIEN();
     public DefaultTableModel defaultTableModel;
+    public static String getmaNV;
     /**
      * Creates new form NhanVien
      */
     public NhanVien() {
         initComponents();
         nvBUS = new NhanVienBUS();
+        defaultTableModel = new DefaultTableModel();
         defaultTableModel = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row,int column){
                 return false;
             }
         };
+        String headerString[] = new String[]{"Mã nhân viên", "Tên nhân viên", "Giới tính", "Ngày sinh", "Địa chỉ","Số điện thoại","Lương","Mật khẩu"};
+        defaultTableModel.setColumnIdentifiers(headerString);
         tableNhanVien1.setModel(defaultTableModel);
-        defaultTableModel.addColumn("Mã nhân viên");
-        defaultTableModel.addColumn("Tên nhân viên");
-        defaultTableModel.addColumn("Giới tính");
-        defaultTableModel.addColumn("Ngày sinh");
-        defaultTableModel.addColumn("Địa chỉ");
-        defaultTableModel.addColumn("Số điện thoại");
-        defaultTableModel.addColumn("Lương");
-        defaultTableModel.addColumn("Mật khẩu");
-        
-       
         setDataTable(nvBUS.selectAll(nv));
+        
+        tableNhanVien1.setFocusable(false);
+        jScrollPane1.setViewportView(tableNhanVien1);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+    
+        tableNhanVien1.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tableNhanVien1.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tableNhanVien1.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tableNhanVien1.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        tableNhanVien1.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);  
+        tableNhanVien1.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);  
+        tableNhanVien1.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);  
+        tableNhanVien1.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);  
+        tableNhanVien1.setAutoCreateRowSorter(true);
+        
     }
     
     public void setDataTable(ArrayList<NHANVIEN> nvDao) {
@@ -74,47 +89,19 @@ public class NhanVien extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tableNhanVien1 = new table.TableNhanVien();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableNhanVien1 = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/thanh_phan_log/icon/icon/edit.png"))); // NOI18N
-        jButton2.setText("Sửa");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
-            }
-        });
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        setLayout(new java.awt.BorderLayout());
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/thanh_phan_log/icon/icon/plus (2).png"))); // NOI18N
-        jButton3.setText("Thêm");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
-                jButton3clickthemsanpham(evt);
-            }
-        });
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/thanh_phan_log/icon/icon/bin.png"))); // NOI18N
-        jButton4.setText("Xóa");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
         tableNhanVien1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,8 +114,14 @@ public class NhanVien extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(tableNhanVien1);
+        jScrollPane1.setViewportView(tableNhanVien1);
 
+        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1000, 80));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/calculator-tool.png"))); // NOI18N
         jButton1.setText("Tính lương");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,50 +129,115 @@ public class NhanVien extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(108, 108, 108)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 92, 92)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(217, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/plus.png"))); // NOI18N
+        jLabel1.setText("Thêm");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel1.setPreferredSize(new java.awt.Dimension(70, 70));
+        jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/edit.png"))); // NOI18N
+        jLabel2.setText("Sửa");
+        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel2.setPreferredSize(new java.awt.Dimension(70, 70));
+        jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete.png"))); // NOI18N
+        jLabel3.setText("Xóa");
+        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel3.setPreferredSize(new java.awt.Dimension(70, 70));
+        jLabel3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/time.png"))); // NOI18N
+        jButton2.setText("Chấm công");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_START);
+
+        add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2MouseClicked
+        TinhLuongNhanVien tlnv = new TinhLuongNhanVien();
+        tlnv.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-               int row = tableNhanVien1.getSelectedRow();
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        NhanVienDialog_add a = new NhanVienDialog_add();
+        a.setVisible(true);
+        a.setOnProductAddedListener(new NhanVienDialog_add.OnProductAddedListener() {
+            @Override
+            public void onProductAdded() {
+                refreshTable();
+            }
+        });
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        int row = tableNhanVien1.getSelectedRow();
            
            if(row==-1){
-            JOptionPane.showMessageDialog(this,"Hãy chọn sản phẩm cần sửa","Thông báo",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Hãy chọn nhân viên cần sửa","Thông báo",JOptionPane.ERROR_MESSAGE);
         }else{
             String maNV = tableNhanVien1.getValueAt(row, 0).toString();
             String tenNV = tableNhanVien1.getValueAt(row,1).toString();
@@ -189,74 +247,63 @@ public class NhanVien extends javax.swing.JPanel {
             String sdt= tableNhanVien1.getValueAt(row,5).toString();
             String luong = tableNhanVien1.getValueAt(row,6).toString();
             String password = tableNhanVien1.getValueAt(row, 7).toString();
-            SuaNhanVien suanv = new  SuaNhanVien(maNV);
-            suanv.setVisible(true);
-            suanv.setText(tenNV, gioiTinh, ngaySinh, diaChi, sdt, luong, password);
+            NhanVienDialog_edit b = new  NhanVienDialog_edit(maNV);
+            b.setVisible(true);
+            b.setText(tenNV, gioiTinh, ngaySinh, diaChi, sdt, luong, password);
             
-            suanv.setOnProductAddedListener(new SuaNhanVien.OnProductAddedListener() {
-        @Override
-        public void onProductAdded() {
-            refreshTable();
+            b.setOnProductAddedListener(new NhanVienDialog_edit.OnProductAddedListener() {
+                @Override
+                public void onProductAdded() {
+                    refreshTable();
+                }
+
+            });
         }
-            
-    });
-           }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jLabel2MouseClicked
 
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
-        ThemNhanVien themnhanvien = new ThemNhanVien();
-        themnhanvien.setVisible(true);
-        themnhanvien.setOnProductAddedListener(new ThemNhanVien.OnProductAddedListener() {
-        @Override
-        public void onProductAdded() {
-            refreshTable();
-        }
-    });
-
-    }//GEN-LAST:event_jButton3MouseClicked
-
-    private void jButton3clickthemsanpham(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3clickthemsanpham
-        // TODO add your handling code here:
-//        ThemSanPham themsanpham = new ThemSanPham();
-//        themsanpham.setVisible(true);
-    }//GEN-LAST:event_jButton3clickthemsanpham
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         int row = tableNhanVien1.getSelectedRow();
         
         if (row == -1 ){
             JOptionPane.showMessageDialog(this, "Hãy chọn nhân viên cần xóa","Thông báo", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            String maNV = tableNhanVien1.getValueAt(row,0).toString();
+            int rs= JOptionPane.showConfirmDialog(this, "Xác nhận xóa nhân viên", "Xóa nhân viên", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(rs==JOptionPane.YES_OPTION){
+           String maNV = tableNhanVien1.getValueAt(row,0).toString();
             
             nv.setMaNV(maNV);
             nvBUS.delete(nv);
+         }
+            
         }
         defaultTableModel.setRowCount(0);
         setDataTable(nvBUS.selectAll(nv));
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jLabel3MouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        TinhLuongNhanVien tlnv = new TinhLuongNhanVien();
-        tlnv.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int row = tableNhanVien1.getSelectedRow();
+         if (row == -1 ){
+            JOptionPane.showMessageDialog(this, "Hãy chọn nhân viên chấm công","Thông báo", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+          getmaNV = tableNhanVien1.getValueAt(row,0).toString();
+             ChamCongDialog_add b = new ChamCongDialog_add();
+             b.setVisible(true);
+         }
+            
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JScrollPane jScrollPane2;
-    private table.TableNhanVien tableNhanVien1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableNhanVien1;
     // End of variables declaration//GEN-END:variables
 }

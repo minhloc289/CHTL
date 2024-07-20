@@ -5,11 +5,15 @@
 package GUI;
 
 import BUS.NhapHangBUS;
+import GUI.Dialog.KhoHangDialog_add;
 import Model.NHAPHANG;
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -27,20 +31,30 @@ public class KhoHang extends javax.swing.JPanel {
     public KhoHang() {
         initComponents();
         nhBUS = new NhapHangBUS();
+
+        defaultTableModel = new DefaultTableModel();
         defaultTableModel = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row,int column){
                 return false;
             }
         };
+        String headerString[] = new String[]{"Mã nhập hàng", "Mã sản phẩm", "Ngày nhập", "Số lượng nhập", "Nhà cung cấp"};
+        defaultTableModel.setColumnIdentifiers(headerString);
         tableNhapHang1.setModel(defaultTableModel);
-        defaultTableModel.addColumn("Mã nhập hàng");
-        defaultTableModel.addColumn("Mã sản phẩm");
-        defaultTableModel.addColumn("Ngày nhập");
-        defaultTableModel.addColumn("Số lượng nhập");
-        defaultTableModel.addColumn("Nhà cung cấp");
-        
         setDataTable(nhBUS.selectAll(nh));
+        
+        tableNhapHang1.setFocusable(false);
+        jScrollPane2.setViewportView(tableNhapHang1);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+    
+        tableNhapHang1.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tableNhapHang1.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tableNhapHang1.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tableNhapHang1.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        tableNhapHang1.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);  
+        tableNhapHang1.setAutoCreateRowSorter(true);
     }
 
     public void setDataTable(ArrayList<NHAPHANG> nhDao) {
@@ -62,82 +76,92 @@ public class KhoHang extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableNhapHang1 = new table.TableNhapHang();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableNhapHang1 = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+
+        setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
         tableNhapHang1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tableNhapHang1);
+        jScrollPane2.setViewportView(tableNhapHang1);
 
+        jPanel1.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1000, 80));
+
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
+        jTextField1.setText("Nhập thông tin tìm kiếm");
+        jTextField1.setPreferredSize(new java.awt.Dimension(350, 40));
         jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTextField1MouseClicked(evt);
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/thanh_phan_log/icon/icon/plus (2).png"))); // NOI18N
-        jButton1.setText("Thêm");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/plus.png"))); // NOI18N
+        jLabel1.setText("Thêm");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel1.setPreferredSize(new java.awt.Dimension(70, 70));
+        jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 508, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 889, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(142, 142, 142)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
-                .addGap(23, 23, 23))
-        );
-    }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        ThemKhoHang themKhoHang = new ThemKhoHang();
-        themKhoHang.setVisible(true);
-        themKhoHang.setOnProductAddedListener(new ThemKhoHang.OnProductAddedListener() {
-        @Override
-        public void onProductAdded() {
-            refreshTable();
-        }
-    });
-    }//GEN-LAST:event_jButton1ActionPerformed
+        add(jPanel2, java.awt.BorderLayout.PAGE_START);
+    }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
         // TODO add your handling code here:
-        TableRowSorter<DefaultTableModel> rowSorter;
+        jTextField1.setText("");
+        jTextField1.setForeground(Color.black);
+          TableRowSorter<DefaultTableModel> rowSorter;
 
          rowSorter = new TableRowSorter<>(defaultTableModel);
         tableNhapHang1.setRowSorter(rowSorter);
@@ -157,11 +181,24 @@ public class KhoHang extends javax.swing.JPanel {
         });
     }//GEN-LAST:event_jTextField1MouseClicked
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        KhoHangDialog_add themKhoHang = new KhoHangDialog_add();
+        themKhoHang.setVisible(true);
+        themKhoHang.setOnProductAddedListener(new KhoHangDialog_add.OnProductAddedListener() {
+            @Override
+            public void onProductAdded() {
+                refreshTable();
+            }
+        });
+    }//GEN-LAST:event_jLabel1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
-    private table.TableNhapHang tableNhapHang1;
+    private javax.swing.JTable tableNhapHang1;
     // End of variables declaration//GEN-END:variables
 }

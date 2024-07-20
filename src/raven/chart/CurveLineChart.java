@@ -183,6 +183,8 @@ public class CurveLineChart extends JComponent {
     }
 
     private void draw(Graphics2D g2, Rectangle2D rec, int index, double maxValue) {
+        String yAxisUnit = "USD/DVT";
+        g2.drawString(yAxisUnit,  20,  20);
         SplinePoint points[];
         if (lastPoint == null || !animatorChange.isRunning()) {
             points = toPoint(rec, index, maxValue);
@@ -235,6 +237,7 @@ public class CurveLineChart extends JComponent {
     }
 
     private void drawLabel(Graphics2D g2, SplinePoint s) {
+        
         g2.setStroke(new BasicStroke(1f));
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaLable * 0.3f));
         g2.fill(new Ellipse2D.Double(s.getX() - 13, s.getY() - 13, 26, 26));
@@ -335,15 +338,6 @@ public class CurveLineChart extends JComponent {
         }
     }
 
-    public void addData(ModelChart data) {
-        model.add(data);
-        blankPlotChart.setLabelCount(model.size());
-        double max = data.getMaxValues();
-        if (max > blankPlotChart.getMaxValues()) {
-            blankPlotChart.setMaxValues(max);
-        }
-    }
-
     public void clear() {
         animate = 0;
         blankPlotChart.setLabelCount(0);
@@ -371,24 +365,44 @@ public class CurveLineChart extends JComponent {
             animator.start();
         }
     }
-
-    private void startChange(int index) {
-        if (this.index != index) {
-            if (animatorChange.isRunning()) {
-                animatorChange.stop();
-            }
-            lastPoint = copyPoint(current);
-            animateChange = 0;
-            this.index = index;
-            animatorChange.removeTarget(timingColor1);
-            animatorChange.removeTarget(timingColor2);
-            timingColor1 = new PropertySetter(this, "color1", color1, legends.get(index).getColor1());
-            timingColor2 = new PropertySetter(this, "color2", color2, legends.get(index).getColor2());
-            animatorChange.addTarget(timingColor1);
-            animatorChange.addTarget(timingColor2);
-            animatorChange.start();
+    private void updateMaxValues() {
+    double max = 0;
+    for (ModelChart chart : model) {
+        double chartMax = chart.getMaxValues();
+        if (chartMax > max) {
+            max = chartMax;
         }
     }
+    blankPlotChart.setMaxValues(max);
+}
+
+    private void startChange(int index) {
+    if (this.index != index) {
+        if (animatorChange.isRunning()) {
+            animatorChange.stop();
+        }
+        lastPoint = copyPoint(current);
+        animateChange = 0;
+        this.index = index;
+        animatorChange.removeTarget(timingColor1);
+        animatorChange.removeTarget(timingColor2);
+        timingColor1 = new PropertySetter(this, "color1", color1, legends.get(index).getColor1());
+        timingColor2 = new PropertySetter(this, "color2", color2, legends.get(index).getColor2());
+        animatorChange.addTarget(timingColor1);
+        animatorChange.addTarget(timingColor2);
+        animatorChange.start();
+        
+        // Cập nhật maxValues khi đổi legend
+        updateMaxValues();
+    }
+}
+
+public void addData(ModelChart data) {
+    model.add(data);
+    blankPlotChart.setLabelCount(model.size());
+    updateMaxValues(); // Cập nhật maxValues khi thêm dữ liệu mới
+}
+
 
     public void resetAnimation() {
         animate = 0;

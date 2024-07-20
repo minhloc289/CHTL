@@ -170,21 +170,21 @@ public class Columnchart extends JComponent {
     }
 
     private void draw(Graphics2D g2, Rectangle2D rec, int index, double maxValue) {
+    String yAxisUnit = "USD";
+    g2.drawString(yAxisUnit,  20,  20);
     double barWidth = 30;
     int numberMonth = model.get(index).getValues().length;
     int numberOfBars = model.size();
     double totalWidth = 627 - 15;
     double spacing = totalWidth / model.size();
-    for (int j = 0; j < numberMonth; j++) {
         for (int i = 0; i < numberOfBars; i++) {
-            double x = spacing + i * (spacing + 40);
+            double x = spacing + i * (spacing + 15)+10;
             double y = rec.getY() + rec.getHeight() - (model.get(i).getValues()[index] / maxValue) * rec.getHeight();
             double height = (model.get(i).getValues()[index] / maxValue) * rec.getHeight();
             g2.setPaint(new GradientPaint((int) x, 0, color1, (int) (x + barWidth), 0, color2));
             g2.fill(new Rectangle2D.Double(x, y, barWidth, height));
         }
-    }
-    
+
 }
     private void createPanelLegend() {
         panelLegend = new JPanel();

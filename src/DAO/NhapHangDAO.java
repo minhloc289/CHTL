@@ -89,5 +89,30 @@ public class NhapHangDAO implements DAOInterface<NHAPHANG> {
     public NHAPHANG selectbyID(String T) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+     public boolean productExists(String maSP) {
+        boolean exists = false;
+        // Assuming you have a database connection method `getConnection`
+        Connection conn = JDBC.getConnection();
+        String query = "SELECT COUNT(*) FROM SANPHAM WHERE MASP = ? AND ISDELETED =0";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, maSP);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    exists = rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Make sure to close the connection
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return exists;
+    }
 }
 

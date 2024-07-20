@@ -17,6 +17,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import raven.chart.ModelChart;
 
 
@@ -44,14 +45,16 @@ public class ThongKe extends javax.swing.JPanel {
  public void loaddatacbb(){
         try{
             Connection con = JDBC.getConnection();
-            String query ="SELECT DISTINCT TENSP FROM SANPHAM";
+            String query ="SELECT DISTINCT TENSP FROM SANPHAM WHERE ISDELETED =0";
             PreparedStatement statement = con.prepareStatement(query);
             ResultSet resultSet=statement.executeQuery();
             ArrayList<String> dataList = new ArrayList<>();
 
             while (resultSet.next()) {
                 String data = resultSet.getString("TENSP");
+                if(!data.equals("No Specific Product")){
                 dataList.add(data);
+                }
             }
             for (String s: dataList){
                 jComboBox1.addItem(s);
@@ -87,13 +90,17 @@ public class ThongKe extends javax.swing.JPanel {
             stat.close();
             
             int listSize = list.size();
-            curveLineChart1.clear(); // Xóa dữ liệu trên biểu đồ
+            if(listSize < 2){
+                JOptionPane.showMessageDialog(null, "Không đủ dữ liệu để vẽ biểu đồ");
+            }else{
+                curveLineChart1.clear(); // Xóa dữ liệu trên biểu đồ
                 for(int i = 0; i <listSize; i++){
                     ModelThongKe d = list.get(i);
                     curveLineChart1.addData(new ModelChart(d.getMonth(), new double[]{d.getAmount(), d.getCost()}));
                 }
 
             curveLineChart1.start();
+            }
         } catch (Exception e) {
             System.err.println("SQL Exception: " + e.getMessage());
             e.printStackTrace();

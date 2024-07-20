@@ -23,4 +23,7 @@ public class ChamCongBUS {
     public CHAMCONG selectbyID (String t){
         return ccdao.selectbyID(t);
     }
+    public int insert(CHAMCONG t){
+       return ccdao.insert(t);
+    }
 }

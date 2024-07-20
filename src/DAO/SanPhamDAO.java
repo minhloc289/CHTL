@@ -12,6 +12,7 @@ import Model.SANPHAM;
 import java.util.ArrayList;
 import database.JDBC;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 public class SanPhamDAO implements DAOInterface<SANPHAM> {
     
@@ -33,12 +34,13 @@ public class SanPhamDAO implements DAOInterface<SANPHAM> {
             ps.setDouble(3, t.getGiaBan());
             ps.setDouble(4, t.getGiaNhap());
             
-            return ps.executeUpdate();
-            
-        } catch (SQLException e) {
-            System.err.println("SQL Exception: " + e.getMessage());
-            e.printStackTrace();
-            return 0;
+            int rs= ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Thêm thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+            return rs;
+        } catch (SQLException e) {    
+        int errorCode = e.getErrorCode();
+        return errorCode;
     }
     }
 
@@ -73,11 +75,13 @@ public class SanPhamDAO implements DAOInterface<SANPHAM> {
             ps.setFloat(3, t.getGiaBan());
             ps.setFloat(4, t.getGiaNhap());
             ps.setString(5, t.getMaSP());
-            return ps.executeUpdate();
-        }  catch (SQLException e) {
-            System.err.println("SQL Exception: " + e.getMessage());
-            e.printStackTrace();
-            return 0;
+
+            int rs= ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Thêm thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return rs;
+        } catch (SQLException e) {    
+        int errorCode = e.getErrorCode();
+        return errorCode;
         }
     }
 

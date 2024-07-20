@@ -5,14 +5,17 @@
 package GUI;
 
 import BUS.SanPhamBUS;
-import GUI.ThemSanPham;
+import GUI.Dialog.SanPhamDialog_add;
+import GUI.Dialog.SanPhamDialog_edit;
 import Model.SANPHAM;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -30,25 +33,32 @@ public class SanPham extends javax.swing.JPanel {
      */
     public SanPham() {
         initComponents();
-       tableSanPham1.fixTable(jScrollPane1);
-       sanPhamBUS = new SanPhamBUS();
+        sanPhamBUS = new SanPhamBUS();
+//        
+        defaultTableModel = new DefaultTableModel();
         defaultTableModel = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row,int column){
                 return false;
             }
         };
+        String headerString[] = new String[]{"Mã sản phầm", "Tên sản phẩm", "Đơn vị tính", "Giá bán", "Giá nhập", "Số lượng tồn"};
+        defaultTableModel.setColumnIdentifiers(headerString);
         tableSanPham1.setModel(defaultTableModel);
-        defaultTableModel.addColumn("Mã sản phầm");
-        defaultTableModel.addColumn("Tên sản phẩm");
-        defaultTableModel.addColumn("Đơn vị tính");
-        defaultTableModel.addColumn("Giá bán");
-        defaultTableModel.addColumn("Giá nhập");
-        defaultTableModel.addColumn("Số lượng tồn");
+        setDataTable(sanPhamBUS.selectAll(s));
         
-         setDataTable(sanPhamBUS.selectAll(s));
-         
-        
+        tableSanPham1.setFocusable(false);
+        scrollSanPham1.setViewportView(tableSanPham1);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+    
+        tableSanPham1.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tableSanPham1.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tableSanPham1.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tableSanPham1.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        tableSanPham1.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);  
+        tableSanPham1.getColumnModel().getColumn(5).setCellRenderer(centerRenderer); 
+        tableSanPham1.setAutoCreateRowSorter(true);
     }
     public  void refreshTable(){
         defaultTableModel.setRowCount(0);
@@ -59,6 +69,7 @@ public class SanPham extends javax.swing.JPanel {
 
         private void setDataTable(ArrayList<SANPHAM> spDao) {
         for (SANPHAM spSanpham : spDao){
+            if(spSanpham.getMaSP().equals("N/A")) continue;
             defaultTableModel.addRow(new Object[]{spSanpham.getMaSP(),spSanpham.getTenSP(),spSanpham.getDvt(),spSanpham.getGiaBan(),
             spSanpham.getGiaNhap(),spSanpham.getSlSP()
             });
@@ -73,59 +84,18 @@ public class SanPham extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableSanPham2 = new table.TableSanPham();
+        jPanel1 = new javax.swing.JPanel();
+        scrollSanPham1 = new javax.swing.JScrollPane();
+        tableSanPham1 = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tableSanPham1 = new table.TableSanPham();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
-        jScrollPane1.setViewportView(tableSanPham2);
+        setLayout(new java.awt.BorderLayout());
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
-        jTextField1.setText("Nhập thông tin sản phẩm tìm kiếm");
-        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                clicktimkiemsanpham(evt);
-            }
-        });
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/thanh_phan_log/icon/icon/edit.png"))); // NOI18N
-        jButton2.setText("Sửa");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
-            }
-        });
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/thanh_phan_log/icon/icon/plus (2).png"))); // NOI18N
-        jButton3.setText("Thêm");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
-                clickthemsanpham(evt);
-            }
-        });
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/thanh_phan_log/icon/icon/bin.png"))); // NOI18N
-        jButton4.setText("Xóa");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
         tableSanPham1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -138,52 +108,97 @@ public class SanPham extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(tableSanPham1);
+        scrollSanPham1.setViewportView(tableSanPham1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel1.add(scrollSanPham1, java.awt.BorderLayout.CENTER);
+
+        add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1000, 80));
+
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextField1.setText("Nhập thông tin sản phẩm tìm kiếm");
+        jTextField1.setPreferredSize(new java.awt.Dimension(350, 40));
+        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clicktimkiemsanpham(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/plus.png"))); // NOI18N
+        jLabel1.setText("Thêm");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel1.setPreferredSize(new java.awt.Dimension(70, 70));
+        jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete.png"))); // NOI18N
+        jLabel4.setText("Xóa");
+        jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel4.setPreferredSize(new java.awt.Dimension(70, 70));
+        jLabel4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/edit.png"))); // NOI18N
+        jLabel5.setText("Sửa");
+        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel5.setPreferredSize(new java.awt.Dimension(70, 70));
+        jLabel5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 340, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(112, 112, 112)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 901, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(58, 58, 58))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                        .addGap(57, 57, 57))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-        );
+
+        add(jPanel2, java.awt.BorderLayout.NORTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void clicktimkiemsanpham(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clicktimkiemsanpham
@@ -211,82 +226,77 @@ public class SanPham extends javax.swing.JPanel {
 
     }//GEN-LAST:event_clicktimkiemsanpham
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-       
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+//        ThemSanPham themsanpham = new ThemSanPham();
+//        themsanpham.setOnProductAddedListener(new ThemSanPham.OnProductAddedListener() {
+//        @Override
+//            public void onProductAdded() {
+//                refreshTable();
+//            }
+//        });
+//        themsanpham.setVisible(true);
+          SanPhamDialog_add b = new SanPhamDialog_add();
+          b.setOnProductAddedListener(new SanPhamDialog_add.OnProductAddedListener() {
+            @Override
+                public void onProductAdded() {
+                    refreshTable();
+                }
+            });
+          b.setVisible(true);
+    }//GEN-LAST:event_jLabel1MouseClicked
 
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
-       
-    }//GEN-LAST:event_jButton3MouseClicked
-
-    private void clickthemsanpham(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickthemsanpham
-        // TODO add your handling code here:
-         ThemSanPham themsanpham = new ThemSanPham();
-         themsanpham.setOnProductAddedListener(new ThemSanPham.OnProductAddedListener() {
-        @Override
-        public void onProductAdded() {
-            refreshTable();
-        }
-    });
-          themsanpham.setVisible(true);
-    }//GEN-LAST:event_clickthemsanpham
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         int row = tableSanPham1.getSelectedRow();
            
            if(row==-1){
             JOptionPane.showMessageDialog(this,"Hãy chọn sản phẩm cần sửa","Thông báo",JOptionPane.ERROR_MESSAGE);
         }else{
+               
             String maSP= tableSanPham1.getValueAt(row, 0).toString();
             String tenSP = tableSanPham1.getValueAt(row,1).toString();
             String dvt = tableSanPham1.getValueAt(row,2).toString();
             String giaban = tableSanPham1.getValueAt(row,3).toString();
             String  gianhap= tableSanPham1.getValueAt(row,4).toString();
-            SuaSanPham suasanpham = new  SuaSanPham(maSP);
-            suasanpham.setVisible(true);
-            suasanpham.setText(tenSP, dvt, giaban, gianhap);
-            suasanpham.setOnProductAddedListener(new SuaSanPham.OnProductAddedListener() {
-        @Override
-        public void onProductAdded() {
-            refreshTable();
-        }
-    });
+            SanPhamDialog_edit c = new  SanPhamDialog_edit(maSP);
+            c.setVisible(true);
+            c.setText(tenSP, dvt, giaban, gianhap);
+            c.setOnProductAddedListener(new SanPhamDialog_edit.OnProductAddedListener() {
+                @Override
+                public void onProductAdded() {
+                    refreshTable();
+                }
+            });
             
-           }
-    }//GEN-LAST:event_jButton2ActionPerformed
+        }
+    }//GEN-LAST:event_jLabel5MouseClicked
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2MouseClicked
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         int row = tableSanPham1.getSelectedRow();
            
            if(row==-1){
             JOptionPane.showMessageDialog(this,"Hãy chọn sản phẩm cần xóa","Thông báo",JOptionPane.ERROR_MESSAGE);
         }else{
+            int rs= JOptionPane.showConfirmDialog(this, "Xác nhận xóa sản phẩm", "Xóa sản phẩm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(rs==JOptionPane.YES_OPTION){
+                String maSP= tableSanPham1.getValueAt(row,0).toString();
+                s.setMaSP(maSP);
+                sanPhamBUS.delete(s);
+            }
             
-            String maSP= tableSanPham1.getValueAt(row,0).toString();
-            s.setMaSP(maSP);
-            sanPhamBUS.delete(s);
           }
            defaultTableModel.setRowCount(0);
            setDataTable(sanPhamBUS.selectAll(s));
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jLabel4MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
-    private table.TableSanPham tableSanPham1;
-    private table.TableSanPham tableSanPham2;
+    private javax.swing.JScrollPane scrollSanPham1;
+    private javax.swing.JTable tableSanPham1;
     // End of variables declaration//GEN-END:variables
 }

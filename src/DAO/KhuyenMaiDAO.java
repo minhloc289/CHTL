@@ -8,7 +8,7 @@ package DAO;
  *
  * @author ADMIN
  */
-import GUI.ThemKhuyenMai;
+
 import Model.KHUYENMAI;
 import java.util.ArrayList;
 import database.JDBC;
@@ -41,10 +41,9 @@ public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
             JOptionPane.showMessageDialog(null, "Thêm thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         return result;
         
-    } catch (SQLException e) {     
+    } catch (SQLException e) {    
         int errorCode = e.getErrorCode();
-        
-            return errorCode;
+        return errorCode;
     }
     }
 
@@ -84,12 +83,12 @@ public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
             ps.setDate(5,  Date.valueOf(t.getNgayKT()));
             ps.setString(6, t.getMaKM());
             int result = ps.executeUpdate();
+           JOptionPane.showMessageDialog(null, "Sửa thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             return result;
-        }  catch (SQLException e) {
-            e.printStackTrace();
-           int errorCode = e.getErrorCode();
-            return errorCode;
-        }
+        } catch (SQLException e) {    
+        int errorCode = e.getErrorCode();
+        return errorCode;
+    }
     }
 
     @Override

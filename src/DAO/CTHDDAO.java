@@ -167,6 +167,19 @@ public class CTHDDAO  {
         }
           return maKM;  
     }
-
+    public int updateTongHoaDon(String maHD,float triGia){
+        try {
+            Connection con = JDBC.getConnection();
+            String sql = "{call UPDATE_TONG_HOA_DON(?, ?)}";
+            CallableStatement stmt = con.prepareCall(sql);
+                stmt.setString(1, maHD);
+                stmt.setFloat(2, triGia);
+                stmt.execute();
+                System.out.println("Tổng trị giá của hóa đơn " + maHD + " đã được cập nhật thành công.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+       return 1;
+    }
 }         
 
