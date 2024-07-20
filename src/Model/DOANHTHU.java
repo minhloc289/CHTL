@@ -5,40 +5,40 @@
 package Model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
  * @author ADMIN
  */
 public class DOANHTHU {
-    private String maHD;
-    private Date ngayLap;
-    private float tongDoanhThu;
-
-    public DOANHTHU() {
+    
+    private LocalDate ngayLap;
+    private float tongDoanhThu; 
+    
+    public DOANHTHU(){
+        
     }
-
-    public DOANHTHU(String maHD, Date ngayLap, float tongDoanhThu) {
-        this.maHD = maHD;
+    public DOANHTHU(LocalDate ngayLap, float tongDoanhThu) {
         this.ngayLap = ngayLap;
         this.tongDoanhThu = tongDoanhThu;
     }
 
-    public String getMaHD() {
-        return maHD;
+    public LocalDate getNgayLap() {
+        return ngayLap;
     }
 
-    public Date getNgayLap() {
-        return ngayLap;
+    public void setNgayLap(LocalDate ngayLap) {
+        this.ngayLap = ngayLap;
     }
 
     public float getTongDoanhThu() {
         return tongDoanhThu;
     }
 
-    @Override
-    public String toString() {
-        return "DOANHTHU{" + "maHD=" + maHD + ", ngayLap=" + ngayLap + ", tongDoanhThu=" + tongDoanhThu + '}';
+    public void setTongDoanhThu(float tongDoanhThu) {
+        this.tongDoanhThu = tongDoanhThu;
     }
+    
     
 }

@@ -14,7 +14,7 @@ public class CTHD {
     private String maKM;
     private int SL;
     private float triGia;
-
+    private float chietKhau;
     public CTHD() {
     }
 
@@ -24,6 +24,14 @@ public class CTHD {
         this.maKM = maKM;
         this.SL = SL;
         this.triGia = triGia;
+    }
+
+    public float getChietKhau() {
+        return chietKhau;
+    }
+
+    public void setChietKhau(float chietKhau) {
+        this.chietKhau = chietKhau;
     }
 
     public String getMaHD() {

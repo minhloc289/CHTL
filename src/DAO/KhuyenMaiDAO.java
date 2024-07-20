@@ -8,7 +8,7 @@ package DAO;
  *
  * @author ADMIN
  */
-import GUI.ThemKhuyenMai;
+
 import Model.KHUYENMAI;
 import java.util.ArrayList;
 import database.JDBC;
@@ -41,10 +41,9 @@ public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
             JOptionPane.showMessageDialog(null, "Thêm thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         return result;
         
-    } catch (SQLException e) {     
+    } catch (SQLException e) {    
         int errorCode = e.getErrorCode();
-        
-            return errorCode;
+        return errorCode;
     }
     }
 
@@ -83,13 +82,13 @@ public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
             ps.setDate(4, Date.valueOf(t.getNgayBD()));
             ps.setDate(5,  Date.valueOf(t.getNgayKT()));
             ps.setString(6, t.getMaKM());
-            
-            return ps.executeUpdate();
-        }  catch (SQLException e) {
-            System.err.println("SQL Exception: " + e.getMessage());
-            e.printStackTrace();
-            return 0;
-        }
+            int result = ps.executeUpdate();
+           JOptionPane.showMessageDialog(null, "Sửa thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return result;
+        } catch (SQLException e) {    
+        int errorCode = e.getErrorCode();
+        return errorCode;
+    }
     }
 
     @Override
@@ -98,7 +97,7 @@ public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
         
         try {
             Connection con = JDBC.getConnection();
-            String sql = "Select * from KHUYENMAI where isDeleted = 0";
+            String sql = "Select * from KHUYENMAI where isDeleted = 0 ORDER BY MAKM ASC";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
@@ -107,12 +106,19 @@ public class KhuyenMaiDAO implements DAOInterface<KHUYENMAI> {
                 km.setMaSP(rs.getString("MASP"));
                 km.setCtkm(rs.getString("CTKM"));
                 km.setChietKhau(rs.getFloat("CHIETKHAU"));
-               java.sql.Date sqlDate = rs.getDate("NGAYBD");
-               LocalDate localDate = sqlDate.toLocalDate();
-               km.setNgayBD(localDate);        
-               
+               java.sql.Date sqlDate = rs.getDate("NGAYBD");   
                java.sql.Date sqlDate1 = rs.getDate("NGAYKT");
-               LocalDate localDate1 = sqlDate1.toLocalDate();
+               LocalDate localDate ;
+                LocalDate localDate1;
+               if(sqlDate == null && sqlDate1 == null){
+                   localDate = null;
+                   localDate1 = null;
+               }
+               else{
+                   localDate = sqlDate.toLocalDate();
+                    localDate1 = sqlDate1.toLocalDate();   
+               }
+                km.setNgayBD(localDate);     
                km.setNgayKT(localDate1);   
                 
                 

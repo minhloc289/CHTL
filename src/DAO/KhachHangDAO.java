@@ -7,6 +7,8 @@ import Model.KHACHHANG;
 import java.util.ArrayList;
 import database.JDBC;
 import java.sql.*;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
 /**
  *
  * @author ADMIN
@@ -20,17 +22,17 @@ public class KhachHangDAO implements DAOInterface<KHACHHANG>{
             String sql = "INSERT INTO KHACHHANG (TENKH, GIOITINH, NGAYSINH)"
                         + "VALUES (?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
-          ps.setString(1, t.getTenKH());
+            ps.setString(1, t.getTenKH());
             ps.setString(2, t.getGioiTinh());
-            ps.setDate(3, t.getNgaySinh());
+            ps.setDate(3, Date.valueOf(t.getNgaySinh()));
             
-            return ps.executeUpdate();
-            
-        } catch (SQLException e) {
-            System.err.println("SQL Exception: " + e.getMessage());
-            e.printStackTrace();
-            return 0;
-    }
+           int rs= ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Thêm thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return rs;
+        } catch (SQLException e) {    
+        int errorCode = e.getErrorCode();
+        return errorCode;
+        }
     }
 
     @Override
@@ -42,25 +44,24 @@ public class KhachHangDAO implements DAOInterface<KHACHHANG>{
     public int update(KHACHHANG t) {
         try {
             Connection con = JDBC.getConnection();
-            String sql = "UPDATE KHACHHANG SET " +
-                    "TENKH = ?, "+
-                    "GIOITINH = ?, "+
-                    "NGAYSINH = ?, "+
-                    "TICHDIEM = ?, " +       
-                    "WHERE MAKH = ?";
+           String sql = "UPDATE KHACHHANG SET " +
+                     "TENKH = ?, " +
+                     "GIOITINH = ?, " +
+                     "NGAYSINH = ? " + // Chú ý dấu cách trước WHERE
+                     "WHERE MAKH = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             
-            ps.setString(1, t.getMaKH());
-            ps.setString(2, t.getTenKH());
-            ps.setString(3, t.getGioiTinh());
-            ps.setDate(4, t.getNgaySinh());
-            ps.setInt(5, t.getTichDiem());
             
-            return ps.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("SQL Exception: " + e.getMessage());
-            e.printStackTrace();
-            return 0;
+            ps.setString(1, t.getTenKH());
+            ps.setString(2, t.getGioiTinh());
+            ps.setDate(3, Date.valueOf(t.getNgaySinh()));
+            ps.setString(4, t.getMaKH());
+            int rs= ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Sửa khách hàng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return rs;
+        } catch (SQLException e) {    
+        int errorCode = e.getErrorCode();
+        return errorCode;
         }
     }
 
@@ -69,7 +70,7 @@ public class KhachHangDAO implements DAOInterface<KHACHHANG>{
         ArrayList<KHACHHANG> khachHangList = new ArrayList<>();
         try {
             Connection con = JDBC.getConnection();
-            String sql = "select * from khachhang";
+            String sql = "select * from khachhang order by makh asc";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
@@ -77,8 +78,12 @@ public class KhachHangDAO implements DAOInterface<KHACHHANG>{
                 kh.setMaKH(rs.getString("MAKh"));
                 kh.setTenKH(rs.getString("TENKH"));
                 kh.setGioiTinh(rs.getString("GIOITINH"));
-                kh.setNgaySinh(rs.getDate("NgaySinh"));
-                kh.setTichDiem(rs.getInt("TICHDIEM"));
+                java.sql.Date sqlDate = rs.getDate("ngaysinh");
+                if(sqlDate!= null){
+                LocalDate localDate = sqlDate.toLocalDate();
+                kh.setNgaySinh(localDate);
+                }
+                
                 khachHangList.add(kh);
                
             }
@@ -108,8 +113,9 @@ public class KhachHangDAO implements DAOInterface<KHACHHANG>{
                 khachHang.setMaKH(rs.getString("MAKH"));
                 khachHang.setTenKH(rs.getString("TENKH"));
                 khachHang.setGioiTinh(rs.getString("GIOITINH"));
-                khachHang.setNgaySinh(rs.getDate("NGAYSINH"));
-                khachHang.setTichDiem(rs.getInt("TICHDIEM"));
+                java.sql.Date sqlDate = rs.getDate("NGAYSINH");    
+                LocalDate localDate = sqlDate.toLocalDate();
+                khachHang.setNgaySinh(localDate);
             }
             
             rs.close();

@@ -5,6 +5,8 @@
 package Model;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -14,63 +16,56 @@ public class KHACHHANG {
     private String maKH;
     private String tenKH;
     private String gioiTinh;
-    private Date ngaySinh;
-    private int tichDiem;
+    private LocalDate ngaySinh;
+ 
 
     public KHACHHANG() {
     }
 
-    public KHACHHANG(String maKH, String tenKH, String gioiTinh, Date ngaySinh, int tichDiem) {
+    public KHACHHANG(String maKH, String tenKH, String gioiTinh, LocalDate ngaySinh) {
         this.maKH = maKH;
         this.tenKH = tenKH;
         this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
-        this.tichDiem = tichDiem;
     }
 
     public String getMaKH() {
         return maKH;
     }
 
-    public String getTenKH() {
-        return tenKH;
-    }
-
-    public String getGioiTinh() {
-        return gioiTinh;
-    }
-
     public void setMaKH(String maKH) {
         this.maKH = maKH;
+    }
+
+    public String getTenKH() {
+        return tenKH;
     }
 
     public void setTenKH(String tenKH) {
         this.tenKH = tenKH;
     }
 
+    public String getGioiTinh() {
+        return gioiTinh;
+    }
+
     public void setGioiTinh(String gioiTinh) {
         this.gioiTinh = gioiTinh;
     }
 
-    public void setNgaySinh(Date ngaySinh) {
-        this.ngaySinh = ngaySinh;
-    }
-
-    public void setTichDiem(int tichDiem) {
-        this.tichDiem = tichDiem;
-    }
-
-    public Date getNgaySinh() {
+    public LocalDate getNgaySinh() {
         return ngaySinh;
     }
 
-    public int getTichDiem() {
-        return tichDiem;
+    public void setNgaySinh(LocalDate ngaySinh) {
+        this.ngaySinh = ngaySinh;
     }
 
     @Override
     public String toString() {
-        return "KHACHHANG{" + "maKH=" + maKH + ", tenKH=" + tenKH + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", tichDiem=" + tichDiem + '}';
+        return "KHACHHANG{" + "maKH=" + maKH + ", tenKH=" + tenKH + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + '}';
     }
+
+    
     
 }

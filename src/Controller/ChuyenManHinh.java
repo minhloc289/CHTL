@@ -39,8 +39,8 @@ public class ChuyenManHinh {
     }
     public void setView(JPanel jpnItem, JLabel jblItem){
         kindSelected="TrangChu";
-        jpnItem.setBackground(new Color(0,204,204));
-        jblItem.setBackground(new Color(0,204,204));
+        jpnItem.setBackground(new Color(0, 204, 204));
+        jblItem.setBackground(new Color(0, 204, 204));
         root.removeAll();
         root.setLayout(new BorderLayout());
         root.add(new TrangChu());
@@ -93,11 +93,8 @@ public class ChuyenManHinh {
                 case "KhachHang":
                     node = new KhachHang();
                     break;
-                case "KhoHang":
+                case "NhapHang":
                     node = new KhoHang();
-                    break;
-                case "DangKi":
-                    node = new DangKy();
                     break;
             }
         root.removeAll();
@@ -111,8 +108,8 @@ public class ChuyenManHinh {
         @Override
         public void mousePressed(MouseEvent e) {
             kindSelected=kind;
-            jpnItem.setBackground(new Color(0,204,204));
-            jlbItem.setBackground(new Color(0,204,204));
+            jpnItem.setBackground(new Color(187, 222, 251));
+            jlbItem.setBackground(new Color(187, 222, 251));
                   
         }
 
@@ -122,8 +119,8 @@ public class ChuyenManHinh {
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            jpnItem.setBackground(new Color(0,204,204));
-            jlbItem.setBackground(new Color(0,204,204));
+            jpnItem.setBackground(new Color(187, 222, 251));
+            jlbItem.setBackground(new Color(187, 222, 251));
         }
 
         @Override

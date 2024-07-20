@@ -71,3 +71,38 @@
 
     -->
 </project>
+
+<project name="JTableToPDF" default="run" basedir=".">
+    <!-- Đặt các thư mục -->
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="lib.dir" value="lib"/>
+    
+    <!-- Tạo thư mục build -->
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+    </target>
+
+    <!-- Compile mã nguồn -->
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${build.dir}">
+            <classpath>
+                <fileset dir="${lib.dir}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- Chạy chương trình -->
+    <target name="run" depends="compile">
+        <java fork="true" classname="JTableToPDF" classpath="${build.dir}:${lib.dir}/*">
+            <arg value="path/to/your/output/file.pdf"/>
+        </java>
+    </target>
+</project>
+
+
+
+
+
