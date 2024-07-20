@@ -1,5 +1,6 @@
 package database;
 import DAO.NhanVienDAO;
+import Model.NHANVIEN;
 import java.sql.*;
 import database.JDBC;
 import java.util.ArrayList;
@@ -10,41 +11,21 @@ import java.util.ArrayList;
  */
 public class test {
     public static void main(String[] args) {
-        Connection con = JDBC.getConnection();
-        int kq = 0;
-       try {
-         
-            String sql = "UPDATE NHANVIEN SET isDeleted = 1 WHERE MANV = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-       
-            ps.setString(1,"NV001");
-            kq = ps.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("SQL Exception: " + e.getMessage());
-            e.printStackTrace();
+        NhanVienDAO nvDAO = new NhanVienDAO();
+        NHANVIEN nvParam = new NHANVIEN(); // Tạo một đối tượng NHANVIEN (thực tế có thể không cần thiết nếu không sử dụng trong truy vấn)
+        ArrayList<NHANVIEN> nhanVienList = nvDAO.selectAll(nvParam);
+
+        for (NHANVIEN nv : nhanVienList) {
+            System.out.println("Mã NV: " + nv.getMaNV());
+            System.out.println("Tên NV: " + nv.getTenNV());
+            System.out.println("Giới Tính: " + nv.getGioiTinh());
+            System.out.println("Ngày Sinh: " + nv.getNgaySinh());
+            System.out.println("Địa Chỉ: " + nv.getDiaChi());
+            System.out.println("SĐT: " + nv.getSdt());
+            System.out.println("Email: " + nv.getEmail()); // In giá trị Email
+            System.out.println("Lương: " + nv.getLuong());
+            System.out.println("Mật Khẩu: " + nv.getPassword());
+            System.out.println("---------------------------");
         }
-    }
-    
-    public static ArrayList<String> getUsername(Connection con) throws SQLException {
-    ArrayList<String> username = new ArrayList<>();
-    
-    // Tạo một đối tượng Statement để thực hiện truy vấn
-    Statement stat = con.createStatement();
-    
-    // Thực hiện truy vấn và lấy kết quả
-    ResultSet rs = stat.executeQuery("SELECT SDT FROM NHANVIEN");
-    
-    // Lặp qua kết quả truy vấn và thêm vào danh sách
-    while (rs.next()) {
-        // Lấy giá trị của cột "SDT" và thêm vào danh sách
-        username.add(rs.getString("SDT"));
-    }
-    
-    // Đóng ResultSet và Statement để giải phóng tài nguyên
-    rs.close();
-    stat.close();
-    
-    // Trả về danh sách tên người dùng
-    return username;
     }
 }

@@ -19,20 +19,10 @@ public class NHANVIEN {
     private String diaChi;
     private String sdt;
     private float luong;
+    private String Email;
     private String password;
 
     public NHANVIEN() {
-    }
-
-    public NHANVIEN(String maNV, String tenNV, String gioiTinh, LocalDate ngaySinh, String diaChi, String sdt, float luong, String password) {
-        this.maNV = maNV;
-        this.tenNV = tenNV;
-        this.gioiTinh = gioiTinh;
-        this.ngaySinh = ngaySinh;
-        this.diaChi = diaChi;
-        this.sdt = sdt;
-        this.luong = luong;
-        this.password = password;
     }
 
     public String getMaNV() {
@@ -63,8 +53,29 @@ public class NHANVIEN {
         return luong;
     }
 
+    public String getEmail() {
+        return Email;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String toString() {
+        return "NHANVIEN{" + "maNV=" + maNV + ", tenNV=" + tenNV + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", diaChi=" + diaChi + ", sdt=" + sdt + ", luong=" + luong + ", Email=" + Email + ", password=" + password + '}';
+    }
+
+    public NHANVIEN(String maNV, String tenNV, String gioiTinh, LocalDate ngaySinh, String diaChi, String sdt, float luong, String Email, String password) {
+        this.maNV = maNV;
+        this.tenNV = tenNV;
+        this.gioiTinh = gioiTinh;
+        this.ngaySinh = ngaySinh;
+        this.diaChi = diaChi;
+        this.sdt = sdt;
+        this.luong = luong;
+        this.Email = Email;
+        this.password = password;
     }
 
     public void setMaNV(String maNV) {
@@ -95,14 +106,14 @@ public class NHANVIEN {
         this.luong = luong;
     }
 
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
     
     
-    @Override
-    public String toString() {
-        return "NHANVIEN{" + "maNV=" + maNV + ", tenNV=" + tenNV + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", diaChi=" + diaChi + ", sdt=" + sdt + ", luong=" + luong + ", password=" + password + '}';
-    }
     
 }

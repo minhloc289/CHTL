@@ -24,26 +24,26 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 
     @Override
     public int insert(NHANVIEN t) {
-        
         try {
             Connection con = JDBC.getConnection();
-            String sql = "INSERT INTO NHANVIEN (TENNV, GIOITINH, NGAYSINH, DIACHI, SDT, LUONG, PASSWORD) "
-                   + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO NHANVIEN (TENNV, GIOITINH, NGAYSINH, DIACHI, SDT, Email, LUONG, PASSWORD) "
+                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
-            
+
             ps.setString(1, t.getTenNV());
             ps.setString(2, t.getGioiTinh());
-            ps.setDate(3, Date.valueOf(t.getNgaySinh())); 
+            ps.setDate(3, Date.valueOf(t.getNgaySinh()));
             ps.setString(4, t.getDiaChi());
             ps.setString(5, t.getSdt());
-            ps.setFloat(6, t.getLuong());
-            ps.setString(7, t.getPassword());
-           int rs= ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Thêm thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            ps.setString(6, t.getEmail()); 
+            ps.setFloat(7, t.getLuong());
+            ps.setString(8, t.getPassword());
+
+            int rs = ps.executeUpdate();
             return rs;
-        } catch (SQLException e) {    
-        int errorCode = e.getErrorCode();
-        return errorCode;
+        } catch (SQLException e) {
+            int errorCode = e.getErrorCode();
+            return errorCode;
         }
     }
 
@@ -68,81 +68,47 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
     public int update(NHANVIEN t) {
         try {
             Connection con = JDBC.getConnection();
-           String sql = "UPDATE NHANVIEN SET " +
-             "TENNV = ?, " +
-             "GIOITINH = ?, " +
-             "NGAYSINH = ?, " +
-             "DIACHI = ?, " +
-             "SDT = ?, " +
-             "LUONG = ?, " +
-             "PASSWORD = ? " +
-             "WHERE MANV = ?";
+            String sql = "UPDATE NHANVIEN SET " +
+                         "TENNV = ?, " +
+                         "GIOITINH = ?, " +
+                         "NGAYSINH = ?, " +
+                         "DIACHI = ?, " +
+                         "SDT = ?, " +
+                         "Email = ?, " + // Thêm dòng này để cập nhật giá trị Email
+                         "LUONG = ?, " +
+                         "PASSWORD = ? " +
+                         "WHERE MANV = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-       
+
             ps.setString(1, t.getTenNV());
             ps.setString(2, t.getGioiTinh());
-            ps.setDate(3, Date.valueOf(t.getNgaySinh())); 
+            ps.setDate(3, Date.valueOf(t.getNgaySinh()));
             ps.setString(4, t.getDiaChi());
             ps.setString(5, t.getSdt());
-            ps.setFloat(6, t.getLuong());
-            ps.setString(7, t.getPassword());
-            ps.setString(8, t.getMaNV());
-            int rs= ps.executeUpdate();
+            ps.setString(6, t.getEmail()); // Thiết lập giá trị cho Email
+            ps.setFloat(7, t.getLuong());
+            ps.setString(8, t.getPassword());
+            ps.setString(9, t.getMaNV());
+
+            int rs = ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Sửa thành công nhân viên", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             return rs;
-        } catch (SQLException e) {    
-        int errorCode = e.getErrorCode();
-        return errorCode;
-        }
-    }
-
-    @Override
-    public ArrayList<NHANVIEN> selectAll(NHANVIEN t) {
-        ArrayList<NHANVIEN> nhanVienList = new ArrayList<>();
-        
-        try {
-            Connection con = JDBC.getConnection();
-            String sql = "Select * from NHANVIEN WHERE isDeleted = 0 ORDER BY MANV ASC";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()){
-                NHANVIEN nv = new NHANVIEN();
-                nv.setMaNV(rs.getString("MANV"));
-                nv.setTenNV(rs.getString("TENNV"));
-                nv.setGioiTinh(rs.getString("GIOITINH"));
-                
-               java.sql.Date sqlDate = rs.getDate("NGAYSINH");
-               LocalDate localDate = sqlDate.toLocalDate();
-               nv.setNgaySinh(localDate);
-                nv.setDiaChi(rs.getString("DIACHI"));
-                nv.setSdt(rs.getString("SDT"));
-                nv.setLuong(rs.getFloat("LUONG"));
-                nv.setPassword(rs.getString("PASSWORD"));
-                
-                nhanVienList.add(nv);
-                
-            
-            }
-            rs.close();
-            ps.close();
-            con.close();
         } catch (SQLException e) {
-            System.err.println("SQL Exception: " + e.getMessage());
-            e.printStackTrace();
+            int errorCode = e.getErrorCode();
+            return errorCode;
         }
-        return nhanVienList;
     }
 
     @Override
     public NHANVIEN selectbyID(String T) {
-    NHANVIEN nhanVien = null;
+        NHANVIEN nhanVien = null;
         try {
             Connection con = JDBC.getConnection();
             String sql = "SELECT * FROM NHANVIEN WHERE MANV = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, T);
             ResultSet rs = ps.executeQuery();
-            
+
             if (rs.next()) {
                 nhanVien = new NHANVIEN();
                 nhanVien.setMaNV(rs.getString("MANV"));
@@ -151,13 +117,14 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
                 java.sql.Date sqlDate = rs.getDate("NGAYSINH");
                 LocalDate localDate = sqlDate.toLocalDate();
                 nhanVien.setNgaySinh(localDate);
-                
+
                 nhanVien.setDiaChi(rs.getString("DIACHI"));
                 nhanVien.setSdt(rs.getString("SDT"));
+                nhanVien.setEmail(rs.getString("Email")); // Thêm dòng này để lấy giá trị Email
                 nhanVien.setLuong(rs.getFloat("LUONG"));
                 nhanVien.setPassword(rs.getString("PASSWORD"));
             }
-            
+
             rs.close();
             ps.close();
             con.close();
@@ -165,7 +132,9 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
             System.err.println("SQL Exception: " + e.getMessage());
             e.printStackTrace();
         }
-        return nhanVien;    }
+        return nhanVien;
+    }
+
     
     public boolean checkLogin (String username, String password){
         try {
@@ -183,5 +152,57 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
         }
          return false;
     }
+
+    @Override
+    public ArrayList<NHANVIEN> selectAll(NHANVIEN t) {
+        ArrayList<NHANVIEN> nhanVienList = new ArrayList<>();
+
+        try {
+            Connection con = JDBC.getConnection();
+            String sql = "SELECT * FROM NHANVIEN WHERE isDeleted = 0 ORDER BY MANV ASC";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                NHANVIEN nv = new NHANVIEN();
+                nv.setMaNV(rs.getString("MANV"));
+                nv.setTenNV(rs.getString("TENNV"));
+                nv.setGioiTinh(rs.getString("GIOITINH"));
+
+                java.sql.Date sqlDate = rs.getDate("NGAYSINH");
+                LocalDate localDate = sqlDate.toLocalDate();
+                nv.setNgaySinh(localDate);
+                nv.setDiaChi(rs.getString("DIACHI"));
+                nv.setSdt(rs.getString("SDT"));
+                nv.setEmail(rs.getString("Email")); // Thêm dòng này để lấy giá trị Email
+                nv.setLuong(rs.getFloat("LUONG"));
+                nv.setPassword(rs.getString("PASSWORD"));
+
+                nhanVienList.add(nv);
+            }
+            rs.close();
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            System.err.println("SQL Exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return nhanVienList;
+    }
+    
+    public int updatePassword(String email, String newPassword) {
+        int ketQua = 0;
+        try {
+            Connection con = JDBC.getConnection();
+            String sql = "UPDATE NHANVIEN SET PASSWORD=? WHERE Email=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, newPassword); 
+            pst.setString(2, email);
+            ketQua = pst.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ketQua;
+    }
+
    
 }

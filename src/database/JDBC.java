@@ -21,7 +21,7 @@ public class JDBC {
 
 
     	String url = "jdbc:oracle:thin:@localhost:1521:orcl21";
-		String username = "c##CUAHANGTIENLOI";
+		String username = "c##CHTL2";
 		String password = "28092004";
 		
 		conn = DriverManager.getConnection(url, username, password);
