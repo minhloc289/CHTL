@@ -5,7 +5,6 @@ package GUI;
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 
-
 import BUS.NhanVienBUS;
 import GUI.Dialog.ChamCongDialog_add;
 import GUI.Dialog.NhanVienDialog_add;
@@ -47,7 +46,7 @@ public class NhanVien extends javax.swing.JPanel {
                 return false;
             }
         };
-        String headerString[] = new String[]{"Mã nhân viên", "Tên nhân viên", "Giới tính", "Ngày sinh", "Địa chỉ","Số điện thoại","Lương","Mật khẩu"};
+        String headerString[] = new String[]{"Mã nhân viên", "Tên nhân viên", "Giới tính", "Ngày sinh", "Địa chỉ", "Số điện thoại", "Email", "Lương", "Mật khẩu"};
         defaultTableModel.setColumnIdentifiers(headerString);
         tableNhanVien1.setModel(defaultTableModel);
         setDataTable(nvBUS.selectAll(nv));
@@ -64,14 +63,16 @@ public class NhanVien extends javax.swing.JPanel {
         tableNhanVien1.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);  
         tableNhanVien1.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);  
         tableNhanVien1.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);  
-        tableNhanVien1.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);  
+        tableNhanVien1.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
+        tableNhanVien1.getColumnModel().getColumn(8).setCellRenderer(centerRenderer);
         tableNhanVien1.setAutoCreateRowSorter(true);
         
     }
     
     public void setDataTable(ArrayList<NHANVIEN> nvDao) {
-        for (NHANVIEN nvien : nvDao){
-            defaultTableModel.addRow(new Object[]{ nvien.getMaNV(), nvien.getTenNV(), nvien.getGioiTinh(), nvien.getNgaySinh(), nvien.getDiaChi(), nvien.getSdt(), nvien.getLuong(), nvien.getPassword()
+        for (NHANVIEN nvien : nvDao) {
+            defaultTableModel.addRow(new Object[]{
+                nvien.getMaNV(), nvien.getTenNV(), nvien.getGioiTinh(), nvien.getNgaySinh(), nvien.getDiaChi(), nvien.getSdt(), nvien.getEmail(), nvien.getLuong(), nvien.getPassword()
             });
         }
     }
@@ -79,7 +80,7 @@ public class NhanVien extends javax.swing.JPanel {
     public void refreshTable(){
         defaultTableModel.setRowCount(0);
         setDataTable(nvBUS.selectAll(nv));
-    }
+    }       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
