@@ -90,6 +90,8 @@ public class NhanVienDialog_edit extends javax.swing.JDialog {
         textFieldMK = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        textFieldEmail = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -98,13 +100,13 @@ public class NhanVienDialog_edit extends javax.swing.JDialog {
         jPnlHeader.setLayout(new java.awt.BorderLayout());
 
         jlblHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlblHeader.setText("THÊM KHÁCH HÀNG");
+        jlblHeader.setText("SỬA NHÂN VIÊN");
         jlblHeader.setPreferredSize(new java.awt.Dimension(400, 50));
         jPnlHeader.add(jlblHeader, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPnlHeader, java.awt.BorderLayout.NORTH);
 
-        panelRound1.setPreferredSize(new java.awt.Dimension(500, 750));
+        panelRound1.setPreferredSize(new java.awt.Dimension(500, 800));
 
         jLabel1.setFont(new java.awt.Font("Arial", 2, 16)); // NOI18N
         jLabel1.setText("Tên nhân viên");
@@ -189,35 +191,44 @@ public class NhanVienDialog_edit extends javax.swing.JDialog {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(200, 34));
 
+        textFieldEmail.setPreferredSize(new java.awt.Dimension(200, 34));
+        textFieldEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textFieldEmailActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Arial", 2, 16)); // NOI18N
+        jLabel8.setText("Email");
+
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
         panelRound1Layout.setHorizontalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelRound1Layout.createSequentialGroup()
-                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel7)
-                            .addComponent(textFieldMK, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
-                            .addComponent(jLabel6)
-                            .addComponent(textFieldLuong, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
-                            .addComponent(jLabel5)
-                            .addComponent(textFieldNgaySDT, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
-                            .addComponent(jLabel4)
-                            .addComponent(textFieldDiaChi, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)
-                            .addComponent(textFieldTenNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(textFieldNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textFieldMK, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                    .addComponent(textFieldLuong, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                    .addComponent(textFieldNgaySDT, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                    .addComponent(textFieldDiaChi, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                    .addComponent(textFieldTenNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textFieldNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelRound1Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,14 +258,18 @@ public class NhanVienDialog_edit extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textFieldLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textFieldMK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(textFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(textFieldMK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelRound1, java.awt.BorderLayout.CENTER);
@@ -295,6 +310,7 @@ public class NhanVienDialog_edit extends javax.swing.JDialog {
         String diaChi =textFieldDiaChi.getText();
         String sdt = textFieldNgaySDT.getText();
         String luong = textFieldLuong.getText();
+        String email = textFieldEmail.getText();
         String password = textFieldMK.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         float floatLuong;
@@ -302,42 +318,48 @@ public class NhanVienDialog_edit extends javax.swing.JDialog {
         nv.setTenNV(tenNV);
         nv.setDiaChi(diaChi);
         nv.setSdt(sdt);
+        nv.setEmail(email);
         nv.setPassword(password);
         nv.setMaNV(localMaNV);
 
-        if(tenNV.isEmpty() || ngaySinh.isEmpty() || diaChi.isEmpty() || sdt.isEmpty() || luong.isEmpty() || password.isEmpty()){
+        if(tenNV.isEmpty() || ngaySinh.isEmpty() || diaChi.isEmpty() || sdt.isEmpty() || luong.isEmpty() || email.isEmpty() || password.isEmpty()){
             JOptionPane.showMessageDialog(null, "Vui lòng nhập thông tin đầy đủ.", "Lỗi", JOptionPane.INFORMATION_MESSAGE);
             if (tenNV.isEmpty()) {
                 highlightField(textFieldTenNV);
             } else if(!tenNV.isEmpty()){
-                rehighlightField(textFieldTenNV);
-                if (ngaySinh.isEmpty()) {
-                    highlightField(textFieldNgaySinh);
-                } else if(!ngaySinh.isEmpty()){
-                    rehighlightField(textFieldNgaySinh);
-                    if (diaChi.isEmpty()) {
-                        highlightField(textFieldDiaChi);
-                    } else if(!diaChi.isEmpty()){
-                        rehighlightField(textFieldDiaChi);
-                        if (sdt.isEmpty()){
-                            highlightField(textFieldNgaySDT);
-                        } else if (!sdt.isEmpty()){
-                            rehighlightField(textFieldNgaySDT);
-                            if (luong.isEmpty()) {
-                                highlightField(textFieldLuong);
-                            } else if (!luong.isEmpty()){
-                                rehighlightField(textFieldLuong);
-                                if (password.isEmpty()) {
-                                    highlightField(textFieldMK);
-                                } else if (!password.isEmpty()){
-                                    rehighlightField(textFieldMK);
-                                }
+                           rehighlightField(textFieldTenNV);
+                        if (ngaySinh.isEmpty()) {
+                                highlightField(textFieldNgaySinh);
+                        } else if(!ngaySinh.isEmpty()){
+                                     rehighlightField(textFieldNgaySinh);
+                                if (diaChi.isEmpty()) {
+                                    highlightField(textFieldDiaChi);
+                                } else if(!diaChi.isEmpty()){
+                                    rehighlightField(textFieldDiaChi);
+                                    if (sdt.isEmpty()){
+                                        highlightField(textFieldNgaySDT);
+                                    } else if (!sdt.isEmpty()){
+                                        rehighlightField(textFieldNgaySDT);
+                                        if (luong.isEmpty()) {
+                                            highlightField(textFieldLuong);
+                                        } else if (!luong.isEmpty()){
+                                            rehighlightField(textFieldLuong);
+                                            if (email.isEmpty()) {
+                                                highlightField(textFieldEmail);
+                                            } else if (!email.isEmpty()){
+                                                rehighlightField(textFieldEmail);
+                                                if (password.isEmpty()){
+                                                    highlightField(textFieldMK);
+                                                } else if (!password.isEmpty()){
+                                                    rehighlightField(textFieldMK);
+                                                }
+                                            }
+                                            }
+                                        }
+                                    }  
                             }
                         }
                     }
-                }
-            }
-        }
         else {
             try {
                 floatLuong = Float.parseFloat(luong);
@@ -372,6 +394,10 @@ public class NhanVienDialog_edit extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_textFieldMKActionPerformed
 
+    private void textFieldEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textFieldEmailActionPerformed
+
      public interface OnProductAddedListener {
         void onProductAdded();
      }
@@ -389,7 +415,7 @@ public class NhanVienDialog_edit extends javax.swing.JDialog {
         field.setBackground(Color.white);
     }
     
-    public void setText(String tenNV,String gioiTinh ,String ngaySinh, String diaChi, String sdt, String luong, String password){
+    public void setText(String tenNV,String gioiTinh ,String ngaySinh, String diaChi, String sdt, String luong, String email, String password){
     
     textFieldTenNV.setText(tenNV);
     jComboBox1.setSelectedItem(gioiTinh);
@@ -397,6 +423,7 @@ public class NhanVienDialog_edit extends javax.swing.JDialog {
     textFieldDiaChi.setText(diaChi);
     textFieldNgaySDT.setText(sdt);
     textFieldLuong.setText(luong);
+    textFieldEmail.setText(email);
     textFieldMK.setText(password);
 }
 
@@ -464,10 +491,12 @@ public class NhanVienDialog_edit extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPnlHeader;
     private javax.swing.JLabel jlblHeader;
     private table.PanelRound panelRound1;
     private javax.swing.JTextField textFieldDiaChi;
+    private javax.swing.JTextField textFieldEmail;
     private javax.swing.JTextField textFieldLuong;
     private javax.swing.JTextField textFieldMK;
     private javax.swing.JTextField textFieldNgaySDT;

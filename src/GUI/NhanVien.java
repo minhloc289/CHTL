@@ -247,10 +247,11 @@ public class NhanVien extends javax.swing.JPanel {
             String diaChi = tableNhanVien1.getValueAt(row,4).toString();
             String sdt= tableNhanVien1.getValueAt(row,5).toString();
             String luong = tableNhanVien1.getValueAt(row,6).toString();
-            String password = tableNhanVien1.getValueAt(row, 7).toString();
+            String email = tableNhanVien1.getValueAt(row, 7).toString();
+            String password = tableNhanVien1.getValueAt(row, 8).toString();
             NhanVienDialog_edit b = new  NhanVienDialog_edit(maNV);
             b.setVisible(true);
-            b.setText(tenNV, gioiTinh, ngaySinh, diaChi, sdt, luong, password);
+            b.setText(tenNV, gioiTinh, ngaySinh, diaChi, sdt, luong, email, password);
             
             b.setOnProductAddedListener(new NhanVienDialog_edit.OnProductAddedListener() {
                 @Override
