@@ -63,6 +63,7 @@ public class JTableToPDFGUI extends JFrame {
                 pdfFilePath += ".pdf";
             }
 
+            
             try (FileOutputStream fos = new FileOutputStream(pdfFilePath)) {
                 PdfWriter writer = new PdfWriter(fos);
                 PdfDocument pdfDoc = new PdfDocument(writer);
