@@ -91,7 +91,7 @@ public class KhuyenMaiDialog_add extends javax.swing.JDialog {
         jPnlHeader.setLayout(new java.awt.BorderLayout());
 
         jlblHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlblHeader.setText("THÊM KHÁCH HÀNG");
+        jlblHeader.setText("THÊM KHUYẾN MÃI");
         jlblHeader.setPreferredSize(new java.awt.Dimension(400, 50));
         jPnlHeader.add(jlblHeader, java.awt.BorderLayout.CENTER);
 

@@ -113,5 +113,29 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
         }
         return chamCong;
     }
+    
+    public ArrayList<CHAMCONG> dsNhanVien(LocalDate date) {
+        ArrayList<CHAMCONG> dsChamCong = new ArrayList<>();
+        try {
+            Connection conn = JDBC.getConnection();
+            String sql = "SELECT MACC, MANV, NGAYCC, SOGIOLAM FROM CHAMCONG WHERE NGAYCC = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            Date sqlDate = Date.valueOf(date);
+            ps.setDate(1, sqlDate);
+            
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                CHAMCONG cc = new CHAMCONG();
+                cc.setMaCC(rs.getString("MACC"));
+                cc.setMaNV(rs.getString("MANV"));
+                cc.setNgayCC(rs.getDate("NGAYCC").toLocalDate());
+                cc.setSoGioLam(rs.getInt("SOGIOLAM"));
+                dsChamCong.add(cc);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dsChamCong;
+    }
 }
 
