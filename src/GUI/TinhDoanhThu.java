@@ -250,14 +250,16 @@ public class TinhDoanhThu extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jButton2ActionPerformed
     
-    private ArrayList<DOANHTHUTHANG> fetchDoanhThuThangData() {
-    // Tạo một đối tượng DoanhThuThangBUS
-    DoanhThuThangBUS doanhThuThangBUS = new DoanhThuThangBUS();
-    // Tạo đối tượng DOANHTHUTHANG mặc định (hoặc có thể là null nếu phương thức hỗ trợ)
-    DOANHTHUTHANG defaultFilter = new DOANHTHUTHANG();
-    // Lấy tất cả dữ liệu từ bảng thông qua phương thức selectAll của DoanhThuThangBUS
-    return doanhThuThangBUS.selectAll(defaultFilter);
-}
+        private ArrayList<DOANHTHUTHANG> fetchDoanhThuThangData() {
+        // Tạo một đối tượng DoanhThuThangBUS
+        DoanhThuThangBUS doanhThuThangBUS = new DoanhThuThangBUS();
+        // Tạo đối tượng DOANHTHUTHANG mặc định (hoặc có thể là null nếu phương thức hỗ trợ)
+        DOANHTHUTHANG defaultFilter = new DOANHTHUTHANG();
+        // Lấy tất cả dữ liệu từ bảng thông qua phương thức selectAll của DoanhThuThangBUS
+        return doanhThuThangBUS.selectAll(defaultFilter);
+    }
+        
+    
 
     /**
      * @param args the command line arguments

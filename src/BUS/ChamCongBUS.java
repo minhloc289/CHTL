@@ -28,7 +28,7 @@ public class ChamCongBUS {
     public int insert(CHAMCONG t){
        return ccdao.insert(t);
     }
-    public ArrayList<CHAMCONG> dsNhanVien(LocalDate date) {
-        return ccdao.dsNhanVien(date);
+    public ArrayList<CHAMCONG> dsNhanVien(String month, String year) {
+        return ccdao.dsNhanVien(month, year);
     }
 }
