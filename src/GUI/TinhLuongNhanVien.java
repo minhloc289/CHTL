@@ -6,7 +6,6 @@ package GUI;
 
 import BUS.ChamCongBUS;
 import BUS.NhanVienBUS;
-import DAO.ChamCongDAO;
 import Model.CHAMCONG;
 import Model.LUONGNHANVIEN;
 import Model.NHANVIEN;
@@ -14,10 +13,6 @@ import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -145,7 +140,7 @@ public class TinhLuongNhanVien extends javax.swing.JFrame {
             }
         });
 
-        jMonthCbb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", " " }));
+        jMonthCbb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
         jMonthCbb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMonthCbbActionPerformed(evt);
@@ -155,7 +150,7 @@ public class TinhLuongNhanVien extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Năm");
 
-        jYearCbb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2021", "2022", "2023", "2024", "2025" }));
+        jYearCbb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--", "2021", "2022", "2023", "2024", "2025" }));
 
         jLbSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/ic_Search.png"))); // NOI18N
         jLbSearch.setText("jLabel4");
@@ -202,11 +197,9 @@ public class TinhLuongNhanVien extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLbSearch)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLbSearch)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
                     .addComponent(jYearCbb))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,23 +211,29 @@ public class TinhLuongNhanVien extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ArrayList<LUONGNHANVIEN> dsLuongNV = new ArrayList<>();
-        for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
-            String maCC = defaultTableModel.getValueAt(i, 0).toString();
-            String maNV = defaultTableModel.getValueAt(i, 1).toString();
-
-            NHANVIEN nhanvien = nvbus.selectbyID(maNV);
-            String tenNV = nhanvien.getTenNV();
-
-            int soGioLam = Integer.parseInt(defaultTableModel.getValueAt(i, 3).toString());
-            float luongcb = nhanvien.getLuong();
-            float tongLuong = soGioLam * luongcb;
-
-            dsLuongNV.add(new LUONGNHANVIEN(maCC, maNV, tenNV, tongLuong));
-        }
         String selectedMonth = jMonthCbb.getSelectedItem().toString();
         String selectedYear = jYearCbb.getSelectedItem().toString();
-        TongLuongNhanVien luongNV = new TongLuongNhanVien(dsLuongNV, selectedMonth, selectedYear);
-        luongNV.setVisible(true);
+        
+        if (selectedMonth.equals("--") || selectedYear.equals("--")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn tháng và năm phù hợp để tính lương!");
+        }
+        else {
+            for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
+                String maCC = defaultTableModel.getValueAt(i, 0).toString();
+                String maNV = defaultTableModel.getValueAt(i, 1).toString();
+
+                NHANVIEN nhanvien = nvbus.selectbyID(maNV);
+                String tenNV = nhanvien.getTenNV();
+
+                int soGioLam = Integer.parseInt(defaultTableModel.getValueAt(i, 3).toString());
+                float luongcb = nhanvien.getLuong();
+                float tongLuong = soGioLam * luongcb;
+
+                dsLuongNV.add(new LUONGNHANVIEN(maCC, maNV, tenNV, tongLuong));
+            }
+            TongLuongNhanVien luongNV = new TongLuongNhanVien(dsLuongNV, selectedMonth, selectedYear);
+            luongNV.setVisible(true);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -280,16 +279,21 @@ public class TinhLuongNhanVien extends javax.swing.JFrame {
     private void jLbSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbSearchMouseClicked
         String selectedMonth = jMonthCbb.getSelectedItem().toString();
         String selectedYear = jYearCbb.getSelectedItem().toString();
+        
+        if (selectedMonth.equals("--") || selectedYear.equals("--")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn tháng và năm phù hợp!");
+        }
+        else {
+            // Clear the existing rows in the table
+            defaultTableModel.setRowCount(0);
 
-        // Clear the existing rows in the table
-        defaultTableModel.setRowCount(0);
+            // Get the attendance records for the selected month and year
+            ArrayList<CHAMCONG> dsChamCong = ccbus.dsNhanVien(selectedMonth, selectedYear);
 
-        // Get the attendance records for the selected month and year
-        ArrayList<CHAMCONG> dsChamCong = ccbus.dsNhanVien(selectedMonth, selectedYear);
-
-        // Update the table with the retrieved data
-        for (CHAMCONG rec : dsChamCong) {
-            defaultTableModel.addRow(new Object[]{rec.getMaCC(), rec.getMaNV(), rec.getNgayCC(), rec.getSoGioLam()});
+            // Update the table with the retrieved data
+            for (CHAMCONG rec : dsChamCong) {
+                defaultTableModel.addRow(new Object[]{rec.getMaCC(), rec.getMaNV(), rec.getNgayCC(), rec.getSoGioLam()});
+            }
         }
     }//GEN-LAST:event_jLbSearchMouseClicked
 
