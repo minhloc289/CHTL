@@ -4,19 +4,50 @@
  */
 package GUI;
 
+import Model.LUONGNHANVIEN;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 /**
  *
  * @author locmi
  */
 public class TongLuongNhanVien extends javax.swing.JFrame {
-
+    private String month;
+    private String year;
     /**
      * Creates new form TongLuongNhanVien
      */
-    public TongLuongNhanVien() {
+    public TongLuongNhanVien(ArrayList<LUONGNHANVIEN> nvLuongList, String month, String year) {
+        this.month = month;
+        this.year = year;
         initComponents();
+        populateTable(nvLuongList);
     }
+    
+    private void populateTable(ArrayList<LUONGNHANVIEN> nvLuongList) {
+        DefaultTableModel model = (DefaultTableModel) tblTongLuongNV.getModel();
+        model.setRowCount(0); 
 
+        for (LUONGNHANVIEN nvLuong : nvLuongList) {
+            model.addRow(new Object[]{nvLuong.getMaCC(), nvLuong.getMaNV(), nvLuong.getTenNV(), nvLuong.getTongLuong()});
+        }
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,7 +64,7 @@ public class TongLuongNhanVien extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         lb_DOANHTHU1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(51, 255, 204));
@@ -78,6 +109,20 @@ public class TongLuongNhanVien extends javax.swing.JFrame {
         lb_DOANHTHU1.setForeground(new java.awt.Color(255, 255, 255));
         lb_DOANHTHU1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/excel-file (1).png"))); // NOI18N
         lb_DOANHTHU1.setText("Xuất excel");
+        lb_DOANHTHU1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                lb_DOANHTHU1AncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        lb_DOANHTHU1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lb_DOANHTHU1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -120,8 +165,95 @@ public class TongLuongNhanVien extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void lb_DOANHTHU1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lb_DOANHTHU1AncestorAdded
+        
+    }//GEN-LAST:event_lb_DOANHTHU1AncestorAdded
+
+    private void lb_DOANHTHU1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_DOANHTHU1MouseClicked
+        try {
+            JFileChooser jFileChooser = new JFileChooser();
+            jFileChooser.showSaveDialog(this);
+            File saveFile = jFileChooser.getSelectedFile();
+
+            if (saveFile != null) {
+                saveFile = new File(saveFile.toString() + ".xlsx");
+                Workbook wb = new XSSFWorkbook();
+                Sheet sheet = wb.createSheet("Bảng lương");
+
+                // Tạo font và style cho tiêu đề
+                org.apache.poi.ss.usermodel.Font titleFont = wb.createFont();
+                titleFont.setBold(true);
+                titleFont.setFontHeightInPoints((short) 16);
+
+                CellStyle titleStyle = wb.createCellStyle();
+                titleStyle.setFont(titleFont);
+                titleStyle.setAlignment(HorizontalAlignment.CENTER);
+
+                // Thêm tiêu đề
+                Row titleRow1 = sheet.createRow(0);
+                Cell titleCell1 = titleRow1.createCell(0);
+                titleCell1.setCellValue("Bảng lương tháng " + month + " năm " + year);
+                titleCell1.setCellStyle(titleStyle);
+
+                // Hợp nhất các ô cho tiêu đề
+                sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, tblTongLuongNV.getColumnCount() - 1));
+
+                // Thêm khoảng cách giữa tiêu đề và bảng
+                Row emptyRow1 = sheet.createRow(1);
+
+                // Thêm header
+                Row rowHeader = sheet.createRow(3);
+                CellStyle headerStyle = wb.createCellStyle();
+                headerStyle.setAlignment(HorizontalAlignment.CENTER);
+                headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+                headerStyle.setWrapText(true);
+                org.apache.poi.ss.usermodel.Font headerFont = wb.createFont();
+                headerFont.setBold(true);
+                headerStyle.setFont(headerFont);
+
+                for (int i = 0; i < tblTongLuongNV.getColumnCount(); i++) {
+                    Cell cell = rowHeader.createCell(i);
+                    cell.setCellValue(tblTongLuongNV.getColumnName(i));
+                    cell.setCellStyle(headerStyle);
+                }
+
+                // Thêm dữ liệu
+                CellStyle cellStyle = wb.createCellStyle();
+                cellStyle.setAlignment(HorizontalAlignment.CENTER);
+                cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+
+                for (int i = 0; i < tblTongLuongNV.getRowCount(); i++) {
+                    Row dataRow = sheet.createRow(i + 4);
+                    for (int j = 0; j < tblTongLuongNV.getColumnCount(); j++) {
+                        Cell cell = dataRow.createCell(j);
+                        if (tblTongLuongNV.getValueAt(i, j) != null) {
+                            cell.setCellValue(tblTongLuongNV.getValueAt(i, j).toString());
+                            cell.setCellStyle(cellStyle);
+                        }
+                    }
+                }
+
+                // Tự động điều chỉnh độ rộng các cột
+                for (int i = 0; i < tblTongLuongNV.getColumnCount(); i++) {
+                    sheet.autoSizeColumn(i);
+                }
+
+                FileOutputStream out = new FileOutputStream(saveFile);
+                wb.write(out);
+                wb.close();
+                out.close();
+                JOptionPane.showMessageDialog(this, "Xuất dữ liệu thành công!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_lb_DOANHTHU1MouseClicked
+    
+
+    
     /**
      * @param args the command line arguments
      */
@@ -152,7 +284,7 @@ public class TongLuongNhanVien extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TongLuongNhanVien().setVisible(true);
+                new TongLuongNhanVien(new ArrayList<>(), "", "").setVisible(true);
             }
         });
     }
