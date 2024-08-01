@@ -3,6 +3,8 @@ package BUS;
 import DAO.ChamCongDAO;
 import Model.CHAMCONG;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.sql.Date;
 
 public class ChamCongBUS {
     private ChamCongDAO ccdao;
@@ -25,5 +27,8 @@ public class ChamCongBUS {
 
     public int update(CHAMCONG t){
         return ccdao.update(t);
+    }
+    public ArrayList<CHAMCONG> dsNhanVien(String month, String year) {
+        return ccdao.dsNhanVien(month, year);
     }
 }

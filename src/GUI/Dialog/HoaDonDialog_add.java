@@ -551,8 +551,8 @@ public interface OnProductAddedListener {
             String tenSP = jTable1.getValueAt(row,1).toString();
             String giaBan = jTable1.getValueAt(row,2).toString();
             String sl =jTable1.getValueAt(row,3).toString();
-            if(sl.isEmpty()||sl.equals("0")){
-                JOptionPane.showMessageDialog(null,"Bạn chưa nhập số lượng ","Thông báo",JOptionPane.ERROR_MESSAGE);
+            if (sl.isEmpty() || !sl.matches("\\d+") || Integer.parseInt(sl) <= 0) {
+                JOptionPane.showMessageDialog(null, "Bạn chưa nhập số lượng hoặc số lượng không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
             else{
             try {
