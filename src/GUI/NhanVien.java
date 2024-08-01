@@ -33,12 +33,15 @@ public class NhanVien extends javax.swing.JPanel {
     NHANVIEN nv = new NHANVIEN();
     public DefaultTableModel defaultTableModel;
     public static String getmaNV;
+    private ArrayList<String> listNV;
     /**
      * Creates new form NhanVien
      */
+
     public NhanVien() {
         initComponents();
         nvBUS = new NhanVienBUS();
+        listNV=new ArrayList<>();
         defaultTableModel = new DefaultTableModel();
         defaultTableModel = new DefaultTableModel(){
             @Override
@@ -233,7 +236,15 @@ public class NhanVien extends javax.swing.JPanel {
             }
         });
     }//GEN-LAST:event_jLabel1MouseClicked
-
+    public ArrayList<String> getArrayList(){
+        return listNV;
+    }
+    public void addMaNV(String maNV) {
+        listNV.add(maNV);
+    }
+    public void removeNV(String maNV){
+        listNV.remove(maNV);
+    }
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         int row = tableNhanVien1.getSelectedRow();
            
@@ -290,7 +301,7 @@ public class NhanVien extends javax.swing.JPanel {
         }
         else{
           getmaNV = tableNhanVien1.getValueAt(row,0).toString();
-             ChamCongDialog_add b = new ChamCongDialog_add();
+             ChamCongDialog_add b = new ChamCongDialog_add(this);
              b.setVisible(true);
          }
             
