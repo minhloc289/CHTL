@@ -1,33 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-/**
- *
- * @author ADMIN
- */
 public class CHAMCONG {
     private String maCC;
     private String maNV;
     private LocalDate ngayCC;
     private int soGioLam;
+    private LocalDateTime checkInTime;
+    private LocalDateTime checkOutTime;
 
     public CHAMCONG() {
     }
 
-    public CHAMCONG(String maCC, String maNV, LocalDate ngayCC, int soGioLam) {
+    public CHAMCONG(String maCC, String maNV, LocalDate ngayCC, LocalDateTime checkInTime, LocalDateTime checkOutTime, int soGioLam) {
         this.maCC = maCC;
         this.maNV = maNV;
         this.ngayCC = ngayCC;
+        this.checkInTime = checkInTime;
+        this.checkOutTime = checkOutTime;
         this.soGioLam = soGioLam;
     }
-
-    
 
     public String getMaCC() {
         return maCC;
@@ -45,6 +40,14 @@ public class CHAMCONG {
         return soGioLam;
     }
 
+    public LocalDateTime getCheckInTime() {
+        return checkInTime;
+    }
+
+    public LocalDateTime getCheckOutTime() {
+        return checkOutTime;
+    }
+
     public void setMaCC(String maCC) {
         this.maCC = maCC;
     }
@@ -60,12 +63,17 @@ public class CHAMCONG {
     public void setSoGioLam(int soGioLam) {
         this.soGioLam = soGioLam;
     }
-    
-    
+
+    public void setCheckInTime(LocalDateTime checkInTime) {
+        this.checkInTime = checkInTime;
+    }
+
+    public void setCheckOutTime(LocalDateTime checkOutTime) {
+        this.checkOutTime = checkOutTime;
+    }
 
     @Override
     public String toString() {
-        return "CHAMCONG{" + "maCC=" + maCC + ", maNV=" + maNV + ", ngayCC=" + ngayCC + ", soGioLam=" + soGioLam + '}';
+        return "CHAMCONG{" + "maCC=" + maCC + ", maNV=" + maNV + ", ngayCC=" + ngayCC + ", soGioLam=" + soGioLam + ", checkInTime=" + checkInTime + ", checkOutTime=" + checkOutTime + '}';
     }
-    
 }
