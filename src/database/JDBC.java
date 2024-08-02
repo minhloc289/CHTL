@@ -23,6 +23,7 @@ public class JDBC {
     	String url = "jdbc:oracle:thin:@localhost:1521:longg";
 		String username = "c##220704";
 		String password = "1";
+
 		
 		conn = DriverManager.getConnection(url, username, password);
 		System.out.println("Connect successfully");

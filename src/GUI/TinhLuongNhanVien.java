@@ -6,18 +6,13 @@ package GUI;
 
 import BUS.ChamCongBUS;
 import BUS.NhanVienBUS;
-import DAO.ChamCongDAO;
 import Model.CHAMCONG;
+import Model.LUONGNHANVIEN;
 import Model.NHANVIEN;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -85,9 +80,12 @@ public class TinhLuongNhanVien extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jDateChooserNgayCC = new com.toedter.calendar.JDateChooser();
+        jMonthCbb = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jYearCbb = new javax.swing.JComboBox<>();
+        jLbSearch = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
 
         tableChamCong1.setModel(new javax.swing.table.DefaultTableModel(
@@ -117,7 +115,14 @@ public class TinhLuongNhanVien extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/calculator-tool.png"))); // NOI18N
+        jButton1.setText("Tính lương ");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -135,10 +140,23 @@ public class TinhLuongNhanVien extends javax.swing.JFrame {
             }
         });
 
-        jDateChooserNgayCC.setBackground(new java.awt.Color(255, 255, 255));
-        jDateChooserNgayCC.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jDateChooserNgayCCPropertyChange(evt);
+        jMonthCbb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        jMonthCbb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMonthCbbActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setText("Năm");
+
+        jYearCbb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--", "2021", "2022", "2023", "2024", "2025" }));
+
+        jLbSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/ic_Search.png"))); // NOI18N
+        jLbSearch.setText("jLabel4");
+        jLbSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLbSearchMouseClicked(evt);
             }
         });
 
@@ -152,15 +170,21 @@ public class TinhLuongNhanVien extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 840, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateChooserNgayCC, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 840, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jMonthCbb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jYearCbb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(jLbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jButton1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -169,10 +193,14 @@ public class TinhLuongNhanVien extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooserNgayCC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(jMonthCbb)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLbSearch)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                    .addComponent(jYearCbb))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -182,65 +210,61 @@ public class TinhLuongNhanVien extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        // TODO add your handling code here:
-//        String maNV = jTextField1.getText();
-//        String thang =  jComboBox1.getSelectedItem().toString();
-//        float tongGioLam = 0;
-//        float tongLuong = 0;
-//        if(defaultTableModel.getRowCount() == 0 ){
-//            JOptionPane.showMessageDialog(null,"Nhân viên không có thông tin chấm công","Thông báo",JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        for (CHAMCONG rec : ccbus.selectAll(c)){
-//            int monthenum = rec.getNgayCC().getMonthValue();
-//            String monthString = String.format("%02d", monthenum);
-//            if (thang.equals(monthString) && maNV.equals(rec.getMaNV())){
-//                tongGioLam += rec.getSoGioLam();
-//            defaultTableModel.addRow(new Object[]{rec.getMaCC(),rec.getMaNV(),rec.getNgayCC(),rec.getSoGioLam()
-//            });
-//        }
-//    }
-//        
-//        nv = nvbus.selectbyID(maNV);
-//        float luongcb = nv.getLuong();
-//        tongLuong = tongGioLam * luongcb;
-//        String tlstring = Float.toString(tongLuong);
-//        jLabel2.setForeground(Color.BLACK);
-//        jLabel2.setText(tlstring);
-//        refreshTable();
+        ArrayList<LUONGNHANVIEN> dsLuongNV = new ArrayList<>();
+        String selectedMonth = jMonthCbb.getSelectedItem().toString();
+        String selectedYear = jYearCbb.getSelectedItem().toString();
+        
+        if (selectedMonth.equals("--") || selectedYear.equals("--")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn tháng và năm phù hợp để tính lương!");
+        }
+        else {
+            for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
+                String maCC = defaultTableModel.getValueAt(i, 0).toString();
+                String maNV = defaultTableModel.getValueAt(i, 1).toString();
+
+                NHANVIEN nhanvien = nvbus.selectbyID(maNV);
+                String tenNV = nhanvien.getTenNV();
+
+                int soGioLam = Integer.parseInt(defaultTableModel.getValueAt(i, 3).toString());
+                float luongcb = nhanvien.getLuong();
+                float tongLuong = soGioLam * luongcb;
+
+                dsLuongNV.add(new LUONGNHANVIEN(maCC, maNV, tenNV, tongLuong));
+            }
+            TongLuongNhanVien luongNV = new TongLuongNhanVien(dsLuongNV, selectedMonth, selectedYear);
+            luongNV.setVisible(true);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         
-     
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
-//        // TODO add your handling code here:
-//      jTextField1.setText("");
-//      if(jTextField1.getText().isEmpty()){
-//          refreshTable();
-//      }
-//      jTextField1.setForeground(Color.black);
-//      TableRowSorter<DefaultTableModel> rowSorter;
-//
-//         rowSorter = new TableRowSorter<>(defaultTableModel);
-//        tableChamCong1.setRowSorter(rowSorter);
-//
-//        // Tạo JTextField để nhập từ khóa tìm kiếm
-//        
-//        jTextField1.addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyReleased(KeyEvent e) {
-//                String text = jTextField1.getText();
-//                if (text.trim().length() == 0) {
-//                    rowSorter.setRowFilter(null);
-//                } else {
-//                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-//                }
-//            }
-//        });
+        // TODO add your handling code here:
+      jTextField1.setText("");
+      if(jTextField1.getText().isEmpty()){
+          refreshTable();
+      }
+      jTextField1.setForeground(Color.black);
+      TableRowSorter<DefaultTableModel> rowSorter;
 
+         rowSorter = new TableRowSorter<>(defaultTableModel);
+        tableChamCong1.setRowSorter(rowSorter);
+
+        // Tạo JTextField để nhập từ khóa tìm kiếm
+        
+        jTextField1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String text = jTextField1.getText();
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+        });
     }//GEN-LAST:event_jTextField1MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
@@ -248,32 +272,35 @@ public class TinhLuongNhanVien extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jLabel3MouseClicked
 
-    private void jDateChooserNgayCCPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserNgayCCPropertyChange
-        try {
-            timThongTinNgayChamCong();
-        } catch (ParseException ex) {
-            Logger.getLogger(ThongKe.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jDateChooserNgayCCPropertyChange
-    
-    public void timThongTinNgayChamCong() throws ParseException {
-        ArrayList<CHAMCONG> dsChamCong = new ArrayList<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        LocalDate selectedDate = null;
+    private void jMonthCbbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMonthCbbActionPerformed
+        
+    }//GEN-LAST:event_jMonthCbbActionPerformed
 
-        if (jDateChooserNgayCC.getDate() != null) {
-            // Chuyển đổi java.util.Date thành LocalDate
-            java.util.Date utilDate = jDateChooserNgayCC.getDate();
-            selectedDate = LocalDate.ofInstant(utilDate.toInstant(), java.time.ZoneId.systemDefault());
+    private void jLbSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbSearchMouseClicked
+        String selectedMonth = jMonthCbb.getSelectedItem().toString();
+        String selectedYear = jYearCbb.getSelectedItem().toString();
+        
+        if (selectedMonth.equals("--") || selectedYear.equals("--")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn tháng và năm phù hợp!");
         }
-        if (selectedDate != null) {
-           dsChamCong = ccbus.dsNhanVien(selectedDate);
-        } else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-            return;
+        else {
+            // Clear the existing rows in the table
+            defaultTableModel.setRowCount(0);
+
+            // Get the attendance records for the selected month and year
+            ArrayList<CHAMCONG> dsChamCong = ccbus.dsNhanVien(selectedMonth, selectedYear);
+
+            // Update the table with the retrieved data
+            for (CHAMCONG rec : dsChamCong) {
+                defaultTableModel.addRow(new Object[]{rec.getMaCC(), rec.getMaNV(), rec.getNgayCC(), rec.getSoGioLam()});
+            }
         }
-        setDataTable(dsChamCong);
-    }
+    }//GEN-LAST:event_jLbSearchMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1MouseClicked
+        
     /**
      * @param args the command line arguments
      */
@@ -311,11 +338,14 @@ public class TinhLuongNhanVien extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private com.toedter.calendar.JDateChooser jDateChooserNgayCC;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLbSearch;
+    private javax.swing.JComboBox<String> jMonthCbb;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JComboBox<String> jYearCbb;
     private table.TableChamCong tableChamCong1;
     // End of variables declaration//GEN-END:variables
 }
