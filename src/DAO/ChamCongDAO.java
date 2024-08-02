@@ -24,7 +24,7 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
             ps.setDate(2, Date.valueOf(t.getNgayCC()));
             ps.setTimestamp(3, t.getCheckInTime() != null ? Timestamp.valueOf(t.getCheckInTime()) : null);
             ps.setTimestamp(4, t.getCheckOutTime() != null ? Timestamp.valueOf(t.getCheckOutTime()) : null);
-            ps.setDouble(5, t.getSoGioLam()); // Đổi từ setInt sang setDouble
+            ps.setFloat(5, t.getSoGioLam()); // Đổi từ setInt sang setDouble
 
             int result = ps.executeUpdate();
             
@@ -52,7 +52,7 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setTimestamp(1, Timestamp.valueOf(t.getCheckOutTime()));
-            ps.setDouble(2, t.getSoGioLam()); // Đổi từ setInt sang setDouble
+            ps.setFloat(2, t.getSoGioLam()); // Đổi từ setInt sang setDouble
             ps.setString(3, t.getMaNV());
             ps.setDate(4, Date.valueOf(t.getNgayCC()));
 
@@ -86,7 +86,7 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
                 cc.setNgayCC(localDate);
                 cc.setCheckInTime(rs.getTimestamp("CHECK_IN_TIME") != null ? rs.getTimestamp("CHECK_IN_TIME").toLocalDateTime() : null);
                 cc.setCheckOutTime(rs.getTimestamp("CHECK_OUT_TIME") != null ? rs.getTimestamp("CHECK_OUT_TIME").toLocalDateTime() : null);
-                cc.setSoGioLam(rs.getDouble("SOGIOLAM")); // Đổi từ getInt sang getDouble
+                cc.setSoGioLam(rs.getFloat("SOGIOLAM")); // Đổi từ getInt sang getDouble
 
                 chamCongList.add(cc);
             }
@@ -119,7 +119,7 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
                 chamCong.setNgayCC(rs.getDate("NGAYCC").toLocalDate());
                 chamCong.setCheckInTime(rs.getTimestamp("CHECK_IN_TIME") != null ? rs.getTimestamp("CHECK_IN_TIME").toLocalDateTime() : null);
                 chamCong.setCheckOutTime(rs.getTimestamp("CHECK_OUT_TIME") != null ? rs.getTimestamp("CHECK_OUT_TIME").toLocalDateTime() : null);
-                chamCong.setSoGioLam(rs.getDouble("SOGIOLAM")); // Đổi từ getInt sang getDouble
+                chamCong.setSoGioLam(rs.getFloat("SOGIOLAM")); // Đổi từ getInt sang getDouble
             }
             
             rs.close();
@@ -136,7 +136,7 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
         ArrayList<CHAMCONG> dsChamCong = new ArrayList<>();
         try {
             Connection conn = JDBC.getConnection();
-            String sql = "SELECT MACC, MANV, NGAYCC, SOGIOLAM FROM CHAMCONG WHERE EXTRACT(MONTH FROM NGAYCC) = ? AND EXTRACT(YEAR FROM NGAYCC) = ?";
+            String sql = "SELECT MACC, MANV, NGAYCC, SOGIOLAM FROM CHAMCONG WHERE EXTRACT(MONTH FROM NGAYCC) = ? AND EXTRACT(YEAR FROM NGAYCC) = ? ORDER BY MANV";
             PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.setInt(1, Integer.parseInt(month)); // Convert month to integer
@@ -148,7 +148,7 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
                 cc.setMaCC(rs.getString("MACC"));
                 cc.setMaNV(rs.getString("MANV"));
                 cc.setNgayCC(rs.getDate("NGAYCC").toLocalDate());
-                cc.setSoGioLam(rs.getInt("SOGIOLAM"));
+                cc.setSoGioLam(rs.getFloat("SOGIOLAM"));
                 dsChamCong.add(cc);
             }
         } catch (SQLException e) {

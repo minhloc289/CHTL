@@ -9,22 +9,16 @@ package Model;
  * @author locmi
  */
 public class LUONGNHANVIEN {
-    private String maCC;
     private String maNV;
     private String tenNV;
     private float tongLuong;
     
     public LUONGNHANVIEN(){};
     
-    public LUONGNHANVIEN(String maCC, String maNV, String tenNV, float tongLuong) {
-        this.maCC = maCC;
+    public LUONGNHANVIEN(String maNV, String tenNV, float tongLuong) {
         this.maNV = maNV;
         this.tenNV = tenNV;
         this.tongLuong = tongLuong;
-    }
-
-    public String getMaCC() {
-        return maCC;
     }
 
     public String getMaNV() {
@@ -39,11 +33,21 @@ public class LUONGNHANVIEN {
         return tongLuong;
     }
 
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
+    }
+
+    public void setTenNV(String tenNV) {
+        this.tenNV = tenNV;
+    }
+
+    public void setTongLuong(float tongLuong) {
+        this.tongLuong = tongLuong;
+    }
+
     @Override
     public String toString() {
-        return "LUONGNHANVIEN{" + "maCC=" + maCC + ", maNV=" + maNV + ", tenNV=" + tenNV + ", tongLuong=" + tongLuong + '}';
+        return "LUONGNHANVIEN{" + "maNV=" + maNV + ", tenNV=" + tenNV + ", tongLuong=" + tongLuong + '}';
     }
-    
-    
-    
+
 }

@@ -1,6 +1,5 @@
 package Model;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -8,14 +7,14 @@ public class CHAMCONG {
     private String maCC;
     private String maNV;
     private LocalDate ngayCC;
-    private double soGioLam; // Đổi từ int thành double
+    private float soGioLam; // Đổi từ int thành double
     private LocalDateTime checkInTime;
     private LocalDateTime checkOutTime;
 
     public CHAMCONG() {
     }
 
-    public CHAMCONG(String maCC, String maNV, LocalDate ngayCC, LocalDateTime checkInTime, LocalDateTime checkOutTime, double soGioLam) { // Đổi kiểu dữ liệu ở đây
+    public CHAMCONG(String maCC, String maNV, LocalDate ngayCC, LocalDateTime checkInTime, LocalDateTime checkOutTime, float soGioLam) { // Đổi kiểu dữ liệu ở đây
         this.maCC = maCC;
         this.maNV = maNV;
         this.ngayCC = ngayCC;
@@ -36,7 +35,7 @@ public class CHAMCONG {
         return ngayCC;
     }
 
-    public double getSoGioLam() { // Đổi kiểu dữ liệu ở đây
+    public float getSoGioLam() { // Đổi kiểu dữ liệu ở đây
         return soGioLam;
     }
 
@@ -60,7 +59,7 @@ public class CHAMCONG {
         this.ngayCC = ngayCC;
     }
 
-    public void setSoGioLam(double soGioLam) { // Đổi kiểu dữ liệu ở đây
+    public void setSoGioLam(float soGioLam) { // Đổi kiểu dữ liệu ở đây
         this.soGioLam = soGioLam;
     }
 
