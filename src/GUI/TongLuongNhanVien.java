@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -43,7 +43,7 @@ public class TongLuongNhanVien extends javax.swing.JFrame {
         model.setRowCount(0); 
 
         for (LUONGNHANVIEN nvLuong : nvLuongList) {
-            model.addRow(new Object[]{nvLuong.getMaCC(), nvLuong.getMaNV(), nvLuong.getTenNV(), nvLuong.getTongLuong()});
+            model.addRow(new Object[]{nvLuong.getMaNV(), nvLuong.getTenNV(), nvLuong.getTongLuong()});
         }
     }
     
@@ -92,13 +92,13 @@ public class TongLuongNhanVien extends javax.swing.JFrame {
 
         tblTongLuongNV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Mã chấm công", "Mã nhân viên", "Tên nhân viên", "Lương "
+                "Mã nhân viên", "Tên nhân viên", "Lương "
             }
         ));
         jScrollPane1.setViewportView(tblTongLuongNV);
@@ -198,8 +198,8 @@ public class TongLuongNhanVien extends javax.swing.JFrame {
                 titleCell1.setCellValue("Bảng lương tháng " + month + " năm " + year);
                 titleCell1.setCellStyle(titleStyle);
 
-                // Hợp nhất các ô cho tiêu đề
-                sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, tblTongLuongNV.getColumnCount() - 1));
+                int mergeColumns = 4; // Số cột muốn hợp nhất
+                sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, mergeColumns - 1));
 
                 // Thêm khoảng cách giữa tiêu đề và bảng
                 Row emptyRow1 = sheet.createRow(1);

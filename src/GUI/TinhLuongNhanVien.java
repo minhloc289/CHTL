@@ -13,6 +13,9 @@ import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -213,24 +216,38 @@ public class TinhLuongNhanVien extends javax.swing.JFrame {
         ArrayList<LUONGNHANVIEN> dsLuongNV = new ArrayList<>();
         String selectedMonth = jMonthCbb.getSelectedItem().toString();
         String selectedYear = jYearCbb.getSelectedItem().toString();
-        
+
         if (selectedMonth.equals("--") || selectedYear.equals("--")) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn tháng và năm phù hợp để tính lương!");
-        }
-        else {
+        } else {
+            Map<String, Float> tongGioLamMap = new HashMap<>();
+
+            // Loop through the table to accumulate working hours for each employee
             for (int i = 0; i < defaultTableModel.getRowCount(); i++) {
-                String maCC = defaultTableModel.getValueAt(i, 0).toString();
                 String maNV = defaultTableModel.getValueAt(i, 1).toString();
+                float soGioLam = Float.parseFloat(defaultTableModel.getValueAt(i, 3).toString());
+
+                // Accumulate working hours
+                tongGioLamMap.put(maNV, tongGioLamMap.getOrDefault(maNV, 0f) + soGioLam);
+            }
+
+            // Now calculate salary based on accumulated working hours
+            for (Map.Entry<String, Float> entry : tongGioLamMap.entrySet()) {
+                String maNV = entry.getKey();
+                float tongGioLam = entry.getValue();
+                
+                tongGioLam = Math.round(tongGioLam * 100.0f) / 100.0f;
 
                 NHANVIEN nhanvien = nvbus.selectbyID(maNV);
                 String tenNV = nhanvien.getTenNV();
-
-                int soGioLam = Integer.parseInt(defaultTableModel.getValueAt(i, 3).toString());
                 float luongcb = nhanvien.getLuong();
-                float tongLuong = soGioLam * luongcb;
+                float tongLuong = tongGioLam * luongcb;
 
-                dsLuongNV.add(new LUONGNHANVIEN(maCC, maNV, tenNV, tongLuong));
+                dsLuongNV.add(new LUONGNHANVIEN(maNV, tenNV, tongLuong));
             }
+            
+            dsLuongNV.sort(Comparator.comparing(LUONGNHANVIEN::getMaNV));
+            
             TongLuongNhanVien luongNV = new TongLuongNhanVien(dsLuongNV, selectedMonth, selectedYear);
             luongNV.setVisible(true);
         }
