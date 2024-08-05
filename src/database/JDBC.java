@@ -20,9 +20,10 @@ public class JDBC {
 		DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 
 
-    	String url = "jdbc:oracle:thin:@localhost:1521:longg";
-		String username = "c##220704";
-		String password = "1";
+    	String url = "jdbc:oracle:thin:@localhost:1521:orcl21";
+		String username = "c##CHTL2";
+		String password = "28092004";
+
 		
 		conn = DriverManager.getConnection(url, username, password);
 		System.out.println("Connect successfully");

@@ -5,9 +5,11 @@
 package GUI;
 
 import BUS.DoanhThuBUS;
+import BUS.DoanhThuThangBUS;
 import BUS.HoaDonBUS;
 import BUS.cthdBUS;
 import Model.DOANHTHU;
+import Model.DOANHTHUTHANG;
 import Model.HOADON;
 import java.util.ArrayList;
 import javax.swing.JLabel;
@@ -76,6 +78,7 @@ public class TinhDoanhThu extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -141,6 +144,14 @@ public class TinhDoanhThu extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 0, -1, -1));
 
+        jButton2.setText("Xuất Excel");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 150, 120, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,7 +168,7 @@ public class TinhDoanhThu extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-            String nam = jComboBox1.getSelectedItem().toString();
+    String nam = jComboBox1.getSelectedItem().toString();
     String thang = jComboBox2.getSelectedItem().toString();
     HoaDonBUS hoaDonBUS = new HoaDonBUS();
     DOANHTHU h = new DOANHTHU();
@@ -173,6 +184,12 @@ public class TinhDoanhThu extends javax.swing.JFrame {
         }
     }
     jLabel3.setText(String.valueOf(tongdtt));
+    String thangNam = thang + "-" + nam; // Format as MM/YYYY
+    
+    // Create a new DOANHTHUTHANG object and insert it into the database
+    DOANHTHUTHANG doanhThuThang = new DOANHTHUTHANG(thangNam, tongdtt);
+    DoanhThuThangBUS doanhThuThangBUS = new DoanhThuThangBUS();
+    doanhThuThangBUS.insert(doanhThuThang);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -183,6 +200,66 @@ public class TinhDoanhThu extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try {
+        // Create an instance of the Apache POI library classes
+        org.apache.poi.ss.usermodel.Workbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook();
+        org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("Doanh Thu Thang");
+
+        // Create title row
+        org.apache.poi.ss.usermodel.Row titleRow = sheet.createRow(0);
+        org.apache.poi.ss.usermodel.Cell titleCell = titleRow.createCell(0);
+        titleCell.setCellValue("BẢNG DOANH THU THEO THÁNG");
+
+        // Merge title cells
+        sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(0, 0, 0, 1));
+
+        // Create header row
+        org.apache.poi.ss.usermodel.Row headerRow = sheet.createRow(1);
+        headerRow.createCell(0).setCellValue("Tháng");
+        headerRow.createCell(1).setCellValue("Doanh thu của tháng");
+
+        // Fetch data from the table
+        ArrayList<DOANHTHUTHANG> doanhThuThangList = fetchDoanhThuThangData();
+        int rowNum = 2;
+        for (DOANHTHUTHANG record : doanhThuThangList) {
+            org.apache.poi.ss.usermodel.Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(record.getThangNam());
+            row.createCell(1).setCellValue(record.getDtThang());
+        }
+
+        // Use JFileChooser to choose file save location
+        javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+        fileChooser.setDialogTitle("Save As");
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
+            java.io.File fileToSave = fileChooser.getSelectedFile();
+            try (java.io.FileOutputStream fileOut = new java.io.FileOutputStream("DoanhThuThang.xlsx")) {
+                workbook.write(fileOut);
+            }
+            workbook.close();
+            javax.swing.JOptionPane.showMessageDialog(this, "Xuất file Excel thành công!");
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        javax.swing.JOptionPane.showMessageDialog(this, "Lỗi xuất file Excel.");
+    }
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+        private ArrayList<DOANHTHUTHANG> fetchDoanhThuThangData() {
+        // Tạo một đối tượng DoanhThuThangBUS
+        DoanhThuThangBUS doanhThuThangBUS = new DoanhThuThangBUS();
+        // Tạo đối tượng DOANHTHUTHANG mặc định (hoặc có thể là null nếu phương thức hỗ trợ)
+        DOANHTHUTHANG defaultFilter = new DOANHTHUTHANG();
+        // Lấy tất cả dữ liệu từ bảng thông qua phương thức selectAll của DoanhThuThangBUS
+        return doanhThuThangBUS.selectAll(defaultFilter);
+    }
+        
+    
 
     /**
      * @param args the command line arguments
@@ -221,6 +298,7 @@ public class TinhDoanhThu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;

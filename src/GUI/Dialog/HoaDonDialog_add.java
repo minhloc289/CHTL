@@ -143,6 +143,9 @@ public interface OnProductAddedListener {
         jPanel4 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        txtTienKhach = new javax.swing.JTextField();
+        jlbTienThua = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jPnlHeader = new javax.swing.JPanel();
         jlblHeader = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -211,24 +214,50 @@ public interface OnProductAddedListener {
             }
         });
 
+        txtTienKhach.setText("Tiền khách đưa");
+        txtTienKhach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTienKhachActionPerformed(evt);
+            }
+        });
+
+        jlbTienThua.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 204, 255)));
+
+        jLabel5.setText("Tiền thừa");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(99, 99, 99)
+                .addGap(70, 70, 70)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 447, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(154, 154, 154))
+                .addGap(53, 53, 53)
+                .addComponent(txtTienKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlbTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(157, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jlbTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                            .addGap(20, 20, 20)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txtTienKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -427,11 +456,7 @@ public interface OnProductAddedListener {
         headerTable.addCell(dateExportCell);
 
         document.add(headerTable);
-// ... (Các phần khác của code)
 
-//            Paragraph ngayXuat = new Paragraph("Date Export: " + java.time.LocalDate.now(), new Font(Font.FontFamily.HELVETICA, 12));
-//            ngayXuat.setAlignment(Element.ALIGN_RIGHT);
-//            document.add(ngayXuat);
 
             PdfPTable table = new PdfPTable(5);
             table.setWidthPercentage(100);
@@ -455,29 +480,9 @@ public interface OnProductAddedListener {
 
             document.add(table);
             //
-            
-//            Paragraph bank= new Paragraph("Bank Detail" +  new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD));
-//            bank.setAlignment(Element.ALIGN_LEFT);
-//            document.add(bank);
-//            
-            
-            
-            // Tổng cộng
-//            Paragraph tongCongPara = new Paragraph("Total: " + currencyFormatter.format(tongCong), new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD));
-//            tongCongPara.setAlignment(Element.ALIGN_RIGHT);
-//            document.add(tongCongPara);
-//
-//            Thuế (10%)
-            //double thue = tongCong * 0.05;
-//            Paragraph thuePara = new Paragraph("Tax (5%): " + currencyFormatter.format(thue), new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD));
-//            thuePara.setAlignment(Element.ALIGN_RIGHT);
-//            document.add(thuePara);
-//
-//            // Chi phí phải trả
+
            double chiPhiPhaiTra = tongCong;
-//            Paragraph chiPhiPara = new Paragraph("Fee Cost: " + currencyFormatter.format(chiPhiPhaiTra), new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD));
-//            chiPhiPara.setAlignment(Element.ALIGN_RIGHT);
-//            document.add(chiPhiPara);
+
               PdfPTable infoTable = new PdfPTable(2); 
         infoTable.setWidthPercentage(100);
         infoTable.setSpacingBefore(20f); 
@@ -551,8 +556,8 @@ public interface OnProductAddedListener {
             String tenSP = jTable1.getValueAt(row,1).toString();
             String giaBan = jTable1.getValueAt(row,2).toString();
             String sl =jTable1.getValueAt(row,3).toString();
-            if(sl.isEmpty()||sl.equals("0")){
-                JOptionPane.showMessageDialog(null,"Bạn chưa nhập số lượng ","Thông báo",JOptionPane.ERROR_MESSAGE);
+            if (sl.isEmpty() || !sl.matches("\\d+") || Integer.parseInt(sl) <= 0) {
+                JOptionPane.showMessageDialog(null, "Bạn chưa nhập số lượng hoặc số lượng không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
             else{
             try {
@@ -583,47 +588,23 @@ public interface OnProductAddedListener {
         }
     }//GEN-LAST:event_jLabel2MouseClicked
 
+    private void txtTienKhachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTienKhachActionPerformed
+        // TODO add your handling code here:
+        double tienKhach = Double.parseDouble(txtTienKhach.getText());
+        double tongCong = Double.parseDouble(jLabel3.getText());
+        double tienThua = tienKhach - tongCong;
+        String tienThuaString = Double.toString(tienThua);
+        if (tienThua < 0 ) {
+            JOptionPane.showMessageDialog(this, "Khách hàng không đủ tiền để mua mặt hàng này", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        }
+        jlbTienThua.setText(tienThuaString);
+        
+    }//GEN-LAST:event_txtTienKhachActionPerformed
+
     /**
      * @param args the command line arguments
      */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(HoaDonDialog_add.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(HoaDonDialog_add.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(HoaDonDialog_add.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(HoaDonDialog_add.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the dialog */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                HoaDonDialog_add dialog = new HoaDonDialog_add(new javax.swing.JFrame(), true);
-//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-//                    @Override
-//                    public void windowClosing(java.awt.event.WindowEvent e) {
-//                        System.exit(0);
-//                    }
-//                });
-//                dialog.setVisible(true);
-//            }
-//        });
-//    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -631,6 +612,7 @@ public interface OnProductAddedListener {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -640,6 +622,8 @@ public interface OnProductAddedListener {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jlbTienThua;
     private javax.swing.JLabel jlblHeader;
+    private javax.swing.JTextField txtTienKhach;
     // End of variables declaration//GEN-END:variables
 }
